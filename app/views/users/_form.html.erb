@@ -27,6 +27,11 @@
   </div>
 
   <div class="field">
+    <%= form.label t('user.active') %><br />
+    <%= form.check_box :active, disabled: user_is_current_user?(user) %>
+  </div>
+
+  <div class="field">
     <%= form.label t('user.admin') %><br />
     <%= form.check_box :admin, disabled: user_is_current_user?(user) %>
   </div>

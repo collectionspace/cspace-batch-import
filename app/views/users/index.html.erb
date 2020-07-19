@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th><%= t 'user.email' %></th>
+      <th><%= t 'user.active' %></th>
       <th><%= t 'user.admin' %></th>
       <th colspan="3"></th>
     </tr>
@@ -13,6 +14,7 @@
     <% policy_scope(@users).each do |user| %>
       <tr>
         <td><%= user.email %></td>
+        <td><%= user.active %></td>
         <td><%= user.admin %></td>
         <td><%= link_to t('navigation.edit'), edit_user_path(user) %></td>
         <td><%= link_to t('navigation.delete'), user, method: :delete, data: { confirm: t('action.confirm_delete') } %></td>

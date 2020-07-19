@@ -15,7 +15,7 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.admin? && !updating_own_record?(user, record)
-      [:admin]
+      %i[active admin]
     else
       %i[password password_confirmation]
     end

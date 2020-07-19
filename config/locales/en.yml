@@ -44,6 +44,7 @@ en:
       title: Home
   user:
     account: My Account
+    active: Active
     admin: Admin
     edit: Editing User
     email: Email
