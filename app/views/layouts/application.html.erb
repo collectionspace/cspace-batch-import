@@ -11,6 +11,7 @@
 
   <body>
     <p id="notice"><%= notice %></p>
+    <p id="alert"><%= alert %></p>
 
     <% if user_signed_in? %>
       <%= button_to t('user.logout'), destroy_user_session_path, method: :delete  %>
