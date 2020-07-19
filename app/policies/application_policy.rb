@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 class ApplicationPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
+    raise Pundit::NotAuthorizedError, 'Must be logged in' unless user
+
     @user = user
     @record = record
   end
@@ -38,12 +42,18 @@ class ApplicationPolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
+      raise Pundit::NotAuthorizedError, 'Must be logged in' unless user
+
       @user = user
       @scope = scope
     end
 
     def resolve
-      scope.all
+      if user.admin?
+        scope.all
+      else
+        scope.where(created_by: user.email)
+      end
     end
   end
 end
