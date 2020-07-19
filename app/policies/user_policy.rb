@@ -13,6 +13,14 @@ class UserPolicy < ApplicationPolicy
     user.admin? && !record.admin?
   end
 
+  def permitted_attributes
+    if user.admin? && !updating_own_record?(user, record)
+      [:admin]
+    else
+      %i[email password password_confirmation]
+    end
+  end
+
   class Scope < Scope
     def resolve
       if user.admin?

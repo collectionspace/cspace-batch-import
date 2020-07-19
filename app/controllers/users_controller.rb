@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = policy_scope(User)
+    @users = policy_scope(User).order(:email)
   end
 
   def edit; end
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        bypass_sign_in(@user)
+        reset_user(@user)
         format.html { redirect_to edit_user_path(@user), notice: 'User was successfully updated.' }
       else
         format.html { render :edit }
@@ -41,11 +41,15 @@ class UsersController < ApplicationController
 
   private
 
+  def reset_user(user)
+    current_user == user ? bypass_sign_in(user) : bypass_sign_in(current_user)
+  end
+
   def set_user
     @user = authorize User.find(params[:id])
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(policy(@user).permitted_attributes)
   end
 end
