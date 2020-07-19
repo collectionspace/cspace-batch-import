@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :email %>
+    <%= form.label t('user.email') %>
     <%= form.text_field :email, disabled: true %>
   </div>
 
   <div class="field">
-    <%= form.label :password, "Password" %><br />
+    <%= form.label t('user.password') %><br />
     <%= form.password_field :password, :autocomplete => "off", disabled: !user_is_current_user?(user)  %>
   </div>
 
   <div class="field">
-    <%= form.label :password_confirmation %><br />
+    <%= form.label t('user.password_confirmation') %><br />
     <%= form.password_field :password_confirmation, disabled: !user_is_current_user?(user) %>
   </div>
 
   <div class="field">
-    <%= form.label :admin %><br />
+    <%= form.label t('user.admin') %><br />
     <%= form.check_box :admin, disabled: user_is_current_user?(user) %>
   </div>
 

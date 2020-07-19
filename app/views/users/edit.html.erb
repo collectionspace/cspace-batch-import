@@ -1,9 +1,9 @@
-<h1>Editing User</h1>
+<h1><%= t 'user.edit' %></h1>
 
 <%= render 'form', user: @user %>
 
 <% if current_user.admin? %>
-  <%= link_to 'Back', users_path %>
+  <%= link_to t('navigation.back'), users_path %>
 <% else %>
-  <%= link_to 'Back', root_path %>
+  <%= link_to t('navigation.back'), root_path %>
 <% end %>

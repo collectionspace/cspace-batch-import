@@ -30,4 +30,24 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  action:
+    confirm_delete: Are you sure?
+  navigation:
+    back: Back
+    become: Become
+    delete: Delete
+    edit: Edit
+    home: Home
+    users: Users
+  site:
+    home:
+      title: Home
+  user:
+    account: My Account
+    admin: Admin
+    edit: Editing User
+    email: Email
+    logout: Logout
+    password: Password
+    password_confirmation: Password confirmation
+    return: Back to admin
