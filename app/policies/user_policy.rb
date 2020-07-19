@@ -17,7 +17,7 @@ class UserPolicy < ApplicationPolicy
     if user.admin? && !updating_own_record?(user, record)
       [:admin]
     else
-      %i[email password password_confirmation]
+      %i[password password_confirmation]
     end
   end
 
