@@ -1,23 +1,20 @@
 # frozen_string_literal: true
 
-# Place this code in a initializer. E.g: config/initializers/form_error.rb
-ActionView::Base.field_error_proc = proc do |html_tag, instance_tag|
-  fragment = Nokogiri::HTML.fragment(html_tag)
-  field = fragment.at('input,select,textarea')
+ActionView::Base.field_error_proc = proc { |html_tag, instance|
+  html = %(<div class="field_with_errors">#{html_tag}</div>).html_safe
 
-  model = instance_tag.object
-  error_message = model.errors.full_messages.join(', ')
+  form_fields = %w[textarea input select]
 
-  html = if field
-           field['class'] = "#{field['class']} invalid"
-           html = <<-HTML
-              #{fragment}
-              <p class="error has-text-danger">#{error_message}</p>
-           HTML
-           html
-         else
-           html_tag
-         end
+  elements = Nokogiri::HTML::DocumentFragment.parse(html_tag).css 'label, ' + form_fields.join(', ')
 
-  html.html_safe
-end
+  elements.each do |e|
+    next unless form_fields.include?(e.node_name)
+
+    errors = [instance.error_message].flatten.uniq.collect do |error|
+      "#{instance.class.field_type.humanize} #{error}"
+    end
+    html = %(<div class="field_with_errors">#{html_tag}</div><small class="has-text-danger">&nbsp;#{errors.join(', ')}</small>).html_safe
+  end
+
+  html
+}
