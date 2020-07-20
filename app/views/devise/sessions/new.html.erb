@@ -1,0 +1,40 @@
+<h2 class="title"><%= t('user.login') %></h2>
+
+<div class="columns">
+  <div class="column">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div class="field">
+        <%= f.label t('user.email'), class: 'label' %>
+        <div class="control">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= f.label t('user.password'), class: 'label' %><br />
+        <div class="control">
+          <%= f.password_field :password, :autocomplete => "current-password", class: 'input' %>
+        </div>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <div class="field">
+          <%= f.label t('user.remember_me'), class: 'checkbox' do %>
+            <%= f.check_box :remember_me %>
+            <%= t('user.remember_me') %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <div class="control">
+          <%= f.submit t('user.login'), class: 'button is-link' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="column">
+  </div>
+</div>
+
+<%= render "devise/shared/links" %>

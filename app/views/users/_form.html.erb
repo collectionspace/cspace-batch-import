@@ -1,42 +1,55 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<div class="columns">
+  <div class="column">
+    <%= form_with(model: user, local: true) do |form| %>
+      <div class="field">
+        <%= form.label t('user.email'), class: 'label' %>
+        <div class="control">
+          <%= form.email_field :email, disabled: true, class: 'input' %>
+        </div>
+      </div>
 
-      <ul>
-        <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+      <div class="field">
+        <%= form.label t('user.password'), class: 'label' %><br />
+        <div class="control">
+          <%= form.password_field :password, :autocomplete => "off", disabled: !user_is_current_user?(user), class: 'input' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label t('user.password_confirmation'), class: 'label' %>
+        <div class="control">
+          <%= form.password_field :password_confirmation, disabled: !user_is_current_user?(user), class: 'input' %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= form.label t('user.active'), class: 'checkbox' do %>
+          <%= form.check_box :active, disabled: user_is_current_user?(user) %>
+          <%= t('user.active') %>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+      </div>
 
-  <div class="field">
-    <%= form.label t('user.email') %>
-    <%= form.text_field :email, disabled: true %>
-  </div>
+      <div class="field">
+        <%= form.label t('user.admin'), class: 'checkbox' do %>
+          <%= form.check_box :admin, disabled: user_is_current_user?(user) %>
+          <%= t('user.admin') %>
+        <% end %>
+      </div>
 
-  <div class="field">
-    <%= form.label t('user.password') %><br />
-    <%= form.password_field :password, :autocomplete => "off", disabled: !user_is_current_user?(user)  %>
+      <div class="field is-grouped">
+        <div class="control"> 
+          <%= form.submit t('action.submit'), class: 'button is-link' %>
+        </div>
+        <div class="control"> 
+          <% if current_user.admin? %>
+            <%= link_to t('action.cancel'), users_path, class: 'button is-link' %>
+          <% else %>
+            <%= link_to t('action.cancel'), root_path, class: 'button is-link' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
-
-  <div class="field">
-    <%= form.label t('user.password_confirmation') %><br />
-    <%= form.password_field :password_confirmation, disabled: !user_is_current_user?(user) %>
+  <div class="column">
   </div>
-
-  <div class="field">
-    <%= form.label t('user.active') %><br />
-    <%= form.check_box :active, disabled: user_is_current_user?(user) %>
-  </div>
-
-  <div class="field">
-    <%= form.label t('user.admin') %><br />
-    <%= form.check_box :admin, disabled: user_is_current_user?(user) %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
