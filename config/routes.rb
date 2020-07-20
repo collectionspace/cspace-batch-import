@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     post :impersonate, on: :member
     post :stop_impersonating, on: :collection
   end
+  get '/users/:id', to: redirect('/users/%{id}/edit')
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
