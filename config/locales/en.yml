@@ -34,6 +34,9 @@ en:
     cancel: Return
     confirm_delete: Are you sure?
     submit: Submit
+  devise:
+    failure:
+      inactive: "Your account is not activated."
   navigation:
     back: Back
     become: Become

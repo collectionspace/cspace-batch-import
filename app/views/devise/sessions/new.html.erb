@@ -26,15 +26,16 @@
         </div>
       <% end %>
 
-      <div class="actions">
+      <div class="actions field is-grouped">
         <div class="control">
           <%= f.submit t('user.login'), class: 'button is-link' %>
         </div>
+        <%- if devise_mapping.registerable? %>
+          <%= link_to "Sign up", new_registration_path(resource_name), class: 'button is-info' %><br />
+        <% end %>
       </div>
     <% end %>
   </div>
   <div class="column">
   </div>
 </div>
-
-<%= render "devise/shared/links" %>

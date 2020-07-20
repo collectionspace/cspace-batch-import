@@ -18,6 +18,8 @@
         <td><%= link_to t('navigation.delete'), user, method: :delete, data: { confirm: t('action.confirm_delete') } %></td>
         <% if current_user.admin? && !user_is_current_user?(user) %>
           <td><%= link_to t('navigation.become'), impersonate_user_path(user), method: :post %></td>
+        <% else %>
+          <td></td>
         <% end %>
       </tr>
     <% end %>

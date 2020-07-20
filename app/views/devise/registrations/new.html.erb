@@ -25,9 +25,12 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'input' %>
       </div>
 
-      <div class="actions">
+      <div class="actions field is-grouped">
         <div class="control">
           <%= f.submit t('user.signup'), class: 'button is-link' %>
+        </div>
+        <div class="control">
+          <%= link_to "Log in", new_session_path(resource_name), class: 'button is-info' %><br />
         </div>
       </div>
     <% end %>
@@ -35,5 +38,3 @@
   <div class="column">
   </div>
 </div>
-
-<%= render "devise/shared/links" %>
