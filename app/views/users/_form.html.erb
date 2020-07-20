@@ -41,11 +41,7 @@
           <%= form.submit t('action.submit'), class: 'button is-link' %>
         </div>
         <div class="control"> 
-          <% if current_user.admin? %>
-            <%= link_to t('action.cancel'), users_path, class: 'button is-info' %>
-          <% else %>
-            <%= link_to t('action.cancel'), root_path, class: 'button is-info' %>
-          <% end %>
+          <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
         </div>
       </div>
     <% end %>
