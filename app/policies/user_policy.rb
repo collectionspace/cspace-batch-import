@@ -13,6 +13,10 @@ class UserPolicy < ApplicationPolicy
     user.admin? && !record.admin?
   end
 
+  def impersonate?
+    user.admin?
+  end
+
   def permitted_attributes
     if user.admin? && !updating_own_record?(user, record)
       %i[active admin]

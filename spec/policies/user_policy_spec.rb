@@ -22,6 +22,16 @@ describe UserPolicy do
     end
   end
 
+  permissions :impersonate? do
+    it 'denies access if user is not an admin' do
+      expect(subject).not_to permit(minion, admin)
+    end
+
+    it 'grants access if user is an admin' do
+      expect(subject).to permit(admin, minion)
+    end
+  end
+
   permissions :update? do
     it 'denies access if user is not an admin' do
       expect(subject).not_to permit(minion, admin)
