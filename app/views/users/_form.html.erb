@@ -40,9 +40,18 @@
         <div class="control"> 
           <%= form.submit t('action.submit'), class: 'button is-link' %>
         </div>
-        <div class="control"> 
-          <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
+        <div class="control">
+          <% if impersonating_user? %>
+            <%= link_to t('action.cancel'), root_path, class: 'button is-info' %>
+          <% else %>
+            <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
+          <% end %>
         </div>
+        <% if current_user.admin? && !user_is_current_user?(user) %>
+        <div class="control"> 
+          <%= link_to t('navigation.become'), impersonate_user_path(user), method: :post, class: 'button is-primary' %>
+        </div>
+        <% end %>
       </div>
     <% end %>
   </div>
