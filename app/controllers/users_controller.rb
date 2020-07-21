@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @users = policy_scope(User).order(:email)
+    fresh_when @users
   end
 
   def edit; end
@@ -29,7 +30,7 @@ class UsersController < ApplicationController
 
   # Become user functionality
   def impersonate
-    user = User.find(params[:id])
+    user = authorize User.find(params[:id])
     impersonate_user(user)
     redirect_to root_path
   end
