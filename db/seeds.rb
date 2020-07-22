@@ -11,7 +11,7 @@
 unless Group.default_created?
   Group.create!(
     id: 1,
-    name: 'Default',
+    name: Group.default_group_name,
     description: 'Default group.'
   )
 end

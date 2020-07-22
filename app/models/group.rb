@@ -9,7 +9,11 @@ class Group < ApplicationRecord
 
   def self.default_created?
     Group.where(
-      name: 'Default'
+      name: Group.default_group_name
     ).exists?
+  end
+
+  def self.default_group_name
+    'Default'
   end
 end

@@ -66,5 +66,6 @@ en:
     remember_me: Remember me?
     return: "Back to: %{email}"
     signup: Sign up
+    unassigned: You are not currently assigned to an active group.
     unauthorized: You are not authorized to perform this action.
     updated: User was successfully updated.
