@@ -52,7 +52,7 @@ class ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.where(created_by: user.email)
+        scope.where(id: user.id)
       end
     end
   end

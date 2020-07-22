@@ -2,8 +2,8 @@
 
 class UserPolicy < ApplicationPolicy
   def update?
-    # user.admin? || user.manager?(record) || updating_own_record?(user, record)
-    user.admin? || updating_own_record?(user, record)
+    # user.admin? || user.manager?(record) || user.is?(record)
+    user.admin? || user.is?(record)
   end
 
   def edit?
@@ -36,11 +36,5 @@ class UserPolicy < ApplicationPolicy
              .where(groups: { id: user.group_id })
       end
     end
-  end
-
-  private
-
-  def updating_own_record?(user, record)
-    user.id == record.id
   end
 end
