@@ -1,14 +1,12 @@
 admin:
-  id: 1
   email: admin@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   admin: true
   active: true
-  group_id: 1
+  group: default
 minion:
-  id: 2
   email: minion@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   admin: false
   active: true
-  group_id: 1
+  group: default

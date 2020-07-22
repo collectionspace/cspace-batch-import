@@ -10,7 +10,6 @@
 
 unless Group.default_created?
   Group.create!(
-    id: 1,
     name: Group.default_group_name,
     description: 'Default group.'
   )
@@ -21,14 +20,12 @@ unless User.admin_created?
     email: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_EMAIL', 'admin@collectionspace.org'),
     active: true,
     admin: true,
-    group_id: 1,
     password: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password'),
     password_confirmation: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
   )
   User.create!(
     email: 'minion@collectionspace.org',
     active: true,
-    group_id: 1,
     password: 'password',
     password_confirmation: 'password'
   )

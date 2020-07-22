@@ -21,8 +21,20 @@ class User < ApplicationRecord
     admin
   end
 
+  # def manager?(record)
+  #   return false unless role.name == Role.manager
+
+  #   if record.respond_to? :group
+  #     group.name == record.group.name
+  #   elsif record.respond_to? :user
+  #     group.name == record.user.group.name
+  #   else
+  #     false
+  #   end
+  # end
+
   def set_group
-    self.group_id = 1
+    self.group_id = Group.find_by(name: Group.default_group_name).id
   end
 
   def self.admin_created?

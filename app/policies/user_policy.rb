@@ -2,6 +2,7 @@
 
 class UserPolicy < ApplicationPolicy
   def update?
+    # user.admin? || user.manager?(record) || updating_own_record?(user, record)
     user.admin? || updating_own_record?(user, record)
   end
 
