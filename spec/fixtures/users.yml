@@ -4,9 +4,11 @@ admin:
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   admin: true
   active: true
+  group_id: 1
 minion:
   id: 2
   email: minion@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   admin: false
   active: true
+  group_id: 1

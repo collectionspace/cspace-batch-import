@@ -6,6 +6,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  belongs_to :group
+  after_initialize :set_group, if: :new_record?
+
   def active_for_authentication?
     super && active?
   end
@@ -16,6 +19,10 @@ class User < ApplicationRecord
 
   def admin?
     admin
+  end
+
+  def set_group
+    self.group_id = 1
   end
 
   def self.admin_created?

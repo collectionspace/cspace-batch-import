@@ -5,19 +5,15 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <div class="field">
         <%= f.label t('user.email'), class: 'label' %>
-        <div class="control">
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
-        </div>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
       </div>
 
       <div class="field">
         <%= f.label t('user.password'), class: 'label' %>
         <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %>
-        <div class="control">
-          <%= f.password_field :password, :autocomplete => "new-password", class: 'input' %>
-        </div>
+        <%= f.password_field :password, :autocomplete => "new-password", class: 'input' %>
       </div>
 
       <div class="field">
@@ -25,12 +21,12 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'input' %>
       </div>
 
-      <div class="actions field is-grouped">
+      <div class="field is-grouped">
         <div class="control">
           <%= f.submit t('user.signup'), class: 'button is-link' %>
         </div>
         <div class="control">
-          <%= link_to "Log in", new_session_path(resource_name), class: 'button is-info' %><br />
+          <%= link_to "Log in", new_session_path(resource_name), class: 'button is-info' %>
         </div>
       </div>
     <% end %>

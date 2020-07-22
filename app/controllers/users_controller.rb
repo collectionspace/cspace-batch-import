@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = policy_scope(User).order(:email)
+    @users = policy_scope(User).includes(:group).order(:email)
     fresh_when @users
   end
 
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         reset_user(@user)
-        format.html { redirect_to edit_user_path(@user), notice: 'User was successfully updated.' }
+        format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
       else
         format.html { render :edit }
       end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: t('user.deleted') }
     end
   end
 

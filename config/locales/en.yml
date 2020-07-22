@@ -37,11 +37,15 @@ en:
   devise:
     failure:
       inactive: "Your account is not activated."
+  group:
+    description: Description
+    name: Name
   navigation:
     back: Back
     become: Become
     delete: Delete
     edit: Edit
+    groups: Groups
     home: Home
     users: Users
   site:
@@ -51,8 +55,10 @@ en:
     account: "My Account: %{email}"
     active: Active
     admin: Admin
+    deleted: User was successfully deleted.
     edit: Editing User
     email: Email
+    group: Group
     login: Log in
     logout: Logout
     password: Password
@@ -61,3 +67,4 @@ en:
     return: "Back to: %{email}"
     signup: Sign up
     unauthorized: You are not authorized to perform this action.
+    updated: User was successfully updated.

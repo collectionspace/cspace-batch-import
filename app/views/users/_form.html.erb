@@ -3,35 +3,39 @@
     <%= form_with(model: user, local: true) do |form| %>
       <div class="field">
         <%= form.label t('user.email'), class: 'label' %>
-        <div class="control">
-          <%= form.email_field :email, disabled: true, class: 'input' %>
-        </div>
+        <%= form.email_field :email, disabled: true, class: 'input' %>
       </div>
 
       <div class="field">
-        <%= form.label t('user.password'), class: 'label' %><br />
-        <div class="control">
-          <%= form.password_field :password, :autocomplete => "off", disabled: !user_is_current_user?(user), class: 'input' %>
-        </div>
+        <%= form.label t('user.password'), class: 'label' %>
+        <%= form.password_field :password, :autocomplete => "off",
+            disabled: !current_user?(user), class: 'input' %>
       </div>
 
       <div class="field">
         <%= form.label t('user.password_confirmation'), class: 'label' %>
-        <div class="control">
-          <%= form.password_field :password_confirmation, disabled: !user_is_current_user?(user), class: 'input' %>
+        <%= form.password_field :password_confirmation,
+            disabled: !current_user?(user), class: 'input' %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('user.group'), class: 'label' %>
+        <div class="select">
+          <%= form.collection_select :group_id, Group.all, :id, :name, {},
+              disabled: current_user?(user) || user.admin? %>
         </div>
       </div>
 
       <div class="field">
         <%= form.label t('user.active'), class: 'checkbox' do %>
-          <%= form.check_box :active, disabled: user_is_current_user?(user) %>
+          <%= form.check_box :active, disabled: current_user?(user) %>
           <%= t('user.active') %>
         <% end %>
       </div>
 
       <div class="field">
         <%= form.label t('user.admin'), class: 'checkbox' do %>
-          <%= form.check_box :admin, disabled: user_is_current_user?(user) %>
+          <%= form.check_box :admin, disabled: current_user?(user) %>
           <%= t('user.admin') %>
         <% end %>
       </div>
@@ -47,9 +51,12 @@
             <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
           <% end %>
         </div>
-        <% if current_user.admin? && !user_is_current_user?(user) %>
+        <% if current_user.admin? && !current_user?(user) %>
         <div class="control"> 
-          <%= link_to t('navigation.become'), impersonate_user_path(user), method: :post, class: 'button is-primary' %>
+          <%=
+            link_to t('navigation.become'), impersonate_user_path(user),
+            method: :post, class: 'button is-primary'
+          %>
         </div>
         <% end %>
       </div>
