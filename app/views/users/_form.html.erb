@@ -9,33 +9,33 @@
       <div class="field">
         <%= form.label t('user.password'), class: 'label' %>
         <%= form.password_field :password, :autocomplete => "off",
-            disabled: !current_user?(user), class: 'input' %>
+            disabled: !current_user.is?(user), class: 'input' %>
       </div>
 
       <div class="field">
         <%= form.label t('user.password_confirmation'), class: 'label' %>
         <%= form.password_field :password_confirmation,
-            disabled: !current_user?(user), class: 'input' %>
+            disabled: !current_user.is?(user), class: 'input' %>
       </div>
 
       <div class="field">
         <%= form.label t('user.group'), class: 'label' %>
         <div class="select">
           <%= form.collection_select :group_id, Group.all, :id, :name, {},
-              disabled: current_user?(user) || user.admin? %>
+              disabled: current_user.is?(user) || user.admin? %>
         </div>
       </div>
 
       <div class="field">
         <%= form.label t('user.active'), class: 'checkbox' do %>
-          <%= form.check_box :active, disabled: current_user?(user) %>
+          <%= form.check_box :active, disabled: current_user.is?(user) %>
           <%= t('user.active') %>
         <% end %>
       </div>
 
       <div class="field">
         <%= form.label t('user.admin'), class: 'checkbox' do %>
-          <%= form.check_box :admin, disabled: current_user?(user) %>
+          <%= form.check_box :admin, disabled: current_user.is?(user) %>
           <%= t('user.admin') %>
         <% end %>
       </div>
@@ -51,7 +51,7 @@
             <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
           <% end %>
         </div>
-        <% if current_user.admin? && !current_user?(user) %>
+        <% if current_user.admin? && !current_user.is?(user) %>
         <div class="control"> 
           <%=
             link_to t('navigation.become'), impersonate_user_path(user),

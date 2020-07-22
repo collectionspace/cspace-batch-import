@@ -10,3 +10,9 @@ minion:
   admin: false
   active: true
   group: default
+outcast:
+  email: outcast@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  admin: false
+  active: false
+  group: default

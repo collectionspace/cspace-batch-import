@@ -21,6 +21,10 @@ class User < ApplicationRecord
     admin
   end
 
+  def is?(user)
+    self == user
+  end
+
   # def manager?(record)
   #   return false unless role.name == Role.manager
 

@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Group, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should have the default group' do
+    expect(Group.default_created?).to be true
+  end
 end

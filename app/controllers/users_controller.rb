@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   private
 
   def reset_user(user)
-    current_user == user ? bypass_sign_in(user) : bypass_sign_in(current_user)
+    current_user.is?(user) ? bypass_sign_in(user) : bypass_sign_in(current_user)
   end
 
   def set_user
