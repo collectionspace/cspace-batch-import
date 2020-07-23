@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.datetime "remember_created_at"
     t.boolean "active", default: true, null: false
     t.boolean "admin", default: false, null: false
-    t.bigint "group_id"
+    t.bigint "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -38,4 +39,5 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "users", "groups"
 end
