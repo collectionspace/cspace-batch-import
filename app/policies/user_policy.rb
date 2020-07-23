@@ -15,12 +15,15 @@ class UserPolicy < ApplicationPolicy
   end
 
   def impersonate?
+    # user.admin? || user.manager?(record)
     user.admin?
   end
 
   def permitted_attributes
-    if user.admin? && !updating_own_record?(user, record)
+    if user.admin? && !user.is?(record)
       %i[active admin group_id]
+    # elsif user.manager?(record) && !user.is?(record)
+    #   %i[active]
     else
       %i[password password_confirmation]
     end
