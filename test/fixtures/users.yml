@@ -1,0 +1,18 @@
+admin:
+  email: admin@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  admin: true
+  active: true
+  group: default
+minion:
+  email: minion@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  admin: false
+  active: true
+  group: default
+outcast:
+  email: outcast@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  admin: false
+  active: false
+  group: default
