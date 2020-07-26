@@ -7,7 +7,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   belongs_to :group
-  after_initialize :set_group, if: :new_record?
+  belongs_to :role
+  after_initialize :setup, if: :new_record?
 
   def active_for_authentication?
     super && active?
@@ -18,15 +19,19 @@ class User < ApplicationRecord
   end
 
   def admin?
-    admin
+    role.name == Role::TYPE[:admin]
   end
 
   def is?(user)
     self == user
   end
 
+  def role?(role)
+    role.name == role
+  end
+
   # def manager?(record)
-  #   return false unless role.name == Role.manager
+  #   return false unless role.name == Role::TYPE[:manager]
 
   #   if record.respond_to? :group
   #     group.name == record.group.name
@@ -37,8 +42,9 @@ class User < ApplicationRecord
   #   end
   # end
 
-  def set_group
-    self.group_id = Group.find_by(name: Group.default_group_name).id
+  def setup
+    self.group ||= Group.find_by(name: Group.default_group_name)
+    self.role ||= Role.find_by(name: Role::TYPE[:member])
   end
 
   def self.admin_created?

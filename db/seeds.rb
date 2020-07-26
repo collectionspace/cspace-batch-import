@@ -8,25 +8,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-unless Group.default_created?
-  Group.create!(
-    name: Group.default_group_name,
-    description: 'Default group.'
-  )
+Group.find_or_create_by!(name: Group.default_group_name) do |group|
+  group.description = 'Default group.'
 end
 
-unless User.admin_created?
-  User.create!(
-    email: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_EMAIL', 'admin@collectionspace.org'),
-    active: true,
-    admin: true,
-    password: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password'),
-    password_confirmation: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
-  )
-  User.create!(
-    email: 'minion@collectionspace.org',
-    active: true,
-    password: 'password',
-    password_confirmation: 'password'
-  )
+Role.find_or_create_by!(name: 'Admin')
+Role.find_or_create_by!(name: 'Manager')
+Role.find_or_create_by!(name: 'Member')
+
+User.find_or_create_by!(
+  email: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_EMAIL', 'admin@collectionspace.org')
+) do |user|
+  user.active = true
+  user.group = Group.find_by(name: Group.default_group_name)
+  user.password = ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
+  user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
+  user.role = Role.find_by(name: Role::TYPE[:admin])
 end

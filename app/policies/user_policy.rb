@@ -21,9 +21,9 @@ class UserPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.admin? && !user.is?(record)
-      %i[active admin group_id]
+      %i[active group_id role_id]
     # elsif user.manager?(record) && !user.is?(record)
-    #   %i[active]
+    #   %i[active role_id]
     else
       %i[password password_confirmation]
     end

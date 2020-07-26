@@ -10,8 +10,8 @@
     <tr>
       <th><%= t 'user.email' %></th>
       <th><%= t 'user.active' %></th>
-      <th><%= t 'user.admin' %></th>
       <th><%= t 'user.group' %></th>
+      <th><%= t 'user.role' %></th>
       <th colspan="1"></th>
     </tr>
   </thead>
@@ -20,9 +20,9 @@
     <% policy_scope(@users).each do |user| %>
       <tr>
         <td><%= link_to user.email, edit_user_path(user) %></td>
-        <td><%= user.active %></td>
-        <td><%= user.admin %></td>
+        <td><%= user.active? %></td>
         <td><%= user.group.name %></td>
+        <td><%= user.role.name %></td>
         <td><%= link_to t('navigation.delete'), user, method: :delete, data: { confirm: t('action.confirm_delete') } %></td>
       </tr>
     <% end %>

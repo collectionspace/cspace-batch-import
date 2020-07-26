@@ -19,6 +19,13 @@
       </div>
 
       <div class="field">
+        <%= form.label t('user.active'), class: 'checkbox' do %>
+          <%= form.check_box :active, disabled: current_user.is?(user) %>
+          <%= t('user.active') %>
+        <% end %>
+      </div>
+
+      <div class="field">
         <%= form.label t('user.group'), class: 'label' %>
         <div class="select">
           <%= form.collection_select :group_id, Group.all, :id, :name, {},
@@ -27,20 +34,14 @@
       </div>
 
       <div class="field">
-        <%= form.label t('user.active'), class: 'checkbox' do %>
-          <%= form.check_box :active, disabled: current_user.is?(user) %>
-          <%= t('user.active') %>
-        <% end %>
+        <%= form.label t('user.role'), class: 'label' %>
+        <div class="select">
+          <%= form.collection_select :role_id, Role.role_options(current_user), :id, :name, {},
+              disabled: current_user.is?(user) %>
+        </div>
       </div>
 
-      <div class="field">
-        <%= form.label t('user.admin'), class: 'checkbox' do %>
-          <%= form.check_box :admin, disabled: current_user.is?(user) %>
-          <%= t('user.admin') %>
-        <% end %>
-      </div>
-
-      <div class="field is-grouped">
+      <div class="field is-grouped headroom">
         <div class="control"> 
           <%= form.submit t('action.submit'), class: 'button is-link' %>
         </div>
