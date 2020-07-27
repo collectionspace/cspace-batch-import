@@ -4,6 +4,12 @@ admin:
   active: true
   group: default
   role: admin
+manager:
+  email: manager@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  active: true
+  group: default
+  role: manager
 minion:
   email: minion@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"

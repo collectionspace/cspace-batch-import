@@ -26,13 +26,9 @@ class User < ApplicationRecord
     self == user
   end
 
-  def role?(role)
-    role.name == role
-  end
-
-  # def manager?(record)
-  #   return false unless role.name == Role::TYPE[:manager]
-
+  # def manage?(record)
+  #   return true if admin?
+  #   return false unless manager?
   #   if record.respond_to? :group
   #     group.name == record.group.name
   #   elsif record.respond_to? :user
@@ -41,6 +37,18 @@ class User < ApplicationRecord
   #     false
   #   end
   # end
+
+  def manager?
+    role.name == Role::TYPE[:manager]
+  end
+
+  def member?
+    role.name == Role::TYPE[:member]
+  end
+
+  def role?(name)
+    role.name == name
+  end
 
   def setup
     self.group ||= Group.find_by(name: Group.default_group_name)

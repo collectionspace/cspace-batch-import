@@ -2,7 +2,7 @@
 
 class UserPolicy < ApplicationPolicy
   def update?
-    # user.admin? || user.manager?(record) || user.is?(record)
+    # user.admin? || user.manage?(record) || user.is?(record)
     user.admin? || user.is?(record)
   end
 
@@ -15,14 +15,14 @@ class UserPolicy < ApplicationPolicy
   end
 
   def impersonate?
-    # user.admin? || user.manager?(record)
+    # user.admin? || user.manage?(record)
     user.admin?
   end
 
   def permitted_attributes
     if user.admin? && !user.is?(record)
       %i[active group_id role_id]
-    # elsif user.manager?(record) && !user.is?(record)
+    # elsif user.manage?(record) && !user.is?(record)
     #   %i[active role_id]
     else
       %i[password password_confirmation]
