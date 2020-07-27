@@ -1,0 +1,9 @@
+default:
+  name: CollectionSpace
+  description: Default group.
+capulet:
+  name: Capulet Family
+  description: Don't mix with Montagues.
+montague:
+  name: Montague Family
+  description: Don't mix with Capulets.

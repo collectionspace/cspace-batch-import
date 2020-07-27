@@ -28,7 +28,7 @@
       <div class="field">
         <%= form.label t('user.group'), class: 'label' %>
         <div class="select">
-          <%= form.collection_select :group_id, Group.all, :id, :name, {},
+          <%= form.collection_select :group_id, Group.group_options(current_user), :id, :name, {},
               disabled: current_user.is?(user) || user.admin? %>
         </div>
       </div>
