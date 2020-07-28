@@ -39,6 +39,7 @@ en:
       inactive: "Your account is not activated."
   group:
     description: Description
+    enabled: Enabled
     name: Name
   navigation:
     back: Back
@@ -58,6 +59,7 @@ en:
     deleted: User was successfully deleted.
     edit: Editing User
     email: Email
+    enabled: Enabled
     group: Group
     login: Log in
     logout: Logout

@@ -19,9 +19,9 @@
       </div>
 
       <div class="field">
-        <%= form.label t('user.active'), class: 'checkbox' do %>
-          <%= form.check_box :active, disabled: current_user.is?(user) %>
-          <%= t('user.active') %>
+        <%= form.label t('user.enabled'), class: 'checkbox' do %>
+          <%= form.check_box :enabled, disabled: current_user.is?(user) %>
+          <%= t('user.enabled') %>
         <% end %>
       </div>
 

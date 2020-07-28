@@ -26,7 +26,15 @@
           <%= render partial: 'shared/flash', locals: { message: alert, type: 'danger' } %>
         <% end %>
 
-        <%= yield %>
+        <% if user_signed_in? && !allowed_access? %>
+          <article class="message is-dark">
+            <div class="message-body">
+              <%= t('user.unassigned') %>
+            </div>
+          </article>
+        <% else %>
+          <%= yield %>
+        <% end %>
       </div>
     </section>
 

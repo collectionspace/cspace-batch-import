@@ -5,6 +5,10 @@ class Group < ApplicationRecord
   scope :default, -> { where(name: default_group_name).first }
   scope :group_options, ->(user) { user.admin? ? all : where(name: user.group.name) }
 
+  def enabled?
+    enabled
+  end
+
   def self.groups_for_select
     Group.all
   end

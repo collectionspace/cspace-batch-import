@@ -2,23 +2,27 @@ admin:
   email: admin@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   active: true
+  enabled: true
   group: default
   role: admin
 manager:
   email: manager@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   active: true
+  enabled: true
   group: default
   role: manager
 minion:
   email: minion@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   active: true
+  enabled: true
   group: default
   role: member
 outcast:
   email: outcast@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   active: false
+  enabled: false
   group: default
   role: member

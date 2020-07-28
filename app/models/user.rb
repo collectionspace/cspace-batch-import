@@ -22,6 +22,10 @@ class User < ApplicationRecord
     role.name == Role::TYPE[:admin]
   end
 
+  def enabled?
+    enabled
+  end
+
   def is?(user)
     self == user
   end

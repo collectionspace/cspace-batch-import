@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.boolean "enabled", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_groups_on_name", unique: true
@@ -37,6 +38,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.boolean "active", default: true, null: false
+    t.boolean "enabled", default: false, null: false
     t.bigint "group_id", null: false
     t.bigint "role_id", null: false
     t.datetime "created_at", precision: 6, null: false
