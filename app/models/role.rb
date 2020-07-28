@@ -10,5 +10,8 @@ class Role < ApplicationRecord
   }
 
   scope :admin, -> { where(name: TYPE[:admin]).first }
+  scope :default, -> { where(name: TYPE[:member]).first }
+  scope :manager, -> { where(name: TYPE[:manager]).first }
+  scope :member, -> { where(name: TYPE[:member]).first }
   scope :role_options, ->(user) { user.admin? ? all : where.not(name: TYPE[:admin]) }
 end

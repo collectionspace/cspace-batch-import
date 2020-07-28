@@ -20,8 +20,8 @@ User.find_or_create_by!(
   email: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_EMAIL', 'admin@collectionspace.org')
 ) do |user|
   user.active = true
-  user.group = Group.find_by(name: Group.default_group_name)
+  user.group = Group.default
   user.password = ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
   user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
-  user.role = Role.find_by(name: Role::TYPE[:admin])
+  user.role = Role.admin
 end

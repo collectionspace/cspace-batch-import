@@ -7,11 +7,23 @@ class RoleTest < ActiveSupport::TestCase
     end
   end
 
+  test 'scope admin returns the admin role' do
+    assert_equal Role.admin.name, Role::TYPE[:admin]
+  end
+
+  test 'scope manager returns the manager role' do
+    assert_equal Role.manager.name, Role::TYPE[:manager]
+  end
+
+  test 'scope member returns the member role' do
+    assert_equal Role.member.name, Role::TYPE[:member]
+  end
+
   test 'scope role options includes admin role for admin user' do
-    assert Role.role_options(users(:admin)).include?(Role.admin)
+    assert_includes Role.role_options(users(:admin)), Role.admin
   end
 
   test 'scope role options does not include admin role for non-admin user' do
-    assert_not Role.role_options(users(:manager)).include?(Role.admin)
+    refute_includes Role.role_options(users(:manager)), Role.admin
   end
 end

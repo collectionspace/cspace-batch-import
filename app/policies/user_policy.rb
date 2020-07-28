@@ -34,9 +34,7 @@ class UserPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.joins(:group)
-             .where.not(groups: { name: Group.default_group_name })
-             .where(groups: { id: user.group_id })
+        scope.joins(:group).where(groups: { id: user.group_id })
       end
     end
   end

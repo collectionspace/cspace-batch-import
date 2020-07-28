@@ -51,8 +51,8 @@ class User < ApplicationRecord
   end
 
   def setup
-    self.group ||= Group.find_by(name: Group.default_group_name)
-    self.role ||= Role.find_by(name: Role::TYPE[:member])
+    self.group ||= Group.default
+    self.role ||= Role.default
   end
 
   def self.admin_created?
