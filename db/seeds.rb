@@ -27,3 +27,22 @@ User.find_or_create_by!(
   user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_PASSWORD', 'password')
   user.role = Role.admin
 end
+
+if ENV['RAILS_ENV'] == 'development'
+  Group.find_or_create_by!(name: 'WOTC') do |group|
+    group.description = 'Wizards of the Coast: MTG.'
+    group.enabled = true
+  end
+
+  %w[chandra jace nissa teferi ugin].each do |planeswalker|
+    User.find_or_create_by!(
+      email: "#{planeswalker}@wizards.com"
+    ) do |user|
+      user.enabled = true
+      user.group = Group.where(name: 'WOTC').first
+      user.password = 'password'
+      user.password_confirmation = 'password'
+      user.role = Role.manager if planeswalker == 'chandra'
+    end
+  end
+end
