@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 
   def index
     @users = policy_scope(User).includes(:group).order(:email)
-    fresh_when @users
   end
 
   def edit; end
