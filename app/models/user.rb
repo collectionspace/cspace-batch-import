@@ -30,17 +30,18 @@ class User < ApplicationRecord
     self == user
   end
 
-  # def manage?(record)
-  #   return true if admin?
-  #   return false unless manager?
-  #   if record.respond_to? :group
-  #     group.name == record.group.name
-  #   elsif record.respond_to? :user
-  #     group.name == record.user.group.name
-  #   else
-  #     false
-  #   end
-  # end
+  def manage?(record)
+    return true if admin?
+    return false unless manager?
+
+    if record.respond_to? :group
+      group.name == record.group.name
+    elsif record.respond_to? :user
+      group.name == record.user.group.name
+    else
+      false
+    end
+  end
 
   def manager?
     role.name == Role::TYPE[:manager]

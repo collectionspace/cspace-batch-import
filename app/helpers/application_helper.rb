@@ -5,6 +5,10 @@ module ApplicationHelper
     current_user.admin? || (current_user.enabled? && current_user.group.enabled?)
   end
 
+  def can_edit_user_group?(user)
+    current_user.admin? && !current_user.is?(user) && !user.admin?
+  end
+
   def impersonating_user?
     current_user != true_user
   end

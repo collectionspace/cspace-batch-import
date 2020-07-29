@@ -29,7 +29,7 @@
         <%= form.label t('user.group'), class: 'label' %>
         <div class="select">
           <%= form.collection_select :group_id, Group.group_options(current_user), :id, :name, {},
-              disabled: current_user.is?(user) || user.admin? %>
+              disabled: !can_edit_user_group?(user) %>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
             <%= link_to t('action.cancel'), :back, class: 'button is-info' %>
           <% end %>
         </div>
-        <% if current_user.admin? && !current_user.is?(user) %>
+        <% if !current_user.is?(user) && current_user.manage?(user) %>
         <div class="control"> 
           <%=
             link_to t('navigation.become'), impersonate_user_path(user),
