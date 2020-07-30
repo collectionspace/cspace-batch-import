@@ -3,8 +3,12 @@
 require 'test_helper'
 
 class UserAdminPolicyTest < ActiveSupport::TestCase
-  test 'admin cannot delete another admin' do
-    refute_permit UserPolicy, users(:admin), users(:admin2), :destroy
+  test 'admin cannot delete the superuser' do
+    refute_permit UserPolicy, users(:admin2), users(:admin), :destroy
+  end
+
+  test 'admin can delete another admin' do
+    assert_permit UserPolicy, users(:admin), users(:admin2), :destroy
   end
 
   test 'admin can delete a manager' do

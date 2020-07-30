@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :group
   belongs_to :role
   after_initialize :setup, if: :new_record?
+  scope :superuser, -> { where(email: superuser_email).first }
 
   def active_for_authentication?
     super && active?
@@ -23,7 +24,7 @@ class User < ApplicationRecord
   end
 
   def enabled?
-    enabled
+    enabled && group.enabled?
   end
 
   def is?(user)
@@ -60,9 +61,13 @@ class User < ApplicationRecord
     self.role ||= Role.default
   end
 
-  def self.admin_created?
+  def self.superuser_created?
     User.where(
-      email: ENV.fetch('CSPACE_BATCH_IMPORT_ADMIN_EMAIL', 'admin@collectionspace.org')
+      email: superuser_email
     ).exists?
+  end
+
+  def self.superuser_email
+    ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'admin@collectionspace.org')
   end
 end

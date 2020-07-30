@@ -36,7 +36,7 @@ class UserMemberPolicyTest < ActiveSupport::TestCase
   end
 
   test 'member cannot update an admin' do
-    refute_permit UserPolicy, users(:minion), users(:admin), :update
+    refute_permit UserPolicy, users(:minion), users(:admin2), :update
   end
 
   test 'member cannot update a manager' do

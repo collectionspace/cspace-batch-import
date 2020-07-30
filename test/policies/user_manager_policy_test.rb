@@ -36,7 +36,7 @@ class UserManagerPolicyTest < ActiveSupport::TestCase
   end
 
   test 'manager cannot update an admin' do
-    assert_permit UserPolicy, users(:manager), users(:admin), :update
+    refute_permit UserPolicy, users(:manager), users(:admin2), :update
   end
 
   test 'manager can update a manager' do

@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def allowed_access?
-    current_user.admin? || (current_user.enabled? && current_user.group.enabled?)
+    current_user.enabled?
   end
 
   def can_edit_user_group?(user)

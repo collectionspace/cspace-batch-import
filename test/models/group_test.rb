@@ -3,6 +3,7 @@ require 'test_helper'
 class GroupTest < ActiveSupport::TestCase
   test 'should have the default group' do
     assert Group.default_created?
+    assert_equal Group.default.name, Group.default_group_name
   end
 
   test 'scope group options includes all groups for admin user' do
