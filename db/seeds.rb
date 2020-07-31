@@ -10,7 +10,6 @@
 
 Group.find_or_create_by!(name: Group.default_group_name) do |group|
   group.description = 'Default group.'
-  group.enabled = true
 end
 
 Role.find_or_create_by!(name: 'Admin')
@@ -20,9 +19,7 @@ Role.find_or_create_by!(name: 'Member')
 User.find_or_create_by!(
   email: ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
 ) do |user|
-  user.active = true
   user.enabled = true
-  user.group = Group.default
   user.password = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
   user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
   user.role = Role.admin
@@ -31,36 +28,36 @@ end
 if ENV['RAILS_ENV'] == 'development'
   groups = [
     { name: 'Fish', domain: 'fish.net', enabled: false },
-    { name: 'Fruit', domain: 'fruit.com', enabled: true },
-    { name: 'Veg', domain: 'veg.edu', enabled: true }
+    { name: 'Fruit', domain: 'fruit.com' },
+    { name: 'Veg', domain: 'veg.edu' }
   ]
   groups.each do |food|
     Group.find_or_create_by!(name: food[:name]) do |group|
       group.description = "#{food[:name]} group."
-      group.enabled = food[:enabled]
+      group.domain = food[:domain]
+      group.enabled = food[:enabled] if food[:enabled]
     end
   end
 
   users = [
-    { email: 'manager@fish.net', group: Group.find_by_name('Fish'), role: Role.manager },
-    { email: 'salmon@fish.net', group: Group.find_by_name('Fish'), role: Role.member },
-    { email: 'tuna@fish.net', group: Group.find_by_name('Fish'), role: Role.member },
-    { email: 'manager@fruit.com', group: Group.find_by_name('Fruit'), role: Role.manager },
-    { email: 'apple@fruit.com', group: Group.find_by_name('Fruit'), role: Role.member },
-    { email: 'banana@fruit.com', group: Group.find_by_name('Fruit'), role: Role.member },
-    { email: 'manager@veg.edu', group: Group.find_by_name('Veg'), role: Role.manager },
-    { email: 'brocolli@veg.edu', group: Group.find_by_name('Veg'), role: Role.member },
-    { email: 'carrot@veg.edu', group: Group.find_by_name('Veg'), role: Role.member }
+    { email: 'manager@fish.net', role: Role.manager },
+    { email: 'salmon@fish.net' },
+    { email: 'tuna@fish.net' },
+    { email: 'manager@fruit.com', role: Role.manager },
+    { email: 'apple@fruit.com' },
+    { email: 'banana@fruit.com' },
+    { email: 'manager@veg.edu', role: Role.manager },
+    { email: 'brocolli@veg.edu' },
+    { email: 'carrot@veg.edu' }
   ]
   users.each do |food|
     User.find_or_create_by!(
       email: food[:email]
     ) do |user|
       user.enabled = true
-      user.group = food[:group]
       user.password = 'password'
       user.password_confirmation = 'password'
-      user.role = food[:role]
+      user.role = food[:role] if food[:role]
     end
   end
 end

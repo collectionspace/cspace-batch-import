@@ -57,7 +57,7 @@ class User < ApplicationRecord
   end
 
   def setup
-    self.group ||= Group.default
+    self.group ||= target_group
     self.role ||= Role.default
   end
 
@@ -69,5 +69,12 @@ class User < ApplicationRecord
 
   def self.superuser_email
     ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
+  end
+
+  private
+
+  def target_group
+    g = Group.where(domain: email.split('@').last)
+    g.exists? ? g.first : Group.default
   end
 end
