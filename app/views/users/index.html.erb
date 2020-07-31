@@ -5,18 +5,28 @@
       <th><%= t 'user.enabled' %></th>
       <th><%= t 'user.group' %></th>
       <th><%= t 'user.role' %></th>
-      <th colspan="1"></th>
+      <% if admin? %>
+        <th colspan="1"></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% policy_scope(@users).each do |user| %>
       <tr>
-        <td><%= link_to user.email, edit_user_path(user) %></td>
+        <td><%= manage?(user) ? link_to(user.email, edit_user_path(user)) : user.email %></td>
         <td><%= user.enabled? %></td>
         <td><%= user.group.name %></td>
         <td><%= user.role.name %></td>
-        <td><%= link_to t('navigation.delete'), user, method: :delete, data: { confirm: t('action.confirm_delete') } %></td>
+        <% if admin? %>
+          <td>
+            <%=
+              link_to t('navigation.delete'), user,
+              method: :delete, data: { confirm: t('action.confirm_delete') },
+              class: 'button is-small'
+            %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role.name == Role::TYPE[:admin]
+    role == Role.admin
   end
 
   def enabled?
@@ -45,11 +45,11 @@ class User < ApplicationRecord
   end
 
   def manager?
-    role.name == Role::TYPE[:manager]
+    role == Role.manager
   end
 
   def member?
-    role.name == Role::TYPE[:member]
+    role == Role.member
   end
 
   def role?(name)

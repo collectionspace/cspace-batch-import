@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def admin?
+    current_user.admin?
+  end
+
   def allowed_access?
     current_user.enabled?
   end
@@ -11,5 +15,9 @@ module ApplicationHelper
 
   def impersonating_user?
     current_user != true_user
+  end
+
+  def manage?(record)
+    current_user.manage?(record)
   end
 end
