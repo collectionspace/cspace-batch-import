@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "description"
+    t.string "domain", default: ""
     t.boolean "enabled", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

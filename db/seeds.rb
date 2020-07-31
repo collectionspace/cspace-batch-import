@@ -29,20 +29,38 @@ User.find_or_create_by!(
 end
 
 if ENV['RAILS_ENV'] == 'development'
-  Group.find_or_create_by!(name: 'WOTC') do |group|
-    group.description = 'Wizards of the Coast: MTG.'
-    group.enabled = true
+  groups = [
+    { name: 'Fish', domain: 'fish.net', enabled: false },
+    { name: 'Fruit', domain: 'fruit.com', enabled: true },
+    { name: 'Veg', domain: 'veg.edu', enabled: true }
+  ]
+  groups.each do |food|
+    Group.find_or_create_by!(name: food[:name]) do |group|
+      group.description = "#{food[:name]} group."
+      group.enabled = food[:enabled]
+    end
   end
 
-  %w[chandra jace nissa teferi ugin].each do |planeswalker|
+  users = [
+    { email: 'manager@fish.net', group: Group.find_by_name('Fish'), role: Role.manager },
+    { email: 'salmon@fish.net', group: Group.find_by_name('Fish'), role: Role.member },
+    { email: 'tuna@fish.net', group: Group.find_by_name('Fish'), role: Role.member },
+    { email: 'manager@fruit.com', group: Group.find_by_name('Fruit'), role: Role.manager },
+    { email: 'apple@fruit.com', group: Group.find_by_name('Fruit'), role: Role.member },
+    { email: 'banana@fruit.com', group: Group.find_by_name('Fruit'), role: Role.member },
+    { email: 'manager@veg.edu', group: Group.find_by_name('Veg'), role: Role.manager },
+    { email: 'brocolli@veg.edu', group: Group.find_by_name('Veg'), role: Role.member },
+    { email: 'carrot@veg.edu', group: Group.find_by_name('Veg'), role: Role.member }
+  ]
+  users.each do |food|
     User.find_or_create_by!(
-      email: "#{planeswalker}@wizards.com"
+      email: food[:email]
     ) do |user|
       user.enabled = true
-      user.group = Group.where(name: 'WOTC').first
+      user.group = food[:group]
       user.password = 'password'
       user.password_confirmation = 'password'
-      user.role = Role.manager if planeswalker == 'chandra'
+      user.role = food[:role]
     end
   end
 end

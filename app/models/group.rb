@@ -20,6 +20,6 @@ class Group < ApplicationRecord
   end
 
   def self.default_group_name
-    'CollectionSpace'
+    'Default'
   end
 end

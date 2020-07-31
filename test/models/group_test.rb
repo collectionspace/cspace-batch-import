@@ -7,7 +7,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test 'scope group options includes all groups for admin user' do
-    [:default, :capulet, :montague].each do |group|
+    [:default, :fruit, :veg].each do |group|
       assert_includes Group.group_options(users(:admin)), Group.find_by(name: groups(group).name)
     end
   end
