@@ -4,7 +4,7 @@ require 'test_helper'
 
 class UserAdminPolicyTest < ActiveSupport::TestCase
   test 'admin cannot delete the superuser' do
-    refute_permit UserPolicy, users(:admin2), users(:admin), :destroy
+    refute_permit UserPolicy, users(:admin), users(:superuser), :destroy
   end
 
   test 'admin can delete another admin' do
@@ -23,6 +23,10 @@ class UserAdminPolicyTest < ActiveSupport::TestCase
     refute_permit UserPolicy, users(:admin), users(:admin), :destroy
   end
 
+  test 'admin cannot impersonate the superuser' do
+    refute_permit UserPolicy, users(:admin), users(:superuser), :impersonate
+  end
+
   test 'admin can impersonate another admin' do
     assert_permit UserPolicy, users(:admin), users(:admin2), :impersonate
   end
@@ -37,6 +41,10 @@ class UserAdminPolicyTest < ActiveSupport::TestCase
 
   test 'admin cannot impersonate self' do
     refute_permit UserPolicy, users(:admin), users(:admin), :impersonate
+  end
+
+  test 'admin cannot update the superuser' do
+    refute_permit UserPolicy, users(:admin), users(:superuser), :update
   end
 
   test 'admin can update another admin' do

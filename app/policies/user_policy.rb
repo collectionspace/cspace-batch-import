@@ -19,6 +19,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def impersonate?
+    return false if record == User.superuser
     return false if user.is?(record)
 
     user.admin? || (!record.admin? && user.manage?(record))

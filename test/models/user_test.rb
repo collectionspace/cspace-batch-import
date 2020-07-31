@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test 'should have the default admin user' do
+  test 'should have the default superuser' do
     assert User.superuser_created?
     assert_equal User.superuser.email, User.superuser_email
   end

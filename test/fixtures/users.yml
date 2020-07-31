@@ -1,3 +1,10 @@
+superuser:
+  email: superuser@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  active: true
+  enabled: true
+  group: default
+  role: admin
 admin:
   email: admin@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"

@@ -18,7 +18,7 @@ Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
 User.find_or_create_by!(
-  email: ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'admin@collectionspace.org')
+  email: ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
 ) do |user|
   user.active = true
   user.enabled = true

@@ -68,6 +68,6 @@ class User < ApplicationRecord
   end
 
   def self.superuser_email
-    ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'admin@collectionspace.org')
+    ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
   end
 end
