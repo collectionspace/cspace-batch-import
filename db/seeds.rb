@@ -39,6 +39,15 @@ if ENV['RAILS_ENV'] == 'development'
     end
   end
 
+  User.find_or_create_by!(
+    email: 'admin@collectionspace.org'
+  ) do |user|
+    user.enabled = true
+    user.password = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
+    user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
+    user.role = Role.admin
+  end
+
   users = [
     { email: 'manager@fish.net', role: Role.manager },
     { email: 'salmon@fish.net' },
