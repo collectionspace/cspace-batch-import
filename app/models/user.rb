@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role == Role.admin
+    role == Role.default_scoped.admin
   end
 
   def enabled?
