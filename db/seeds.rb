@@ -8,9 +8,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Group.find_or_create_by!(
-  name: Rails.configuration.default_group
-) do |group|
+Group.find_or_create_by!(name: Rails.configuration.default_group) do |group|
   group.description = 'Default group.'
 end
 
@@ -18,9 +16,7 @@ Role.find_or_create_by!(name: 'Admin')
 Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
-User.find_or_create_by!(
-  email: Rails.configuration.superuser_email
-) do |user|
+User.find_or_create_by!(email: Rails.configuration.superuser_email) do |user|
   user.enabled = true
   user.password = Rails.configuration.superuser_password
   user.password_confirmation = Rails.configuration.superuser_password
@@ -41,9 +37,7 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
     end
   end
 
-  User.find_or_create_by!(
-    email: 'admin@collectionspace.org'
-  ) do |user|
+  User.find_or_create_by!(email: 'admin@collectionspace.org') do |user|
     user.enabled = true
     user.password = Rails.configuration.superuser_password
     user.password_confirmation = Rails.configuration.superuser_password
@@ -51,24 +45,21 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
   end
 
   users = [
-    { email: 'manager@fish.net', role: Role.manager },
-    { email: 'salmon@fish.net' },
-    { email: 'tuna@fish.net' },
-    { email: 'manager@fruit.com', role: Role.manager },
-    { email: 'apple@fruit.com' },
-    { email: 'banana@fruit.com' },
-    { email: 'manager@veg.edu', role: Role.manager },
-    { email: 'brocolli@veg.edu' },
-    { email: 'carrot@veg.edu' }
+    'manager@fish.net',
+    'salmon@fish.net',
+    'tuna@fish.net',
+    'manager@fruit.com',
+    'apple@fruit.com',
+    'banana@fruit.com',
+    'manager@veg.edu',
+    'brocolli@veg.edu',
+    'carrot@veg.edu'
   ]
-  users.each do |food|
-    User.find_or_create_by!(
-      email: food[:email]
-    ) do |user|
+  users.each do |email|
+    User.find_or_create_by!(email: email) do |user|
       user.enabled = true
       user.password = 'password'
       user.password_confirmation = 'password'
-      user.role = food[:role] if food[:role]
     end
   end
 end

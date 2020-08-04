@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :group
   belongs_to :role
   after_initialize :setup, if: :new_record?
+  before_save :reset_admin_group
   scope :superuser, -> { where(email: superuser_email).first }
 
   def active_for_authentication?
@@ -59,7 +60,7 @@ class User < ApplicationRecord
   def setup
     self.group ||= target_group
     self.role ||= target_role
-    self.enabled = self.role == Role.manager
+    self.enabled ||= self.role == Role.manager
   end
 
   def self.superuser_created?
@@ -73,6 +74,10 @@ class User < ApplicationRecord
   end
 
   private
+
+  def reset_admin_group
+    self.group = Group.default if self.role == Role.admin
+  end
 
   def target_group
     g = Group.where(domain: email.split('@').last)

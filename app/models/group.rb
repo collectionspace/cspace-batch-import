@@ -9,10 +9,6 @@ class Group < ApplicationRecord
     enabled
   end
 
-  def self.groups_for_select
-    Group.all
-  end
-
   def self.default_created?
     Group.where(
       name: Group.default_group_name
