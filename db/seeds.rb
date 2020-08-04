@@ -8,7 +8,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Group.find_or_create_by!(name: Group.default_group_name) do |group|
+Group.find_or_create_by!(
+  name: ENV.fetch('CSPACE_BATCH_IMPORT_DEFAULT_GROUP', 'Default')
+) do |group|
   group.description = 'Default group.'
 end
 
@@ -25,7 +27,7 @@ User.find_or_create_by!(
   user.role = Role.admin
 end
 
-if ENV['RAILS_ENV'] == 'development'
+if ENV.fetch('RAILS_ENV', 'development') == 'development'
   groups = [
     { name: 'Fish', domain: 'fish.net', enabled: false },
     { name: 'Fruit', domain: 'fruit.com' },

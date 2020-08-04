@@ -36,9 +36,9 @@ class User < ApplicationRecord
     return false unless manager?
 
     if record.respond_to? :group
-      group.name == record.group.name
+      group.id == record.group.id
     elsif record.respond_to? :user
-      group.name == record.user.group.name
+      group.id == record.user.group.id
     else
       false
     end
@@ -58,7 +58,7 @@ class User < ApplicationRecord
 
   def setup
     self.group ||= target_group
-    self.role ||= Role.default
+    self.role ||= target_role
   end
 
   def self.superuser_created?
@@ -76,5 +76,13 @@ class User < ApplicationRecord
   def target_group
     g = Group.where(domain: email.split('@').last)
     g.exists? ? g.first : Group.default
+  end
+
+  def target_role
+    if self.group != Group.default && self.group.users.count.zero?
+      Role.manager
+    else
+      Role.default
+    end
   end
 end

@@ -3,7 +3,7 @@
 class Group < ApplicationRecord
   has_many :users
   scope :default, -> { where(name: default_group_name).first }
-  scope :group_options, ->(user) { user.admin? ? all : where(name: user.group.name) }
+  scope :group_options, ->(user) { user.admin? ? all : where(id: user.group.id) }
 
   def enabled?
     enabled
@@ -20,6 +20,6 @@ class Group < ApplicationRecord
   end
 
   def self.default_group_name
-    'Default'
+    ENV.fetch('CSPACE_BATCH_IMPORT_DEFAULT_GROUP', 'Default')
   end
 end

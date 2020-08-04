@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
   enable_extension "plpgsql"
 
   create_table "groups", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.string "domain", default: ""
     t.boolean "enabled", default: true, null: false
