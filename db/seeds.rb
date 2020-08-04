@@ -9,7 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Group.find_or_create_by!(
-  name: ENV.fetch('CSPACE_BATCH_IMPORT_DEFAULT_GROUP', 'Default')
+  name: Rails.configuration.default_group
 ) do |group|
   group.description = 'Default group.'
 end
@@ -19,11 +19,11 @@ Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
 User.find_or_create_by!(
-  email: ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
+  email: Rails.configuration.superuser_email
 ) do |user|
   user.enabled = true
-  user.password = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
-  user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
+  user.password = Rails.configuration.superuser_password
+  user.password_confirmation = Rails.configuration.superuser_password
   user.role = Role.admin
 end
 
@@ -45,8 +45,8 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
     email: 'admin@collectionspace.org'
   ) do |user|
     user.enabled = true
-    user.password = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
-    user.password_confirmation = ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password')
+    user.password = Rails.configuration.superuser_password
+    user.password_confirmation = Rails.configuration.superuser_password
     user.role = Role.admin
   end
 

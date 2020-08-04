@@ -59,6 +59,7 @@ class User < ApplicationRecord
   def setup
     self.group ||= target_group
     self.role ||= target_role
+    self.enabled = self.role == Role.manager
   end
 
   def self.superuser_created?
@@ -68,7 +69,7 @@ class User < ApplicationRecord
   end
 
   def self.superuser_email
-    ENV.fetch('CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org')
+    Rails.configuration.superuser_email
   end
 
   private

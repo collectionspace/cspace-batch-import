@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   setup do
-    @grp_email = 'asparagus@veg.edu' # domain matches a group (fixtures)
-    @nogrp_email = 'noob@example.com' # does not match a group
     @password = 'password'
   end
 
@@ -55,7 +55,9 @@ class UserTest < ActiveSupport::TestCase
 
   test 'a new user is disabled by default' do
     user = User.create(
-      email: @nogrp_email, password: @password, password_confirmation: @password
+      email: 'example@example.com',
+      password: @password,
+      password_confirmation: @password
     )
     assert_not user.enabled?
   end
@@ -63,14 +65,18 @@ class UserTest < ActiveSupport::TestCase
   # Group assignment
   test 'assigns user to the default group if email domain is not matched' do
     user = User.create(
-      email: @nogrp_email, password: @password, password_confirmation: @password
+      email: 'example@example.com',
+      password: @password,
+      password_confirmation: @password
     )
     assert_equal user.group.name, groups(:default).name
   end
 
   test 'assigns user to a group when email domain matches' do
     user = User.create(
-      email: @grp_email, password: @password, password_confirmation: @password
+      email: 'asparagus@veg.edu', # matches group from fixtures
+      password: @password,
+      password_confirmation: @password
     )
     assert_equal user.group.name, groups(:veg).name
   end
@@ -78,8 +84,31 @@ class UserTest < ActiveSupport::TestCase
   # Role assignment
   test 'assigns a new user to the default role' do
     user = User.create(
-      email: @nogrp_email, password: @password, password_confirmation: @password
+      email: 'example@example.com',
+      password: @password,
+      password_confirmation: @password
     )
     assert user.role?(Role.default.name)
+  end
+
+  # New group assignment
+  test 'assigns first user of group as manager and subsequent users as member' do
+    group = Group.create(name: 'Example', domain: 'example.org')
+    manager = User.create(
+      email: 'manager@example.org',
+      password: @password,
+      password_confirmation: @password,
+      group: group
+    )
+    member = User.create(
+      email: 'member@example.org',
+      password: @password,
+      password_confirmation: @password,
+      group: group
+    )
+    assert manager.role?(Role.manager.name)
+    assert manager.enabled?
+    assert member.role?(Role.member.name)
+    assert_not member.enabled?
   end
 end

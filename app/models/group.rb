@@ -20,6 +20,6 @@ class Group < ApplicationRecord
   end
 
   def self.default_group_name
-    ENV.fetch('CSPACE_BATCH_IMPORT_DEFAULT_GROUP', 'Default')
+    Rails.configuration.default_group
   end
 end
