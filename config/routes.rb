@@ -3,6 +3,7 @@
 Rails.application.routes.draw do
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
   root 'sites#home'
+  resources :groups, only: %i[index create update]
   resources :users, except: %i[create new show] do
     post :impersonate, on: :member
     post :stop_impersonating, on: :collection

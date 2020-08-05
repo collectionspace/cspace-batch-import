@@ -1,0 +1,27 @@
+<%= form_with(model: group, local: true) do |form| %>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <%= form.text_field :name,
+        disabled: (group == Group.default || !admin?),
+        class: 'field input',
+        placeholder: t('group.name')
+      %>
+      <%= form.text_field :domain,
+        disabled: !admin?,
+        class: 'field input',
+        placeholder: t('group.domain')
+      %>
+      <%= form.label :enabled, class: 'field' do %>
+        <%= t('group.enabled') %>
+        <%= form.check_box :enabled,
+          disabled: (group == Group.default || !admin?),
+          class: 'checkbox'
+        %>
+      <% end %>
+      <%= form.submit (group.name.blank? ? "#{t('action.create')}!" : t('action.update')),
+        disabled: !admin?,
+        class: "button #{group.name.blank? ? 'is-primary' : 'is-link'}"
+      %>
+    </div>
+  </div>
+<% end %>

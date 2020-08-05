@@ -33,14 +33,18 @@ en:
   action:
     cancel: Return
     confirm_delete: Are you sure?
+    create: Create
     submit: Submit
+    update: Update
   devise:
     failure:
       inactive: "Your account is not activated."
   group:
     description: Description
+    domain: Domain
     enabled: Enabled
     name: Name
+    title: Groups
   navigation:
     back: Back
     become: Become
@@ -69,6 +73,7 @@ en:
     return: "Back to: %{email}"
     role: Role
     signup: Sign up
+    title: Users
     unassigned: You are not currently assigned to an active group.
     unauthorized: You are not authorized to perform this action.
     updated: User was successfully updated.

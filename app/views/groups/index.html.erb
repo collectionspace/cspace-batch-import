@@ -1,0 +1,7 @@
+<h1 class="title"><%= t('group.title') %></h1>
+
+<%= render 'form', group: @group %>
+
+<% policy_scope(@groups).each do |group| %>
+  <%= render 'form', group: group %>
+<% end %>
