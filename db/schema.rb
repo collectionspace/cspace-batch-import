@@ -16,9 +16,10 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
   enable_extension "plpgsql"
 
   create_table "groups", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name", null: false, unique: true
     t.string "description"
-    t.string "domain", default: ""
+    t.string "domain"
+    t.string "email"
     t.boolean "enabled", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

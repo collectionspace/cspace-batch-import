@@ -4,12 +4,18 @@
       <%= form.text_field :name,
         disabled: (group == Group.default || !admin?),
         class: 'field input',
-        placeholder: t('group.name')
+        placeholder: t('group.name'),
+        autofocus: (group.name.blank? ? true : false)
       %>
       <%= form.text_field :domain,
         disabled: !admin?,
         class: 'field input',
         placeholder: t('group.domain')
+      %>
+      <%= form.text_field :email,
+        disabled: !admin?,
+        class: 'field input',
+        placeholder: t('group.email')
       %>
       <%= form.label :enabled, class: 'field' do %>
         <%= t('group.enabled') %>

@@ -41,10 +41,13 @@ en:
       inactive: "Your account is not activated."
   group:
     description: Description
-    domain: Domain
+    domain: Email domain
+    email: Support email
     enabled: Enabled
     name: Name
     title: Groups
+    updated: Group was successfully updated.
+    updated_error: Group was not updated.
   navigation:
     back: Back
     become: Become

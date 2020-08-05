@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = policy_scope(User).includes(:group, :role).order('groups.name asc, email asc')
+    @users = policy_scope(User).includes(:group, :role).order('groups.name asc, users.email asc')
   end
 
   def edit; end

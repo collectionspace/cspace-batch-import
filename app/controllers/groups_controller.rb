@@ -14,7 +14,13 @@ class GroupsController < ApplicationController
   end
 
   def update
-    redirect_back fallback_location: root_path
+    respond_to do |format|
+      if @group.update(group_params)
+        format.html { redirect_to groups_path, notice: t('group.updated') }
+      else
+        redirect_back fallback_location: root_path, notice: t('group.updated_error')
+      end
+    end
   end
 
   private

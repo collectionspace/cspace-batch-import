@@ -25,9 +25,9 @@ class GroupPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.admin? && record == Group.default
-      %i[description domain]
+      %i[description domain email]
     elsif user.admin?
-      %i[name description domain enabled]
+      %i[name description domain email enabled]
     else
       []
     end
