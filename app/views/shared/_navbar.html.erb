@@ -1,19 +1,32 @@
 <nav id="navbar" class="mb-4" role="navigation" aria-label="main navigation">
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <%= link_to t('navigation.home'), root_path, class: 'navbar-item' %>
-      <%= link_to t('navigation.groups'), groups_path, class: 'navbar-item' %>
-      <%= link_to t('navigation.users'), users_path, class: 'navbar-item' %>
+      <%= link_to root_path, class: 'navbar-item' do %>
+        <%= fa_icon "home", class: 'mr-2' %>
+        <%= t('navigation.home') %>
+      <% end %>
+      <%= link_to groups_path, class: 'navbar-item' do %>
+        <%= fa_icon "sitemap", class: 'mr-2' %>
+        <%= t('navigation.groups') %>
+      <% end %>
+      <%= link_to users_path, class: 'navbar-item' do %>
+        <%= fa_icon "users", class: 'mr-2' %>
+        <%= t('navigation.users') %>
+      <% end %>
     </div>
 
     <div class="navbar-end">
       <% if impersonating_user? %>
         <%= link_to t('user.return', email: true_user.email), stop_impersonating_users_path, method: :post, class: 'navbar-item' %>
       <% end %>
-      <%= link_to t('user.account', email: current_user.email), edit_user_path(current_user),
-        method: :get, class: 'navbar-item'
-      %>
-      <%= link_to t('user.logout'), destroy_user_session_path, method: :delete, class: 'navbar-item'  %>
+      <%= link_to edit_user_path(current_user), method: :get, class: 'navbar-item' do %>
+        <%= fa_icon "user-circle", class: 'mr-2' %>
+        <%= current_user.email %>
+      <% end %>
+      <%= link_to destroy_user_session_path, method: :delete, class: 'navbar-item' do %>
+        <%= fa_icon "sign-out", class: 'mr-2' %>
+        <%= t('user.logout') %>
+      <% end %>
     </div>
   </div>
 </nav>

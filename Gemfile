@@ -57,5 +57,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bulma-rails', '~> 0.9.0'
 gem 'devise'
+gem 'font-awesome-rails'
 gem 'pretender'
 gem 'pundit'
