@@ -5,7 +5,12 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <div class="field">
         <%= f.label t('user.email'), class: 'label' %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'envelope' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
@@ -13,15 +18,25 @@
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %>
-        <%= f.password_field :password, :autocomplete => "new-password", class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= f.password_field :password, :autocomplete => "new-password", class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'key' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
         <%= f.label t('user.password_confirmation'), class: 'label' %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'key' }
+          %>
+        <% end %>
       </div>
 
-      <div class="field is-grouped headroom">
+      <div class="field is-grouped mt-5">
         <div class="control">
           <%= f.submit t('user.signup'), class: 'button is-link' %>
         </div>

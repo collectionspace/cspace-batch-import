@@ -16,16 +16,15 @@
         <%= render 'shared/navbar' %>
       <% end %>
 
+      <% if notice %>
+        <%= render partial: 'shared/flash', locals: { message: notice, type: 'primary' } %>
+      <% end %>
+
+      <% if alert %>
+        <%= render partial: 'shared/flash', locals: { message: alert, type: 'danger' } %>
+      <% end %>
+
       <div class="container">
-
-        <% if notice %>
-          <%= render partial: 'shared/flash', locals: { message: notice, type: 'primary' } %>
-        <% end %>
-
-        <% if alert %>
-          <%= render partial: 'shared/flash', locals: { message: alert, type: 'danger' } %>
-        <% end %>
-
         <% if user_signed_in? && !allowed_access? %>
           <article class="message is-dark">
             <div class="message-body">

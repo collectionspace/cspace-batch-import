@@ -17,7 +17,10 @@
 
     <div class="navbar-end">
       <% if impersonating_user? %>
-        <%= link_to t('user.return', email: true_user.email), stop_impersonating_users_path, method: :post, class: 'navbar-item' %>
+        <%= link_to stop_impersonating_users_path, method: :post, class: 'navbar-item' do %>
+          <%= fa_icon "exchange", class: 'mr-2' %>
+          <%= true_user.email %>
+        <% end %>
       <% end %>
       <%= link_to edit_user_path(current_user), method: :get, class: 'navbar-item' do %>
         <%= fa_icon "user-circle", class: 'mr-2' %>

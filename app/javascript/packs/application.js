@@ -16,8 +16,8 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-document.addEventListener('DOMContentLoaded', () => {
-  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+document.addEventListener('turbolinks:load', () => {
+  (document.querySelectorAll('.flash .delete') || []).forEach(($delete) => {
     $notification = $delete.parentNode;
 
     $delete.addEventListener('click', () => {

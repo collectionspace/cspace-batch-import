@@ -21,7 +21,11 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role == Role.default_scoped.admin
+    role == Role.default_scoped.admin && enabled?
+  end
+
+  def disabled?
+    !enabled?
   end
 
   def enabled?
@@ -46,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def manager?
-    role == Role.manager
+    role == Role.manager && enabled?
   end
 
   def member?

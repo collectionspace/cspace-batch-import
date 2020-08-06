@@ -1,27 +1,43 @@
 <div class="columns">
   <div class="column">
+    <h2 class="subtitle">Details</h2>
     <%= form_with(model: user, local: true) do |form| %>
       <div class="field">
         <%= form.label t('user.email'), class: 'label' %>
-        <%= form.email_field :email, disabled: true, class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.email_field :email, disabled: true, class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'envelope' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
         <%= form.label t('user.password'), class: 'label' %>
-        <%= form.password_field :password, :autocomplete => "off",
-            disabled: !current_user.is?(user), class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.password_field :password, :autocomplete => "off",
+              disabled: !current_user.is?(user), class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'key' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
         <%= form.label t('user.password_confirmation'), class: 'label' %>
-        <%= form.password_field :password_confirmation,
-            disabled: !current_user.is?(user), class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.password_field :password_confirmation,
+              disabled: !current_user.is?(user), class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'key' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
         <%= form.label t('user.enabled'), class: 'checkbox' do %>
+          <%= content_tag :span, class: 'mr-1' do t('user.enabled') ; end %>
           <%= form.check_box :enabled, disabled: current_user.is?(user) %>
-          <%= t('user.enabled') %>
         <% end %>
       </div>
 
@@ -41,7 +57,7 @@
         </div>
       </div>
 
-      <div class="field is-grouped headroom">
+      <div class="field is-grouped mt-5">
         <div class="control"> 
           <%= form.submit t('action.submit'), class: 'button is-link' %>
         </div>
@@ -64,5 +80,6 @@
     <% end %>
   </div>
   <div class="column">
+    <h2 class="subtitle">Connections</h2>
   </div>
 </div>

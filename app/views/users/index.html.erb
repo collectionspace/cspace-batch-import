@@ -1,6 +1,6 @@
 <h1 class="title"><%= t('user.title') %></h1>
 
-<table class="table is-fullwidth">
+<table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>
       <th><%= t 'user.email' %></th>
@@ -16,10 +16,41 @@
   <tbody>
     <% policy_scope(@users).each do |user| %>
       <tr>
-        <td><%= manage?(user) ? link_to(user.email, edit_user_path(user)) : user.email %></td>
-        <td><%= user.group.name %></td>
-        <td><%= user.role.name %></td>
-        <td><%= user.enabled? %></td>
+        <td class='pt-3'>
+          <% if manage?(user) %>
+            <%= link_to edit_user_path(user) do %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: 'is-small is-left', icon: 'pencil' }
+              %>
+              <%= user.email %>
+              <% if current_user.is?(user) %>
+                <%= render partial: 'shared/icon',
+                    locals: { classes: 'is-small is-right', icon: 'user-circle' }
+                %>
+              <% end %>
+            <% end %>
+          <% else %>
+            <%= user.email %>
+            <% if current_user.is?(user) %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: 'is-small is-right', icon: 'user-circle' }
+              %>
+            <% end %>
+          <% end %>
+        </td>
+        <td class='pt-3'><%= user.group.name %></td>
+        <td class='pt-3'><%= user.role.name %></td>
+        <td class='pt-3'>
+          <% if user.enabled? %>
+            <%= render partial: 'shared/icon',
+                locals: { classes: 'has-text-success', icon: 'check-square' }
+            %>
+          <% else %>
+            <%= render partial: 'shared/icon',
+                locals: { classes: 'has-text-danger', icon: 'ban' }
+            %>
+          <% end %>
+        </td>
         <% if admin? %>
           <td>
             <%=

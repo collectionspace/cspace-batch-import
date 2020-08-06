@@ -1,29 +1,44 @@
 <%= form_with(model: group, local: true) do |form| %>
   <div class="field is-horizontal">
     <div class="field-body">
-      <%= form.text_field :name,
-        disabled: (group == Group.default || !admin?),
-        class: 'field input',
-        placeholder: t('group.name'),
-        autofocus: (group.name.blank? ? true : false)
-      %>
-      <%= form.text_field :domain,
-        disabled: !admin?,
-        class: 'field input',
-        placeholder: t('group.domain')
-      %>
-      <%= form.text_field :email,
-        disabled: !admin?,
-        class: 'field input',
-        placeholder: t('group.email')
-      %>
-      <%= form.label :enabled, class: 'field' do %>
-        <%= t('group.enabled') %>
-        <%= form.check_box :enabled,
-          disabled: (group == Group.default || !admin?),
-          class: 'checkbox'
+      <%= content_tag :div, class: 'field' do %>
+        <%= form.text_field :name,
+          disabled: (group == Group.default || !admin? || group.disabled?),
+          class: 'input',
+          placeholder: t('group.name'),
+          autofocus: (group.name.blank? ? true : false)
         %>
       <% end %>
+
+      <%= content_tag :div, class: 'field' do %>
+        <%= form.text_field :domain,
+          disabled: !admin? || group.disabled?,
+          class: 'input',
+          placeholder: t('group.domain')
+        %>
+      <% end %>
+
+      <%= content_tag :div, class: 'control field has-icons-left' do %>
+        <%= form.text_field :email,
+          disabled: !admin? || group.disabled?,
+          class: 'input',
+          placeholder: t('group.email')
+        %>
+        <%= render partial: 'shared/icon',
+            locals: { classes: 'is-small is-left', icon: 'envelope' }
+        %>
+      <% end %>
+
+      <%= content_tag :div, class: 'field has-text-centered mt-1' do %>
+        <%= form.label :enabled do %>
+          <%= t('group.enabled') %>
+          <%= form.check_box :enabled,
+            disabled: (group == Group.default || !admin?),
+            class: 'checkbox ml-2'
+          %>
+        <% end %>
+      <% end %>
+
       <%= form.submit (group.name.blank? ? "#{t('action.create')}!" : t('action.update')),
         disabled: !admin?,
         class: "button #{group.name.blank? ? 'is-primary' : 'is-link'}"

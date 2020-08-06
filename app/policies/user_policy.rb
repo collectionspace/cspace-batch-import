@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class UserPolicy < ApplicationPolicy
+  def index?
+    user.enabled?
+  end
+
   def update?
     return false if record == User.superuser && !user.is?(record)
     return false if record.admin? && !user.admin?

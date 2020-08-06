@@ -38,7 +38,7 @@ en:
     update: Update
   devise:
     failure:
-      inactive: "Your account is not activated."
+      inactive: Your account is not activated
   group:
     description: Description
     domain: Email domain
@@ -46,8 +46,8 @@ en:
     enabled: Enabled
     name: Name
     title: Groups
-    updated: Group was successfully updated.
-    updated_error: Group was not updated.
+    updated: Group was successfully updated
+    updated_error: Group was not updated
   navigation:
     back: Back
     become: Become
@@ -63,7 +63,7 @@ en:
     account: "My Account: %{email}"
     active: Active
     admin: Admin
-    deleted: User was successfully deleted.
+    deleted: User was successfully deleted
     edit: Editing User
     email: Email
     enabled: Enabled
@@ -72,11 +72,12 @@ en:
     logout: Logout
     password: Password
     password_confirmation: Password confirmation
+    profile: Profile
     remember_me: Remember me?
     return: "Back to: %{email}"
     role: Role
     signup: Sign up
     title: Users
-    unassigned: You are not currently assigned to an active group.
-    unauthorized: You are not authorized to perform this action.
-    updated: User was successfully updated.
+    unassigned: You are not currently assigned to an active group
+    unauthorized: You are not authorized to perform this action
+    updated: User was successfully updated

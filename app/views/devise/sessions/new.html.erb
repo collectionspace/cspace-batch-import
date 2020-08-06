@@ -5,12 +5,22 @@
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="field">
         <%= f.label t('user.email'), class: 'label' %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'envelope' }
+          %>
+        <% end %>
       </div>
 
       <div class="field">
         <%= f.label t('user.password'), class: 'label' %>
-        <%= f.password_field :password, :autocomplete => "current-password", class: 'input' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= f.password_field :password, :autocomplete => "current-password", class: 'input' %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'key' }
+          %>
+        <% end %>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -22,7 +32,7 @@
         </div>
       <% end %>
 
-      <div class="field is-grouped headroom">
+      <div class="field is-grouped mt-5">
         <div class="control">
           <%= f.submit t('user.login'), class: 'button is-link' %>
         </div>
