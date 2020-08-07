@@ -7,12 +7,12 @@ class UserManagerPolicyTest < ActiveSupport::TestCase
     refute_permit UserPolicy, users(:manager), users(:admin), :destroy
   end
 
-  test 'manager cannot delete a manager' do
-    refute_permit UserPolicy, users(:manager), users(:manager2), :destroy
+  test 'manager can delete a manager' do
+    assert_permit UserPolicy, users(:manager), users(:manager2), :destroy
   end
 
   test 'manager can delete a member' do
-    refute_permit UserPolicy, users(:manager), users(:minion), :destroy
+    assert_permit UserPolicy, users(:manager), users(:minion), :destroy
   end
 
   test 'manager cannot delete self' do

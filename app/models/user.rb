@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    role == Role.default_scoped.admin && enabled?
+    role == Role.default_scoped.admin
   end
 
   def disabled?
@@ -37,20 +37,11 @@ class User < ApplicationRecord
   end
 
   def manage?(record)
-    return true if admin?
-    return false unless manager?
-
-    if record.respond_to? :group
-      group.id == record.group.id
-    elsif record.respond_to? :user
-      group.id == record.user.group.id
-    else
-      false
-    end
+    role.manage?(self, record)
   end
 
   def manager?
-    role == Role.manager && enabled?
+    role == Role.manager
   end
 
   def member?
