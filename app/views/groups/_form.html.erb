@@ -3,7 +3,7 @@
     <div class="field-body">
       <%= content_tag :div, class: 'field' do %>
         <%= form.text_field :name,
-          disabled: (group == Group.default || !admin? || group.disabled?),
+          disabled: (group == Group.default || group.disabled? || !manage?(group)),
           class: 'input',
           placeholder: t('group.name'),
           autofocus: (group.name.blank? ? true : false)
@@ -12,7 +12,7 @@
 
       <%= content_tag :div, class: 'field' do %>
         <%= form.text_field :domain,
-          disabled: !admin? || group.disabled?,
+          disabled: group.disabled? || !manage?(group),
           class: 'input',
           placeholder: t('group.domain')
         %>
@@ -20,7 +20,7 @@
 
       <%= content_tag :div, class: 'control field has-icons-left' do %>
         <%= form.text_field :email,
-          disabled: !admin? || group.disabled?,
+          disabled: group.disabled? || !manage?(group),
           class: 'input',
           placeholder: t('group.email')
         %>
@@ -33,14 +33,14 @@
         <%= form.label :enabled do %>
           <%= t('group.enabled') %>
           <%= form.check_box :enabled,
-            disabled: (group == Group.default || !admin?),
+            disabled: (group == Group.default || !manage?(group)),
             class: 'checkbox ml-2'
           %>
         <% end %>
       <% end %>
 
       <%= form.submit (group.name.blank? ? "#{t('action.create')}!" : t('action.update')),
-        disabled: !admin?,
+        disabled: !manage?(group),
         class: "button #{group.name.blank? ? 'is-primary' : 'is-link'}"
       %>
     </div>

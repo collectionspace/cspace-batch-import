@@ -6,11 +6,11 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin?
+    user.manage?(record)
   end
 
   def update?
-    user.admin?
+    user.manage?(record)
   end
 
   def edit?
@@ -20,13 +20,13 @@ class GroupPolicy < ApplicationPolicy
   def destroy?
     return false if record == Group.default
 
-    user.admin?
+    user.manage?(record)
   end
 
   def permitted_attributes
-    if user.admin? && record == Group.default
+    if user.manage?(record) && record == Group.default
       %i[description domain email]
-    elsif user.admin?
+    elsif user.manage?(record)
       %i[name description domain email enabled]
     else
       []
