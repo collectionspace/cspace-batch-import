@@ -1,0 +1,9 @@
+<%= render partial: 'shared/icon',
+    locals: { classes: 'is-small is-left', icon: icon }
+%>
+<%= user.email %>
+<% if current_user.is?(user) %>
+  <%= render partial: 'shared/icon',
+      locals: { classes: 'is-small is-right', icon: 'user-circle' }
+  %>
+<% end %>
