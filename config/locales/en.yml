@@ -36,6 +36,9 @@ en:
     create: Create
     submit: Submit
     update: Update
+  demo:
+    title: This is a demo deployment!
+    message: "You can login as: <strong>admin@collectionspace.org</strong> / <strong>%{password}</strong>"
   devise:
     failure:
       inactive: Your account is not activated

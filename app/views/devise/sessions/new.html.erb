@@ -45,5 +45,13 @@
     <% end %>
   </div>
   <div class="column">
+    <% if Rails.env.development? %>
+      <article class="message is-warning">
+        <div class="message-header"><p><%= t('demo.title') %></p></div>
+        <div class="message-body">
+          <%= raw t('demo.message', password: 'password') %>
+        </div>
+      </article>
+    <% end %>
   </div>
 </div>
