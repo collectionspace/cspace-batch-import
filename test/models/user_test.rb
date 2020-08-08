@@ -9,7 +9,6 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should have the default superuser' do
     assert User.superuser_created?
-    assert_equal User.superuser.email, User.superuser_email
   end
 
   test 'should identify an admin user as admin' do

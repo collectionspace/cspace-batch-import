@@ -34,12 +34,14 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
 
       t.boolean :active, null: false, default: true
       t.boolean :enabled, null: false, default: false
+      t.boolean :superuser
       t.references :group, null: false, foreign_key: true
       t.references :role, null: false, foreign_key: true
 
       t.timestamps null: false
     end
 
+    add_index :users, :superuser, unique: true
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
     # add_index :users, :confirmation_token,   unique: true

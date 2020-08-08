@@ -10,7 +10,7 @@ class User < ApplicationRecord
   belongs_to :role
   after_initialize :setup, if: :new_record?
   before_save :reset_admin_group
-  scope :superuser, -> { where(email: superuser_email).first }
+  scope :superuser, -> { where(superuser: true).first }
 
   def active_for_authentication?
     super && active?
@@ -63,13 +63,7 @@ class User < ApplicationRecord
   end
 
   def self.superuser_created?
-    User.where(
-      email: superuser_email
-    ).exists?
-  end
-
-  def self.superuser_email
-    Rails.configuration.superuser_email
+    User.superuser
   end
 
   private

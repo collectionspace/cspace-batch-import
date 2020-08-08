@@ -1,4 +1,5 @@
 superuser:
+  superuser: true
   email: superuser@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true

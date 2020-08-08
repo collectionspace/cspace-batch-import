@@ -4,7 +4,7 @@ class CreateGroups < ActiveRecord::Migration[6.0]
   def change
     create_table :groups do |t|
       t.string :name, null: false, unique: true
-      t.boolean :default, null: false, default: false
+      t.boolean :default
       t.string :description
       t.string :domain
       t.string :email
@@ -14,5 +14,6 @@ class CreateGroups < ActiveRecord::Migration[6.0]
     end
 
     add_index :groups, :name, unique: true
+    add_index :groups, :default, unique: true
   end
 end

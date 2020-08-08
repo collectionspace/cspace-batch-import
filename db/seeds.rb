@@ -8,7 +8,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Group.find_or_create_by!(name: Rails.configuration.default_group) do |group|
+Group.find_or_create_by!(default: true) do |group|
+  group.name = Rails.configuration.default_group
   group.default = true
   group.description = 'Default group.'
 end
@@ -17,7 +18,8 @@ Role.find_or_create_by!(name: 'Admin')
 Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
-User.find_or_create_by!(email: Rails.configuration.superuser_email) do |user|
+User.find_or_create_by!(superuser: true) do |user|
+  user.email = Rails.configuration.superuser_email
   user.enabled = true
   user.password = Rails.configuration.superuser_password
   user.password_confirmation = Rails.configuration.superuser_password
