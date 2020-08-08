@@ -4,6 +4,7 @@ class CreateGroups < ActiveRecord::Migration[6.0]
   def change
     create_table :groups do |t|
       t.string :name, null: false, unique: true
+      t.boolean :default, null: false, default: false
       t.string :description
       t.string :domain
       t.string :email

@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name", null: false, unique: true
+    t.boolean "default", default: false, null: false
     t.string "description"
     t.string "domain"
     t.string "email"

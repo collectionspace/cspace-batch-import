@@ -1,4 +1,5 @@
 default:
+  default: true
   name: Default
   description: Default group.
   domain: ''

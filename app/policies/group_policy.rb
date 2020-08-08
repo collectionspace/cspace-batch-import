@@ -18,13 +18,13 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return false if record == Group.default
+    return false if record.default?
 
     user.manage?(record)
   end
 
   def permitted_attributes
-    if user.manage?(record) && record == Group.default
+    if user.manage?(record) && record.default?
       %i[description domain email]
     elsif user.manage?(record)
       %i[name description domain email enabled]

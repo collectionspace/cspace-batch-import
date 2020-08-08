@@ -6,7 +6,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    return false if record == User.superuser && !user.is?(record)
+    return false if record.superuser? && !user.superuser?
 
     user.manage?(record)
   end
@@ -16,13 +16,13 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return false if record == User.superuser
+    return false if record.superuser?
 
     user.manage?(record) && !user.is?(record)
   end
 
   def impersonate?
-    return false if record == User.superuser
+    return false if record.superuser?
 
     user.manage?(record) && !user.is?(record)
   end

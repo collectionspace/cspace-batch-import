@@ -3,7 +3,7 @@
     <div class="field-body">
       <%= content_tag :div, class: 'field' do %>
         <%= form.text_field :name,
-          disabled: (group == Group.default || group.disabled? || !manage?(group)),
+          disabled: group.disabled? || !manage?(group),
           class: 'input',
           placeholder: t('group.name'),
           autofocus: (group.name.blank? ? true : false)
@@ -33,7 +33,7 @@
         <%= form.label :enabled do %>
           <%= t('group.enabled') %>
           <%= form.check_box :enabled,
-            disabled: (group == Group.default || !manage?(group)),
+            disabled: (group.default? || !manage?(group)),
             class: 'checkbox ml-2'
           %>
         <% end %>

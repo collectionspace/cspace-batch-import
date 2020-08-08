@@ -58,6 +58,10 @@ class User < ApplicationRecord
     self.enabled ||= self.role == Role.manager
   end
 
+  def superuser?
+    is?(User.superuser)
+  end
+
   def self.superuser_created?
     User.where(
       email: superuser_email

@@ -9,6 +9,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Group.find_or_create_by!(name: Rails.configuration.default_group) do |group|
+  group.default = true
   group.description = 'Default group.'
 end
 
@@ -24,24 +25,25 @@ User.find_or_create_by!(email: Rails.configuration.superuser_email) do |user|
 end
 
 if ENV.fetch('RAILS_ENV', 'development') == 'development'
-  groups = [
-    { name: 'Fish', domain: 'fish.net', enabled: false },
-    { name: 'Fruit', domain: 'fruit.com' },
-    { name: 'Veg', domain: 'veg.edu' }
-  ]
-  groups.each do |food|
-    Group.find_or_create_by!(name: food[:name]) do |group|
-      group.description = "#{food[:name]} group."
-      group.domain = food[:domain]
-      group.enabled = food[:enabled] if food[:enabled]
-    end
-  end
-
   User.find_or_create_by!(email: 'admin@collectionspace.org') do |user|
     user.enabled = true
     user.password = Rails.configuration.superuser_password
     user.password_confirmation = Rails.configuration.superuser_password
     user.role = Role.admin
+  end
+
+  groups = [
+    { name: 'Fish', domain: 'fish.net', email: 'support@fish.net', enabled: false },
+    { name: 'Fruit', domain: 'fruit.com', email: 'support@fruit.com' },
+    { name: 'Veg', domain: 'veg.edu', email: 'support@veg.edu' }
+  ]
+  groups.each do |food|
+    Group.find_or_create_by!(name: food[:name]) do |group|
+      group.description = "#{food[:name]} group."
+      group.domain = food[:domain]
+      group.email = food[:email]
+      group.enabled = food.fetch(:enabled, true)
+    end
   end
 
   users = [
