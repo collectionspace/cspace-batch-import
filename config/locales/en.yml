@@ -34,6 +34,8 @@ en:
     cancel: Return
     confirm_delete: Are you sure?
     create: Create
+    delete: Delete
+    disabled: Disabled
     submit: Submit
     update: Update
   demo:

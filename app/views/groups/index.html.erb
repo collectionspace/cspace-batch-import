@@ -1,8 +1,10 @@
-<h1 class="title"><%= t('group.title') %></h1>
+<h1 class="title is-spaced"><%= t('group.title') %></h1>
 
+<h2 class="subtitle is-5"><%= fa_icon('plus') %> Add a new group</h2>
 <%= render 'form', group: @group %>
 
+<h2 class="subtitle is-5"><%= fa_icon('pencil') %> Edit existing groups</h2>
 <% policy_scope(@groups).each do |group| %>
-  <%= content_tag :div, class: 'level'do ; end %>
   <%= render 'form', group: group %>
+  <%= content_tag :div, class: 'level'do ; end %>
 <% end %>
