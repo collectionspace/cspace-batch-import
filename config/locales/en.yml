@@ -45,16 +45,17 @@ en:
     failure:
       inactive: Your account is not activated
   group:
+    created: Group was successfully created
     description: Description
     domain: Email domain
     email: Support email
     enabled: Enabled
+    inactive: Group is inactive
     name: Name
     title: Groups
     tooltip:
       email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
-    updated_error: Group was not updated
   navigation:
     back: Back
     become: Become

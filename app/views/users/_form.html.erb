@@ -38,6 +38,11 @@
         <%= form.label t('user.enabled'), class: 'checkbox' do %>
           <%= content_tag :span, class: 'mr-1' do t('user.enabled') ; end %>
           <%= form.check_box :enabled, disabled: current_user.is?(user) %>
+          <% if user.group.disabled? %>
+            <%= content_tag :span, class: 'has-text-danger is-italic ml-1' do %>
+              (<%= t('group.inactive') %>)
+            <% end %>
+          <% end %>
         <% end %>
       </div>
 

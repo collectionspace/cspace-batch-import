@@ -10,7 +10,16 @@ class GroupsController < ApplicationController
   end
 
   def create
-    redirect_back fallback_location: root_path
+    respond_to do |format|
+      @group = Group.new
+      if @group.update_attributes(group_params)
+        format.html { redirect_to groups_path, notice: t('group.created') }
+      else
+        format.html {
+          redirect_to groups_path, alert: error_messages(@group.errors)
+        }
+      end
+    end
   end
 
   def update
@@ -18,7 +27,9 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.updated') }
       else
-        redirect_back fallback_location: root_path, notice: t('group.updated_error')
+        format.html {
+          redirect_to groups_path, alert: error_messages(@group.errors)
+        }
       end
     end
   end

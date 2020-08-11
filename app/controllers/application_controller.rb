@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  def error_messages(errors)
+    errors.full_messages.map { |msg| msg }.join
+  end
+
   private
 
   def user_not_authorized

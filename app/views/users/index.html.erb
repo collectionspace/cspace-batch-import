@@ -15,7 +15,7 @@
 
   <tbody>
     <% policy_scope(@users).each do |user| %>
-      <tr>
+      <tr id="<%= dom_id(user) %>">
         <td class='pt-3'>
           <% if manage?(user) && !user.superuser? %>
             <%= link_to edit_user_path(user) do %>
