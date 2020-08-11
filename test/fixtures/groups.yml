@@ -1,5 +1,5 @@
 default:
-  default: true
+  supergroup: true
   name: Default
   description: Default group.
   domain: ''

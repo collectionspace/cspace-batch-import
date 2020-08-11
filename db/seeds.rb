@@ -8,9 +8,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Group.find_or_create_by!(default: true) do |group|
-  group.name = Rails.configuration.default_group
-  group.default = true
+Group.find_or_create_by!(supergroup: true) do |group|
+  group.name = 'Default'
+  group.supergroup = true
   group.description = 'Default group.'
 end
 

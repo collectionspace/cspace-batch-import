@@ -10,6 +10,7 @@ class User < ApplicationRecord
   belongs_to :role
   after_initialize :setup, if: :new_record?
   before_save :reset_admin_group
+  validates :superuser, uniqueness: true, if: -> { superuser }
   scope :superuser, -> { where(superuser: true).first }
 
   def active_for_authentication?

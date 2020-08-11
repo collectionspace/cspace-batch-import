@@ -16,9 +16,6 @@ module CspaceBatchImport
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    config.default_group = ENV.fetch(
-      'CSPACE_BATCH_IMPORT_DEFAULT_GROUP', 'Default'
-    )
     config.superuser_email = ENV.fetch(
       'CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org'
     )

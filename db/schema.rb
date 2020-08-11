@@ -17,15 +17,15 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
 
   create_table "groups", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "default"
     t.string "description"
     t.string "domain"
     t.string "email"
     t.boolean "enabled", default: true, null: false
+    t.boolean "supergroup", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["default"], name: "index_groups_on_default", unique: true
     t.index ["name"], name: "index_groups_on_name", unique: true
+    t.index ["supergroup"], name: "index_groups_on_supergroup", unique: true, where: "(supergroup IS TRUE)"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.datetime "remember_created_at"
     t.boolean "active", default: true, null: false
     t.boolean "enabled", default: false, null: false
-    t.boolean "superuser"
+    t.boolean "superuser", default: false, null: false
     t.bigint "group_id", null: false
     t.bigint "role_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.index ["group_id"], name: "index_users_on_group_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_users_on_role_id"
-    t.index ["superuser"], name: "index_users_on_superuser", unique: true
+    t.index ["superuser"], name: "index_users_on_superuser", unique: true, where: "(superuser IS TRUE)"
   end
 
   add_foreign_key "users", "groups"
