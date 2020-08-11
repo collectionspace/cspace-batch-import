@@ -22,7 +22,8 @@
         <%= form.text_field :email,
           disabled: group.disabled? || !manage?(group),
           class: 'input',
-          placeholder: t('group.email')
+          placeholder: t('group.email'),
+          data: { 'tooltip': t('group.tooltip.email') }
         %>
         <%= render partial: 'shared/icon',
             locals: { classes: 'is-small is-left', icon: 'envelope' }

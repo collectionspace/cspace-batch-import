@@ -51,6 +51,8 @@ en:
     enabled: Enabled
     name: Name
     title: Groups
+    tooltip:
+      email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
     updated_error: Group was not updated
   navigation:
