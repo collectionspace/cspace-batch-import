@@ -12,7 +12,7 @@ class GroupsController < ApplicationController
   def create
     respond_to do |format|
       @group = Group.new
-      if @group.update_attributes(group_params)
+      if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.created') }
       else
         format.html {

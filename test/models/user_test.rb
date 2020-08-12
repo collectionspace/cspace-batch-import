@@ -11,45 +11,53 @@ class UserTest < ActiveSupport::TestCase
     assert User.superuser_created?
   end
 
+  test 'should identify the superuser' do
+    assert users(:superuser).superuser?
+  end
+
+  test 'there can be only 1! (superuser)' do
+    user = User.new(
+      superuser: true,
+      email: 'chris.lambert@highlander.net',
+      password: @password,
+      password_confirmation: @password,
+      group: groups(:default)
+    )
+    assert_not user.valid?
+  end
+
   test 'should identify an admin user as admin' do
-    user = users(:admin)
-    assert user.admin?
+    assert users(:admin).admin?
   end
 
   test 'should identify a manager user as manager' do
-    user = users(:manager)
-    assert user.manager?
+    assert users(:manager).manager?
   end
 
   test 'should identify a member user as member' do
-    user = users(:minion)
-    assert user.member?
+    assert users(:minion).member?
   end
 
   test 'can lookup a user role' do
-    user = users(:minion)
-    assert user.role?('Member')
+    assert users(:minion).role?('Member')
   end
 
   test 'can identify a user as self' do
-    user = users(:minion)
-    assert user.is?(user)
+    assert users(:minion).is?(users(:minion))
   end
 
   test 'does not identify another user as self' do
-    user = users(:minion)
-    other = users(:outcast)
-    assert_not user.is?(other)
+    assert_not users(:minion).is?(users(:outcast))
   end
 
   test 'active users should be able to authenticate' do
-    user = users(:minion)
-    assert user.active_for_authentication?
+    assert users(:minion).active?
+    assert users(:minion).active_for_authentication?
   end
 
   test 'inactive users should not be able to authenticate' do
-    user = users(:outcast)
-    assert_not user.active_for_authentication?
+    assert_not users(:outcast).active?
+    assert_not users(:outcast).active_for_authentication?
   end
 
   test 'a new user is disabled by default' do
@@ -58,6 +66,7 @@ class UserTest < ActiveSupport::TestCase
       password: @password,
       password_confirmation: @password
     )
+    assert user.disabled?
     assert_not user.enabled?
   end
 

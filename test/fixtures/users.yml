@@ -35,10 +35,35 @@ minion:
   enabled: true
   group: default
   role: member
+disabled:
+  email: disabled@collectionspace.org
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  active: true
+  enabled: false
+  group: default
+  role: member
 outcast:
   email: outcast@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   active: false
   enabled: false
   group: default
+  role: member
+fishmonger:
+  email: manager@fish.net
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: true
+  group: fish
+  role: manager
+salmon:
+  email: salmon@fish.net
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: true
+  group: fish
+  role: member
+tuna:
+  email: tuna@fish.net
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: false
+  group: fish
   role: member

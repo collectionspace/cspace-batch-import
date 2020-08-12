@@ -11,10 +11,12 @@ class SitesControllerTest < ActionDispatch::IntegrationTest
     sign_out :user
     get root_path
     assert_response :redirect
+    follow_redirect!
+    assert_select 'p.flash', 'You need to sign in or sign up before continuing.'
   end
 
-  test 'can get users' do
-    get users_path
+  test 'can get the home page' do
+    get root_path
     assert_response :success
   end
 end

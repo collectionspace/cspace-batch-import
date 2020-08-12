@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def manage?(record)
-    role.manage?(self, record)
+    "Role::#{role.name}".constantize.new(self).manage?(record)
   end
 
   def manager?

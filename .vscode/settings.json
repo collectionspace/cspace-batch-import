@@ -1,3 +1,5 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "rubyTestExplorer.minitestCommand": "PARALLEL_WORKERS=1 ./bin/rake",
+    "rubyTestExplorer.testFramework": "minitest"
 }

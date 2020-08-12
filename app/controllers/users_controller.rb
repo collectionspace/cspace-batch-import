@@ -12,7 +12,10 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      authorized_params = user_params
+      check_for_illegal_promote_to_admin(authorized_params)
+
+      if @user.update(authorized_params)
         reset_user(@user)
         format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
       else
@@ -41,6 +44,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def check_for_illegal_promote_to_admin(authorized_params)
+    if !current_user.admin? &&
+       authorized_params.key?(:role_id) &&
+       Role.find(authorized_params[:role_id]).name == Role::TYPE[:admin]
+      raise Pundit::NotAuthorizedError
+    end
+  end
 
   def reset_user(user)
     current_user.is?(user) ? bypass_sign_in(user) : bypass_sign_in(current_user)

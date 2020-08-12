@@ -7,7 +7,7 @@ fish:
   name: Fish
   description: Fish group.
   domain: fish.net
-  enabled: false
+  enabled: true
 fruit:
   name: Fruit
   description: Fruit group.
@@ -16,3 +16,4 @@ veg:
   name: Veg
   description: Veg group.
   domain: veg.edu
+  enabled: false
