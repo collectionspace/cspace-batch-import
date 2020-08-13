@@ -57,7 +57,7 @@ en:
       email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
   mapper:
-    connections: Connections
+    batches: Batches
     profile: Profile
     title: Mappers
     status: Status

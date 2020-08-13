@@ -29,13 +29,16 @@ ActiveRecord::Schema.define(version: 2020_08_13_175549) do
   end
 
   create_table "mappers", force: :cascade do |t|
+    t.string "title", null: false
     t.string "profile", null: false
     t.string "type", null: false
+    t.string "version", null: false
     t.string "url", null: false
     t.boolean "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["profile", "type"], name: "index_mappers_on_profile_and_type", unique: true
+    t.index ["profile", "version", "type"], name: "index_mappers_on_profile_and_version_and_type", unique: true
+    t.index ["title"], name: "index_mappers_on_title", unique: true
   end
 
   create_table "roles", force: :cascade do |t|

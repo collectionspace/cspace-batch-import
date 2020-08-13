@@ -11,8 +11,9 @@
       <tr>
         <th><%= t 'mapper.profile' %></th>
         <th><%= t 'mapper.type' %></th>
+        <th><%= t 'mapper.version' %></th>
         <th><%= t 'mapper.status' %></th>
-        <th class="has-text-centered"><%= t 'mapper.connections' %></th>
+        <th class="has-text-centered"><%= t 'mapper.batches' %></th>
         <th colspan="1"></th>
       </tr>
     </thead>
@@ -22,6 +23,7 @@
         <tr id="<%= dom_id(mapper) %>">
           <td class='pt-3'><%= mapper.profile %></td>
           <td class='pt-3'><%= mapper.type %></td>
+          <td class='pt-3'><%= mapper.version %></td>
           <td class='pt-3'>
             <% if mapper.found? %>
               <%= render partial: 'shared/icon',
