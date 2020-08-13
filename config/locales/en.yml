@@ -47,10 +47,10 @@ en:
   group:
     created: Group was successfully created
     description: Description
+    disabled: Group is disabled
     domain: Email domain
     email: Support email
     enabled: Enabled
-    inactive: Group is inactive
     name: Name
     title: Groups
     tooltip:
