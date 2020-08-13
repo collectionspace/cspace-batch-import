@@ -9,6 +9,10 @@
         <%= fa_icon "sitemap", class: 'mr-2' %>
         <%= t('navigation.groups') %>
       <% end %>
+      <%= link_to '#', class: 'navbar-item' do %>
+        <%= fa_icon "map", class: 'mr-2' %>
+        <%= t('navigation.mappers') %>
+      <% end %>
       <%= link_to users_path, class: 'navbar-item' do %>
         <%= fa_icon "users", class: 'mr-2' %>
         <%= t('navigation.users') %>
