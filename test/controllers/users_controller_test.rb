@@ -32,27 +32,25 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test "an admin can update a member's group" do
     sign_in users(:admin)
     user = users(:manager)
-    assert_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { group_id: groups(:fish).id } },
-      :group_id,
-      groups(:fish).id,
       edit_user_path(user)
     )
+    assert_equal user.group_id, groups(:fish).id
   end
 
   test 'an admin can promote a user to be admin' do
     sign_in users(:admin)
     user = users(:manager)
-    assert_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { role_id: roles(:admin).id } },
-      :role_id,
-      roles(:admin).id,
       edit_user_path(user)
     )
+    assert_equal user.role_id, roles(:admin).id
   end
 
   test 'a manager can browse users from the same group' do
@@ -90,53 +88,49 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   test 'a manager can update a member' do
     sign_in users(:manager)
     user = users(:minion)
-    assert_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { enabled: false } },
-      :enabled,
-      false,
       edit_user_path(user)
     )
+    assert_equal user.enabled, false
   end
 
   test "a manager cannot update a member's group" do
     sign_in users(:manager)
     user = users(:minion)
-    refute_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { group_id: groups(:fish).id } },
-      :group_id,
-      groups(:fish).id,
       edit_user_path(user)
     )
+    assert_not_equal user.group_id, groups(:fish).id
   end
 
   test 'a manager can promote a user to be manager' do
     sign_in users(:manager)
     user = users(:minion)
-    assert_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { role_id: roles(:manager).id } },
-      :role_id,
-      roles(:manager).id,
       edit_user_path(user)
     )
+    assert_equal user.role_id, roles(:manager).id
   end
 
   test 'a manager cannot promote a user to be admin' do
     sign_in users(:manager)
     user = users(:minion)
-    refute_can_update(
+    run_update(
       user_url(user),
       user,
       { user: { role_id: roles(:admin).id } },
-      :role_id,
-      roles(:admin).id,
       root_path
     )
+    assert_not_equal user.role_id, roles(:admin).id
   end
 
   test 'a member can browse users' do

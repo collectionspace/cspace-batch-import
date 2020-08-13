@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2020_08_13_175549) do
     t.string "domain"
     t.string "email"
     t.boolean "enabled", default: true, null: false
+    t.string "profile"
     t.boolean "supergroup", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

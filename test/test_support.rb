@@ -35,17 +35,9 @@ module Integration
     # EDIT
 
     # UPDATE
-    def assert_can_update(path, record, params, field, value, redirected_path)
+    def run_update(path, record, params, redirected_path)
       put path, params: params
       record.reload
-      assert_equal value, record.send(field)
-      assert_redirected_to redirected_path
-    end
-
-    def refute_can_update(path, record, params, field, value, redirected_path)
-      put path, params: params
-      record.reload
-      assert_not_equal value, record.send(field)
       assert_redirected_to redirected_path
     end
   end

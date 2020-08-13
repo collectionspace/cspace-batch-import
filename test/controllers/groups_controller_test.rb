@@ -49,27 +49,38 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   test 'an admin can update a group' do
     sign_in users(:admin)
     group = groups(:fish)
-    assert_can_update(
+    run_update(
       group_url(group),
       group,
-      { group: { name: 'Fish updated!' } },
-      :name,
-      'Fish updated!',
+      { group: { name: 'Fish updated!', profile: 'anthro' } },
       groups_path
     )
+    assert_equal group.name, 'Fish updated!'
+    assert_equal group.profile, 'anthro'
   end
 
   test 'an admin cannot update a group with invalid attributes' do
     sign_in users(:admin)
     group = groups(:fish)
-    refute_can_update(
+    run_update(
       group_url(group),
       group,
       { group: { name: nil } },
-      :name,
-      nil,
       groups_path
     )
+    assert_not_equal group.name, nil
+  end
+
+  test 'an admin cannot set the profile for the default group' do
+    sign_in users(:admin)
+    group = groups(:default)
+    run_update(
+      group_url(group),
+      group,
+      { group: { profile: 'core' } },
+      groups_path
+    )
+    assert_nil group.profile
   end
 
   # DELETE

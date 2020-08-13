@@ -8,6 +8,7 @@ class CreateGroups < ActiveRecord::Migration[6.0]
       t.string :domain
       t.string :email
       t.boolean :enabled, null: false, default: true
+      t.string :profile
       t.boolean :supergroup, null: false, default: false
 
       t.timestamps
