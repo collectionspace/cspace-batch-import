@@ -56,6 +56,14 @@ en:
     tooltip:
       email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
+  mapper:
+    connections: Connections
+    profile: Profile
+    title: Mappers
+    status: Status
+    type: Type
+    url: URL
+    url_link_prefix: "Configuration:"
   navigation:
     back: Back
     become: Become

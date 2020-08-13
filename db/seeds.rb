@@ -26,6 +26,9 @@ User.find_or_create_by!(superuser: true) do |user|
   user.role = Role.admin
 end
 
+# Setup initial set of mappers (this may change)
+Mapper.refresh
+
 if ENV.fetch('RAILS_ENV', 'development') == 'development'
   User.find_or_create_by!(email: 'admin@collectionspace.org') do |user|
     user.enabled = true

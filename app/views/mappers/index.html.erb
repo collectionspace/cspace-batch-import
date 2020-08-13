@@ -1,0 +1,48 @@
+<h1 class="title"><%= t('mapper.title') %></h1>
+
+<%= content_tag :p do %>
+  <%= t('mapper.url_link_prefix') %>
+  <%= link_to Rails.configuration.mappers_url, Rails.configuration.mappers_url %>
+<% end %>
+
+<%= content_tag :div, class: 'table-container' do %>
+  <table class="table is-fullwidth is-hoverable mt-3">
+    <thead>
+      <tr>
+        <th><%= t 'mapper.profile' %></th>
+        <th><%= t 'mapper.type' %></th>
+        <th><%= t 'mapper.status' %></th>
+        <th class="has-text-centered"><%= t 'mapper.connections' %></th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% policy_scope(@mappers).each do |mapper| %>
+        <tr id="<%= dom_id(mapper) %>">
+          <td class='pt-3'><%= mapper.profile %></td>
+          <td class='pt-3'><%= mapper.type %></td>
+          <td class='pt-3'>
+            <% if mapper.found? %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: 'has-text-success', icon: 'check' }
+              %>
+            <% else %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: 'has-text-danger', icon: 'warning' }
+              %>
+            <% end %>
+          </td>
+          <td class='has-text-centered pt-3'>0</td>
+          <td class='pt-3'>
+            <%= link_to mapper.url do %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: '', icon: 'download' }
+              %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

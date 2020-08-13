@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_18_223726) do
+ActiveRecord::Schema.define(version: 2020_08_13_175549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2020_07_18_223726) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_groups_on_name", unique: true
     t.index ["supergroup"], name: "index_groups_on_supergroup", unique: true, where: "(supergroup IS TRUE)"
+  end
+
+  create_table "mappers", force: :cascade do |t|
+    t.string "profile", null: false
+    t.string "type", null: false
+    t.string "url", null: false
+    t.boolean "status", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["profile", "type"], name: "index_mappers_on_profile_and_type", unique: true
   end
 
   create_table "roles", force: :cascade do |t|

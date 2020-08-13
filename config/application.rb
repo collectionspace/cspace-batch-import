@@ -16,6 +16,10 @@ module CspaceBatchImport
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.mappers_url = ENV.fetch(
+      'CSPACE_BATCH_IMPORT_MAPPERS_URL', 'https://cs-public-shared-files.s3-us-west-2.amazonaws.com/mappers/mappers.json'
+    )
+
     config.superuser_email = ENV.fetch(
       'CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org'
     )
