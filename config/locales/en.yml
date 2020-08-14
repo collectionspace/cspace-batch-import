@@ -95,6 +95,8 @@ en:
     role: Role
     signup: Sign up
     title: Users
-    unassigned: You are not currently assigned to an active group
+    unassigned: You are not currently enabled to work in this group
+    unassigned_group: Your group is disabled, you cannot perform any actions until group access is restored
+    unassigned_user: "You are not currently enabled to work in this group, for access contact: <a href='mailto:%{email}'>%{email}</a>"
     unauthorized: You are not authorized to perform this action
     updated: User was successfully updated

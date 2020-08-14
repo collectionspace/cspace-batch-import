@@ -28,7 +28,7 @@
         <% if user_signed_in? && !allowed_access? %>
           <article class="message is-dark">
             <div class="message-body">
-              <%= t('user.unassigned') %>
+              <%= unassigned_message %>
             </div>
           </article>
         <% else %>

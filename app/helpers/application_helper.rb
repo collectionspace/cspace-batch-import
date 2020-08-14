@@ -20,4 +20,14 @@ module ApplicationHelper
   def manage?(record)
     current_user.manage?(record)
   end
+
+  def unassigned_message
+    if current_user.group.disabled?
+      raw t('user.unassigned_group')
+    elsif current_user.group.email
+      raw t('user.unassigned_user', email: current_user.group.email)
+    else
+      t('user.unassigned')
+    end
+  end
 end
