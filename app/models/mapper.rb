@@ -8,8 +8,12 @@ class Mapper < ApplicationRecord
   validates :type, presence: true
   validates :version, presence: true
   validates :url, presence: true, uniqueness: true
-  # TODO: scope mapper_options, ->(connection) { where(profile: connection.profile) }
-  scope :mapper_profiles, -> { order(:profile).pluck(:profile).uniq }
+  scope :mapper_options, ->(connection) { where('title LIKE ?', "#{connection.profile}%") }
+  scope :mapper_profiles, lambda {
+    order('profile asc, version asc').pluck(:profile, :version).map do |m|
+      m.join('-')
+    end.uniq
+  }
 
   def download
     config.purge
@@ -56,6 +60,6 @@ class Mapper < ApplicationRecord
   private
 
   def set_title
-    self.title = "#{profile}-#{type}-#{version}"
+    self.title = "#{profile}-#{version}-#{type}"
   end
 end

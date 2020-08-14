@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 anthro_collectionobject:
-  title: anthro-collectionobject-4_0_0
+  title: anthro-4_0_0-collectionobject
   profile: anthro
   type: collectionobject
   version: "4_0_0"
@@ -9,7 +9,7 @@ anthro_collectionobject:
   status: false
 
 core_collectionobject:
-  title: core-collectionobject-6_0_0
+  title: core-6_0_0-collectionobject
   profile: core
   type: collectionobject
   version: "6_0_0"
