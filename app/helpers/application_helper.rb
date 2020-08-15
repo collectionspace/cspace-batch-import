@@ -13,6 +13,15 @@ module ApplicationHelper
     current_user.admin? && !current_user.is?(user) && !user.admin?
   end
 
+  def can_toogle_status?(record)
+    if record.respond_to?(:role)
+      return false if record.superuser?
+      return false if current_user.is?(record)
+    end
+
+    manage?(record)
+  end
+
   def impersonating_user?
     current_user != true_user
   end

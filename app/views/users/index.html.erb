@@ -14,40 +14,6 @@
   </thead>
 
   <tbody>
-    <% policy_scope(@users).each do |user| %>
-      <tr id="<%= dom_id(user) %>">
-        <td class='pt-3'>
-          <% if manage?(user) && !user.superuser? %>
-            <%= link_to edit_user_path(user) do %>
-              <%= render partial: 'user', locals: { icon: 'pencil', user: user } %>
-            <% end %>
-          <% else %>
-            <%= render partial: 'user', locals: { icon: 'user', user: user } %>
-          <% end %>
-        </td>
-        <td class='pt-3'><%= user.group.name %></td>
-        <td class='pt-3'><%= user.role.name %></td>
-        <td class='pt-3'>
-          <% if user.enabled? %>
-            <%= render partial: 'shared/icon',
-                locals: { classes: 'has-text-success', icon: 'check' }
-            %>
-          <% else %>
-            <%= render partial: 'shared/icon',
-                locals: { classes: 'has-text-danger', icon: 'ban' }
-            %>
-          <% end %>
-        </td>
-        <% if admin? %>
-          <td>
-            <%=
-              link_to t('navigation.delete'), user,
-              method: :delete, data: { confirm: t('action.confirm_delete') },
-              class: 'button is-danger is-outlined is-small'
-            %>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
+    <%= render partial: 'row', collection: policy_scope(@users), as: :user %>
   </tbody>
 </table>

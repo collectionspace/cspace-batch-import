@@ -1,0 +1,37 @@
+<tr id="<%= dom_id(user) %>" data-user-id="<%= user.id %>">
+  <td class='pt-3'>
+    <% if manage?(user) && !user.superuser? %>
+      <%= link_to edit_user_path(user) do %>
+        <%= render partial: 'user', locals: { icon: 'pencil', user: user } %>
+      <% end %>
+    <% else %>
+      <%= render partial: 'user', locals: { icon: 'user', user: user } %>
+    <% end %>
+  </td>
+  <td class='pt-3'><%= user.group.name %></td>
+  <td class='pt-3'><%= user.role.name %></td>
+  <td class='pt-3'>
+    <% if user.enabled? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'ban' }
+      %>
+    <% end %>
+    <% if can_toogle_status?(user) %>
+      <%= check_box_tag :enabled, user.enabled?, user.enabled?,
+        { data: { 'reflex': 'click->User#update', 'reflex-dataset': 'combined' } } %>
+    <% end %>
+  </td>
+  <% if admin? %>
+    <td>
+      <%=
+        link_to t('navigation.delete'), user,
+        method: :delete, data: { confirm: t('action.confirm_delete') },
+        class: 'button is-danger is-outlined is-small'
+      %>
+    </td>
+  <% end %>
+</tr>
