@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
     errors.full_messages.map { |msg| msg }.join
   end
 
+  def highlight(value)
+    value.yield_self { |s| '<span class="highlighted">%s</span>' % s }
+  end
+
   private
 
   def user_not_authorized

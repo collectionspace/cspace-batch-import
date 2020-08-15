@@ -21,12 +21,12 @@ export default class extends Controller {
         debounce: 200,
         templates: {
           suggestion: function (suggestion) {
-            return autocomplete.escapeHighlightedString(suggestion.value);
+            return autocomplete.escapeHighlightedString(suggestion.value, '<span class="highlighted">', '</span>');
           },
         },
       },
     ]).on("autocomplete:selected", (event, suggestion, dataset, context) => {
-      this.ac.autocomplete.setVal(suggestion.value);
+      this.ac.autocomplete.setVal(suggestion.value.replace(/<[^>]+>/g, ''));
       this.fieldTarget.classList.remove('is-danger');
     }).on("autocomplete:empty", (event) => {
       this.fieldTarget.classList.add('is-danger');
