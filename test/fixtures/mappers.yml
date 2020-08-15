@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-anthro_collectionobject:
+anthro_collectionobject_4_0:
   title: anthro-4_0_0-collectionobject
   profile: anthro
   type: collectionobject
@@ -8,7 +8,15 @@ anthro_collectionobject:
   url: https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/anthro_4_0_0-collectionobject.json
   status: false
 
-core_collectionobject:
+anthro_collectionobject_4_1:
+  title: anthro-4_1_0-collectionobject
+  profile: anthro
+  type: collectionobject
+  version: "4_1_0"
+  url: https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/anthro_4_1_0-collectionobject.json
+  status: true
+
+core_collectionobject_6_0:
   title: core-6_0_0-collectionobject
   profile: core
   type: collectionobject

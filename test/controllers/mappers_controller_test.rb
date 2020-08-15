@@ -8,7 +8,10 @@ class MappersControllerTest < ActionDispatch::IntegrationTest
 
   test 'an admin can autocomplete mappers' do
     sign_in users(:admin)
-    assert_can_view('/mappers/autocomplete?query=1')
+    assert_can_view('/mappers/autocomplete?query=anthro')
+    results = JSON.parse(@response.body)
+    assert_not_empty results
+    assert_equal results.count, 2 # TODO: NOT HC
   end
 
   test 'a manager cannot view mappers' do
