@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'sites#home'
   resources :groups, only: %i[index create update]
   resources :mappers, only: %i[index]
+  get '/mappers/autocomplete', to: 'mappers#autocomplete'
   resources :users, except: %i[create new show] do
     post :impersonate, on: :member
     post :stop_impersonating, on: :collection

@@ -5,6 +5,10 @@ class MapperPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def autocomplete?
+    user.admin?
+  end
+
   class Scope < Scope
     def resolve
       scope.all if user.admin?

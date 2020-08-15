@@ -7,10 +7,6 @@ class MapperTest < ActiveSupport::TestCase
     @connection.expect :profile, @profile_version
   end
 
-  test 'scopes the profiles with version correctly' do
-    assert_includes Mapper.mapper_profiles, @profile_version
-  end
-
   test 'scope can match options with profile and version' do
     assert_includes Mapper.mapper_options(@connection), mappers(:core_collectionobject)
   end

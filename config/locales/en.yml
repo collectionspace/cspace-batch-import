@@ -51,6 +51,7 @@ en:
     domain: Email domain
     email: Support email
     enabled: Enabled
+    invalid_profile: is not a valid mapper prefix
     name: Name
     title: Groups
     tooltip:

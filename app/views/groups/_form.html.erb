@@ -30,15 +30,19 @@
         %>
       <% end %>
 
-      <%= content_tag :div, class: 'select' do %>
-        <%= form.select :profile,
-          Mapper.mapper_profiles,
-          { include_blank: true },
-          { disabled: group.default? || group.disabled? || !manage?(group) }
+      <%= content_tag :div, class: 'field',
+          'data-controller': 'autocomplete',
+          'data-autocomplete-url': "mappers/autocomplete" do %>
+        <%= form.text_field :profile,
+          disabled: group.default? || group.disabled? || !manage?(group),
+          class: 'input',
+          placeholder: 'Profile (type to search)',
+          'data-action': 'autocomplete#update',
+          'data-target': 'autocomplete.field'
         %>
       <% end %>
 
-      <%= content_tag :div, class: 'field has-text-centered mt-1' do %>
+      <%= content_tag :div, class: 'field has-text-centered' do %>
         <%= form.label :enabled do %>
           <%= t('group.enabled') %>
           <%= form.check_box :enabled,

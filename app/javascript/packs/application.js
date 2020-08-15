@@ -18,10 +18,12 @@ require("channels")
 
 document.addEventListener('turbolinks:load', () => {
   (document.querySelectorAll('.flash .delete') || []).forEach(($delete) => {
-    $notification = $delete.parentNode;
+    var $notification = $delete.parentNode;
 
     $delete.addEventListener('click', () => {
       $notification.parentNode.removeChild($notification);
     });
   });
 });
+
+import "controllers"

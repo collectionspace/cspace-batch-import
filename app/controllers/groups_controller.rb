@@ -15,9 +15,9 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.created') }
       else
-        format.html {
+        format.html do
           redirect_to groups_path, alert: error_messages(@group.errors)
-        }
+        end
       end
     end
   end
@@ -27,9 +27,9 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.updated') }
       else
-        format.html {
+        format.html do
           redirect_to groups_path, alert: error_messages(@group.errors)
-        }
+        end
       end
     end
   end
