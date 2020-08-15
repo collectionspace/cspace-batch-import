@@ -4,7 +4,4 @@
 <%= render 'form', group: @group %>
 
 <h2 class="subtitle is-5 mt-5"><%= fa_icon('pencil') %> Edit existing groups</h2>
-<% policy_scope(@groups).each do |group| %>
-  <%= render 'form', group: group %>
-  <%= content_tag :div, class: 'level'do ; end %>
-<% end %>
+<%= render partial: 'form', collection: policy_scope(@groups), as: :group %>
