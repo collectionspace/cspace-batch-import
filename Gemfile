@@ -68,3 +68,5 @@ gem 'font-awesome-rails'
 gem 'http'
 gem 'pretender'
 gem 'pundit'
+
+gem "stimulus_reflex", "~> 3.2"

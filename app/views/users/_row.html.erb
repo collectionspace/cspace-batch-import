@@ -21,8 +21,16 @@
       %>
     <% end %>
     <% if can_toogle_status?(user) %>
-      <%= check_box_tag :enabled, user.enabled?, user.enabled?,
-        { data: { 'reflex': 'click->User#update', 'reflex-dataset': 'combined' } } %>
+      <%= check_box_tag nil, nil, user.enabled?,
+        {
+          data: {
+            'reflex': 'click->ApplicationReflex#toggle_status',
+            'reflex-dataset': 'combined',
+            'model': 'user',
+            'id': user.id
+          }
+        }
+      %>
     <% end %>
   </td>
   <% if admin? %>
