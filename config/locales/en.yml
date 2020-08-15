@@ -53,6 +53,8 @@ en:
     enabled: Enabled
     invalid_profile: is not a valid mapper prefix
     name: Name
+    placeholder:
+      profile_version: Profile version (search)
     title: Groups
     tooltip:
       email: This email address will be presented to new users of the group to request access.

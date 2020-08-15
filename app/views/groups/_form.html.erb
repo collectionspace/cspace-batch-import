@@ -36,7 +36,7 @@
         <%= form.text_field :profile,
           disabled: group.default? || group.disabled? || !manage?(group),
           class: 'input',
-          placeholder: 'Profile (type to search)',
+          placeholder: t('group.placeholder.profile_version'),
           'data-action': 'autocomplete#update',
           'data-target': 'autocomplete.field'
         %>
