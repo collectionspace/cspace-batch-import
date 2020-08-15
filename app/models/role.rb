@@ -33,7 +33,7 @@ class Role < ApplicationRecord
   class Manager < Type
     def manage?(record)
       return false if record.nil?
-      return false if record.respond_to?(:role) && record.role == Role.admin
+      return false if record.respond_to?(:role) && record.admin?
 
       return true if user == record
 
