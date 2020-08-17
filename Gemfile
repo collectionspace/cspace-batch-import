@@ -70,3 +70,6 @@ gem 'pretender'
 gem 'pundit'
 
 gem "stimulus_reflex", "~> 3.2"
+
+gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
+gem "hiredis"
