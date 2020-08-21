@@ -19,4 +19,6 @@ class MapperTest < ActiveSupport::TestCase
     refute(mappers(:anthro_collectionobject_4_0).found?)
     assert(mappers(:core_collectionobject_6_0).found?)
   end
+
+  # TODO: test mapper create (via refresh)
 end

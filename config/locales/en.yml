@@ -36,6 +36,8 @@ en:
     create: Create
     delete: Delete
     disabled: Disabled
+    refresh: Refresh
+    reload: Reload
     submit: Submit
     update: Update
   demo:

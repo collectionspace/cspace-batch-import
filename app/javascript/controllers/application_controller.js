@@ -32,7 +32,7 @@ export default class extends Controller {
    */
 
   beforeReflex (element, reflex) {
-    // document.body.classList.add('wait')
+    document.body.classList.add('wait')
   }
 
   reflexSuccess (element, reflex, error) {
@@ -44,6 +44,6 @@ export default class extends Controller {
   }
 
   afterReflex (element, reflex) {
-    // document.body.classList.remove('wait')
+    document.body.classList.remove('wait')
   }
 }

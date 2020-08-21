@@ -23,6 +23,18 @@
       "version": "6_0_0",
       "type": "concept",
       "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/core_6_0_0-concept.json"
+    },
+    {
+      "profile": "fcart",
+      "version": "2_0_0",
+      "type": "collectionobject",
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/fcart_2_0_0-collectionobject.json"
+    },
+    {
+      "profile": "fcart",
+      "version": "2_0_0",
+      "type": "concept",
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/fcart_2_0_0-concept.json"
     }
   ]
 }

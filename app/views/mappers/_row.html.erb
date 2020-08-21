@@ -1,0 +1,37 @@
+<tr id="<%= dom_id(mapper) %>">
+  <td class='pt-3'><%= mapper.profile %></td>
+  <td class='pt-3'><%= mapper.version %></td>
+  <td class='pt-3'><%= mapper.type %></td>
+  <td class='pt-3'>
+    <% if mapper.config.attached? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'check' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'warning' }
+      %>
+    <% end %>
+  </td>
+  <td class="pt-3">
+  <% if true %>
+    <%= render partial: 'shared/icon',
+        locals: { classes: 'has-text-success', icon: 'check' }
+    %>
+  <% else %>
+    <%= render partial: 'shared/icon',
+        locals: { classes: 'has-text-danger', icon: 'ban' }
+    %>
+  <% end %>
+  </td>
+  <td class='pt-3'>0</td>
+  <td class='pt-3'>
+    <% if mapper.config.attached? %>
+      <%= link_to rails_blob_path(mapper.config, disposition: "attachment") do %>
+        <%= render partial: 'shared/icon',
+            locals: { classes: '', icon: 'download' }
+        %>
+      <% end %>
+    <% end %>
+  </td>
+</tr>
