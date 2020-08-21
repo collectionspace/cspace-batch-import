@@ -61,7 +61,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "aws-sdk-s3", require: false
+gem 'aws-sdk-s3', require: false
 gem 'bulma-rails', '~> 0.9.0'
 gem 'devise'
 gem 'font-awesome-rails'
@@ -69,7 +69,7 @@ gem 'http'
 gem 'pretender'
 gem 'pundit'
 
-gem "stimulus_reflex", "~> 3.2"
+gem 'stimulus_reflex', '~> 3.2'
 
-gem "redis", ">= 4.0", :require => ["redis", "redis/connection/hiredis"]
-gem "hiredis"
+gem 'hiredis'
+gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
