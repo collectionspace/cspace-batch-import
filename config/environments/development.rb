@@ -32,9 +32,8 @@ Rails.application.configure do
       'Cache-Control' => "public, max-age=#{2.days.to_i}"
     }
   else
-    config.action_controller.perform_caching = true
-
-    # config.cache_store = :null_store
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
