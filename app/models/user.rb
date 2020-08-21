@@ -74,8 +74,8 @@ class User < ApplicationRecord
   end
 
   def target_group
-    g = Group.where(domain: email.split('@').last)
-    g.exists? ? g.first : Group.default
+    g = Group.matching_domain?(email.split('@').last)
+    g.any? ? g.first : Group.default
   end
 
   def target_role

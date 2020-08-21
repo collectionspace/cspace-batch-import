@@ -77,7 +77,7 @@ class UserTest < ActiveSupport::TestCase
       password: @password,
       password_confirmation: @password
     )
-    assert_equal user.group.name, groups(:default).name
+    assert_equal groups(:default).name, user.group.name
   end
 
   test 'assigns user to a group when email domain matches' do
@@ -86,7 +86,16 @@ class UserTest < ActiveSupport::TestCase
       password: @password,
       password_confirmation: @password
     )
-    assert_equal user.group.name, groups(:veg).name
+    assert_equal groups(:veg).name, user.group.name
+  end
+
+  test 'assigns user to a group when email domain partial matches' do
+    user = User.create(
+      email: 'asparagus@tasty.veg.edu', # partial matches group from fixtures
+      password: @password,
+      password_confirmation: @password
+    )
+    assert_equal groups(:veg).name, user.group.name
   end
 
   # Role assignment

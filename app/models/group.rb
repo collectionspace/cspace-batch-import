@@ -5,6 +5,7 @@ class Group < ApplicationRecord
   validate :profile_must_be_prefix
   validates :name, presence: true, uniqueness: true
   validates :supergroup, uniqueness: true, if: -> { supergroup }
+  validates_uniqueness_of :domain, allow_blank: true
   scope :default, -> { where(supergroup: true).first }
   scope :group_options, ->(user) { user.admin? ? all : where(id: user.group.id) }
 
@@ -22,6 +23,12 @@ class Group < ApplicationRecord
 
   def self.default_created?
     Group.default
+  end
+
+  def self.matching_domain?(domain)
+    return [] if domain.blank?
+
+    Group.all.select { |g| next if g.domain.blank? ; domain.end_with?(g.domain) }
   end
 
   private

@@ -83,6 +83,18 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     assert_nil group.profile
   end
 
+  test 'an admin cannot duplicate a domain for a group' do
+    sign_in users(:admin)
+    group = groups(:fish)
+    run_update(
+      group_url(group),
+      group,
+      { group: { domain: 'veg.edu' } },
+      groups_path
+    )
+    assert_not_equal group.domain, 'veg.edu'
+  end
+
   # DELETE
   # test 'an admin can delete a group' do
   #   sign_in users(:admin)

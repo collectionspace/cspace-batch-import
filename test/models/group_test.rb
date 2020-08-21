@@ -12,6 +12,19 @@ class GroupTest < ActiveSupport::TestCase
     assert_not groups(:fish).default?
   end
 
+  test 'can identify matching groups' do
+    g = Group.matching_domain?('veg.edu')
+    assert_equal groups(:veg).name, g.first.name
+  end
+
+  test 'will return an empty list for blank domains' do
+    assert_equal [], Group.matching_domain?(nil)
+  end
+
+  test 'will return an empty list for unidentified domains' do
+    assert_equal [], Group.matching_domain?('example.com')
+  end
+
   test 'there can be only 1! (default / supergroup)' do
     group = Group.new(supergroup: true, name: 'Highlander')
     assert_not group.valid?
@@ -19,6 +32,11 @@ class GroupTest < ActiveSupport::TestCase
 
   test 'cannot duplicate group names' do
     group = Group.new(name: 'Fish')
+    assert_not group.valid?
+  end
+
+  test 'cannot duplicate group domains' do
+    group = Group.new(name: 'Veggies', domain: 'veg.edu')
     assert_not group.valid?
   end
 
