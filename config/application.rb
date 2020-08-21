@@ -17,14 +17,14 @@ module CspaceBatchImport
     # the framework and any gems in your application.
 
     config.mappers_url = ENV.fetch(
-      'CSPACE_BATCH_IMPORT_MAPPERS_URL', 'https://cs-public-shared-files.s3-us-west-2.amazonaws.com/mappers/mappers.json'
+      'MAPPERS_URL', 'https://cs-public-shared-files.s3-us-west-2.amazonaws.com/mappers/mappers.json'
     )
 
     config.superuser_email = ENV.fetch(
-      'CSPACE_BATCH_IMPORT_SUPERUSER_EMAIL', 'superuser@collectionspace.org'
+      'SUPERUSER_EMAIL', 'superuser@collectionspace.org'
     )
     config.superuser_password = ENV.fetch(
-      'CSPACE_BATCH_IMPORT_SUPERUSER_PASSWORD', 'password'
+      'SUPERUSER_PASSWORD', 'password'
     )
   end
 end
