@@ -30,6 +30,10 @@
         <%= fa_icon "user-circle", class: 'mr-2' %>
         <%= current_user.email %>
       <% end %>
+      <%= link_to '#', method: :get, class: 'navbar-item' do %>
+        <%= fa_icon "inbox", class: 'mr-2' %>
+        <%= 0 %>
+      <% end %>
       <%= link_to destroy_user_session_path, method: :delete, class: 'navbar-item' do %>
         <%= fa_icon "sign-out", class: 'mr-2' %>
         <%= t('user.logout') %>
