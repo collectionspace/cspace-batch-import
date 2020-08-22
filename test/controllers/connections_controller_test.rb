@@ -43,6 +43,6 @@ class ConnectionsControllerTest < ActionDispatch::IntegrationTest
       delete connection_url(@connection)
     end
 
-    assert_redirected_to users_path(users(:superuser))
+    assert_redirected_to edit_user_path(users(:superuser))
   end
 end
