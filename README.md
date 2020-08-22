@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Pre-reqs:
 
-Things you may want to cover:
+- Docker
+  - Postgres
+  - Redis
+- Ruby
+- Yarn
 
-* Ruby version
+To re/start all services:
 
-* System dependencies
+```bash
+./bootstrap.sh # this will blow away any existing databases!
 
-* Configuration
+# to run tests
+./bin/rails t
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# to start the dev server
+./bin/rails s
+```
