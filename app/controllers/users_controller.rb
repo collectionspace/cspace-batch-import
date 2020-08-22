@@ -8,7 +8,9 @@ class UsersController < ApplicationController
     @users = policy_scope(User).includes(:group, :role).order('groups.name asc, users.email asc')
   end
 
-  def edit; end
+  def edit
+    @connections = @user.connections.order(:name)
+  end
 
   def update
     respond_to do |format|

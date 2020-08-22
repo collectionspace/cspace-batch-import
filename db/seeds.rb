@@ -18,12 +18,32 @@ Role.find_or_create_by!(name: 'Admin')
 Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
+connections = [
+  {
+    name: 'core.dev',
+    url: 'https://core.dev.collectionspace.org/cspace-services',
+    username: 'admin@core.collectionspace.org',
+    password: 'Administrator',
+    enabled: true,
+    primary: false
+  },
+  {
+    name: 'fcart.dev',
+    url: 'https://fcart.dev.collectionspace.org/cspace-services',
+    username: 'admin@fcart.collectionspace.org',
+    password: 'Administrator',
+    enabled: true,
+    primary: false
+  }
+]
+
 User.find_or_create_by!(superuser: true) do |user|
   user.email = Rails.configuration.superuser_email
   user.enabled = true
   user.password = Rails.configuration.superuser_password
   user.password_confirmation = Rails.configuration.superuser_password
   user.role = Role.admin
+  connections.each { |c| user.connections.build(c) }
 end
 
 # Setup initial set of mappers (this may change)
@@ -35,6 +55,7 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
     user.password = Rails.configuration.superuser_password
     user.password_confirmation = Rails.configuration.superuser_password
     user.role = Role.admin
+    connections.each { |c| user.connections.build(c) }
   end
 
   groups = [

@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+core:
+  name: core.dev
+  url: https://core.dev.collectionspace.org/cspace-services
+  username: admin@core.collectionspace.org
+  password_ciphertext: Administrator
+  enabled: true
+  primary: true
+  domain: core.collectionspace.org
+  profile: ''
+  user: superuser
+
+# two: {}
+# column: value

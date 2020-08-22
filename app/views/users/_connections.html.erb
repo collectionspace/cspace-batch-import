@@ -1,0 +1,17 @@
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th><%= t 'connection.name' %></th>
+      <th><%= t 'connection.enabled' %></th>
+      <th><%= t 'connection.primary' %></th>
+      <th colspan="1"></th>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'connections/row',\
+        collection: policy_scope(@connections),
+        as: :connection,
+        locals: { user: user }
+    %>
+  </tbody>
+</table>

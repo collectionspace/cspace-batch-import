@@ -66,6 +66,7 @@ gem 'bulma-rails', '~> 0.9.0'
 gem 'devise'
 gem 'font-awesome-rails'
 gem 'http'
+gem 'lockbox'
 gem 'pretender'
 gem 'pundit'
 

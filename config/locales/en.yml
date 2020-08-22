@@ -40,9 +40,19 @@ en:
     reload: Reload
     submit: Submit
     update: Update
+  connection:
+    create: Create
+    created: Connection was successfully created
+    deleted: Connection was successfully deleted
+    enabled: Enabled
+    name: Name
+    primary: Default
+    title: Connections
+    updated: Connection was successfully updated
+    url: Url
   demo:
     title: This is a demo deployment!
-    message: "You can login as: <strong>admin@collectionspace.org</strong> / <strong>%{password}</strong>"
+    message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"
   devise:
     failure:
       inactive: Your account is not activated

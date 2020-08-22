@@ -1,0 +1,59 @@
+<tr id="<%= dom_id(connection) %>" data-connection-id="<%= connection.id %>">
+  <td class='pt-3'>
+    <%= link_to edit_connection_path(connection) do %>
+      <%= fa_icon('pencil') %>
+      <%= connection.name %>
+    <% end %>
+  </td>
+  <td class='pt-3'>
+    <% if connection.enabled? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'ban' }
+      %>
+    <% end %>
+    <% if can_toggle_status?(connection) %>
+      <%= check_box_tag nil, nil, connection.enabled?,
+        {
+          data: {
+            'reflex': 'click->ApplicationReflex#toggle_status',
+            'reflex-dataset': 'combined',
+            'model': 'connection',
+            'id': connection.id
+          }
+        }
+      %>
+    <% end %>
+  </td>
+  <td class='pt-3'>
+    <% if connection.primary? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'times' }
+      %>
+    <% end %>
+    <%= check_box_tag nil, nil, connection.primary?,
+      {
+        data: {
+          'reflex': 'click->ConnectionReflex#primary',
+          'reflex-dataset': 'combined',
+          'id': connection.id,
+          'user-id': user.id
+        },
+        disabled: !connection.enabled?
+      }
+    %>
+  <td>
+    <%=
+      link_to '', connection,
+      method: :delete, data: { confirm: t('action.confirm_delete') },
+      class: 'tag is-delete is-danger'
+    %>
+  </td>
+</tr>

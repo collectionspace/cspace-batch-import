@@ -85,6 +85,23 @@
     <% end %>
   </div>
   <div class="column">
-    <h2 class="subtitle">Connections</h2>
+    <div class="level">
+      <div class="level-left">
+        <h2 class="subtitle">
+          <%= t('connection.title') %>
+        </h2>
+      </div>
+      <div class="level-right">
+        <%= content_tag :div, class: 'tags has-addons mt-2' do %>
+          <%= content_tag :span, class: 'tag is-link' do %>
+            <%= t('connection.create') %>
+          <% end %>
+          <%= link_to new_connection_path, class: 'tag' do %>
+            <%= fa_icon "plus" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <%= render partial: 'connections', locals: { user: user } %>
   </div>
 </div>

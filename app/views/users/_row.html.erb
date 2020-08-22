@@ -20,7 +20,7 @@
           locals: { classes: 'has-text-danger', icon: 'ban' }
       %>
     <% end %>
-    <% if can_toogle_status?(user) %>
+    <% if can_toggle_status?(user) %>
       <%= check_box_tag nil, nil, user.enabled?,
         {
           data: {
