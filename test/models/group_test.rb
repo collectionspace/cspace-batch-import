@@ -17,6 +17,11 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal groups(:veg).name, g.first.name
   end
 
+  test 'can identify matching groups with subdomain' do
+    g = Group.matching_domain?('sushi.fish.net')
+    assert_equal groups(:sushi).name, g.first.name
+  end
+
   test 'will return an empty list for blank domains' do
     assert_equal [], Group.matching_domain?(nil)
   end

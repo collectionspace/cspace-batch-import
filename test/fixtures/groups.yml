@@ -8,6 +8,11 @@ fish:
   description: Fish group.
   domain: fish.net
   enabled: true
+sushi:
+  name: Sushi
+  description: Sushi group.
+  domain: sushi.fish.net
+  enabled: true
 fruit:
   name: Fruit
   description: Fruit group.

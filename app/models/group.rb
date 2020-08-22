@@ -28,14 +28,18 @@ class Group < ApplicationRecord
   def self.matching_domain?(domain)
     return [] if domain.blank?
 
-    Group.all.select { |g| next if g.domain.blank? ; domain.end_with?(g.domain) }
+    Group.all.select { |g|
+      next if g.domain.blank?
+
+      domain.end_with?(g.domain)
+    }.sort_by { |g| domain.length - g.domain.length }
   end
 
   private
 
   def profile_must_be_prefix
-    if profile.present? && !Mapper.mapper_profiles.include?(profile)
-      errors.add(:profile, I18n.t('group.invalid_profile'))
-    end
+    return unless profile.present? && !Mapper.mapper_profiles.include?(profile)
+
+    errors.add(:profile, I18n.t('group.invalid_profile'))
   end
 end
