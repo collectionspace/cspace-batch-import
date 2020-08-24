@@ -1,7 +1,7 @@
-<h1 class="title is-spaced"><%= t('group.title') %></h1>
+<h1 class="title is-spaced"><%= t('group.title.index') %></h1>
 
-<h2 class="subtitle is-5"><%= fa_icon('plus') %> Add a new group</h2>
+<h2 class="subtitle is-5"><%= fa_icon('plus') %> <%= t('action.create') %></h2>
 <%= render 'form', group: @group %>
 
-<h2 class="subtitle is-5 mt-5"><%= fa_icon('pencil') %> Edit existing groups</h2>
+<h2 class="subtitle is-5 mt-5"><%= fa_icon('pencil') %> <%= t('action.edit') %></h2>
 <%= render partial: 'form', collection: policy_scope(@groups), as: :group %>

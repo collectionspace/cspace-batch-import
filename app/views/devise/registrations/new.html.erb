@@ -1,4 +1,4 @@
-<h2 class="title">Sign up</h2>
+<h2 class="title"><%= t('action.signup') %></h2>
 
 <div class="columns">
   <div class="column">
@@ -38,7 +38,7 @@
 
       <div class="field is-grouped mt-5">
         <div class="control">
-          <%= f.submit t('user.signup'), class: 'button is-link' %>
+          <%= f.submit t('action.signup'), class: 'button is-link' %>
         </div>
         <div class="control">
           <%= link_to "Log in", new_session_path(resource_name), class: 'button is-info' %>

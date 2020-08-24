@@ -36,18 +36,23 @@ en:
     create: Create
     delete: Delete
     disabled: Disabled
+    edit: Edit
+    login: Log in
     refresh: Refresh
     reload: Reload
+    signup: Sign up
     submit: Submit
     update: Update
   connection:
-    create: Create
     created: Connection was successfully created
     deleted: Connection was successfully deleted
     enabled: Enabled
     name: Name
     primary: Default
-    title: Connections
+    title:
+      create: New connection
+      edit: Edit connection
+      index: Connections
     updated: Connection was successfully updated
     url: Url
   demo:
@@ -67,14 +72,18 @@ en:
     name: Name
     placeholder:
       profile_version: Profile version (search)
-    title: Groups
+    title:
+      create: Add a new group
+      edit: Edit existing groups
+      index: Groups
     tooltip:
       email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
   mapper:
     batches: Batches
     profile: Profile
-    title: Mappers
+    title:
+      index: Mappers
     status: Status
     type: Type
     url: URL
@@ -86,30 +95,29 @@ en:
     edit: Edit
     groups: Groups
     home: Home
+    logout: Logout
     mappers: Mappers
     users: Users
   site:
-    home:
-      title: Home
+    title:
+      home: Home
   user:
     account: "My Account: %{email}"
     active: Active
     admin: Admin
     deleted: User was successfully deleted
-    edit: Editing User
     email: Email
     enabled: Enabled
     group: Group
-    login: Log in
-    logout: Logout
     password: Password
     password_confirmation: Password confirmation
-    profile: Profile
     remember_me: Remember me?
     return: "Back to: %{email}"
     role: Role
-    signup: Sign up
-    title: Users
+    title:
+      edit: Editing User
+      index: Users
+      profile: Profile
     unassigned: You are not currently enabled to work in this group
     unassigned_group: Your group is disabled, you cannot perform any actions until group access is restored
     unassigned_user: "You are not currently enabled to work in this group, for access contact: <a href='mailto:%{email}'>%{email}</a>"

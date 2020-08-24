@@ -88,13 +88,13 @@
     <div class="level">
       <div class="level-left">
         <h2 class="subtitle">
-          <%= t('connection.title') %>
+          <%= t('connection.title.index') %>
         </h2>
       </div>
       <div class="level-right">
         <%= content_tag :div, class: 'tags has-addons mt-2' do %>
           <%= content_tag :span, class: 'tag is-link' do %>
-            <%= t('connection.create') %>
+            <%= t('action.create') %>
           <% end %>
           <%= link_to new_connection_path, class: 'tag' do %>
             <%= fa_icon "plus" %>
