@@ -21,6 +21,7 @@ class UsersController < ApplicationController
         reset_user(@user)
         format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
       else
+        @connections = @user.connections.order(:name)
         format.html { render :edit }
       end
     end
