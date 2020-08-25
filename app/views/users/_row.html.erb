@@ -23,6 +23,7 @@
     <% if can_toggle_status?(user) %>
       <%= check_box_tag nil, nil, user.enabled?,
         {
+          id: "toggle_status_#{dom_id(user)}",
           data: {
             'reflex': 'click->ApplicationReflex#toggle_status',
             'reflex-dataset': 'combined',
