@@ -1,6 +1,6 @@
 <div class="columns">
   <div class="column">
-    <h2 class="subtitle">Details</h2>
+    <h2 class="subtitle"><%= t('user.title.account') %></h2>
     <%= form_with(model: user, local: true) do |form| %>
       <div class="field">
         <%= form.label t('user.email'), class: 'label' %>
@@ -96,7 +96,7 @@
           <%= content_tag :span, class: 'tag is-link' do %>
             <%= t('action.create') %>
           <% end %>
-          <%= link_to new_connection_path, class: 'tag' do %>
+          <%= link_to(new_connection_path(user_id: user.id), class: 'tag') do %>
             <%= fa_icon "plus" %>
           <% end %>
         <% end %>

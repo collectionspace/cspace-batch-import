@@ -4,11 +4,12 @@ class Connection < ApplicationRecord
   belongs_to :user
   encrypts :password
   after_initialize :find_domain, if: :new_record?
+  before_save :resolve_primary, if: -> { primary? }
   before_save :unset_primary, if: -> { disabled? && primary? }
   validates :name, presence: true
   validates :url, presence: true
   validates :username, presence: true
-  validates :password, presence: true
+  validates :password, presence: true, length: { minimum: 6, maximum: 18 }
 
   def disabled?
     !enabled?
@@ -22,6 +23,10 @@ class Connection < ApplicationRecord
     # TODO: lookup domain
   end
 
+  def resolve_primary
+    Connection.resolve_primary(user, self)
+  end
+
   def primary?
     primary
   end
@@ -30,10 +35,9 @@ class Connection < ApplicationRecord
     self.primary = false
   end
 
-  def self.primary(user, connection)
+  def self.resolve_primary(user, connection)
     where(user_id: user.id)
       .where.not(id: connection.id)
       .update_all(primary: false)
-    connection.update(primary: true)
   end
 end

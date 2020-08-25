@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 class ConnectionPolicy < ApplicationPolicy
-  def create?
-    user.enabled?
-  end
-
   def update?
-    user.manage?(record)
+    user == record.user
   end
 
   def edit?
@@ -19,7 +15,7 @@ class ConnectionPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.manage?(record)
-      %i[url username password enabled primary profile user_id]
+      %i[name url username password enabled primary profile user_id]
     else
       []
     end

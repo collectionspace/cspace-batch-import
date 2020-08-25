@@ -4,17 +4,21 @@ class ConnectionsController < ApplicationController
   before_action :set_connection, only: %i[edit update destroy]
 
   def new
+    check_for_connection_targets_another_user(params[:user_id])
     @connection = Connection.new
   end
 
   def edit; end
 
   def create
-    @connection = Connection.new(connection_params)
-
     respond_to do |format|
-      if @connection.save
-        format.html { redirect_to @connection, notice: t('connection.created') }
+      @connection = Connection.new
+      check_for_connection_targets_another_user(connection_params[:user_id])
+      if @connection.update(connection_params)
+        format.html do
+          redirect_to edit_user_path(current_user),
+                      notice: t('connection.created')
+        end
       else
         format.html { render :new }
       end
@@ -24,7 +28,9 @@ class ConnectionsController < ApplicationController
   def update
     respond_to do |format|
       if @connection.update(connection_params)
-        format.html { redirect_to @connection, notice: t('connection.updated') }
+        format.html do
+          redirect_to edit_connection_path(@connection), notice: t('connection.updated')
+        end
       else
         format.html { render :edit }
       end
@@ -40,6 +46,10 @@ class ConnectionsController < ApplicationController
   end
 
   private
+
+  def check_for_connection_targets_another_user(user_id)
+    raise Pundit::NotAuthorizedError if user_id.blank? || user_id.to_i != current_user.id
+  end
 
   def set_connection
     @connection = authorize Connection.find(params[:id])

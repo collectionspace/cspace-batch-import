@@ -8,9 +8,17 @@ class ConnectionsControllerTest < ActionDispatch::IntegrationTest
     @connection = connections(:core)
   end
 
-  test 'should get new' do
-    get new_connection_url
+  test 'should get new when given the signed in users id' do
+    get new_connection_url(user_id: users(:superuser).id)
     assert_response :success
+  end
+
+  test 'should not get new when given another users id' do
+    refute_can_view(new_connection_url(user_id: users(:admin).id))
+  end
+
+  test 'should not get new when given no user id' do
+    refute_can_view(new_connection_url)
   end
 
   # TODO

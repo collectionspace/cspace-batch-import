@@ -1,17 +1,85 @@
-<%= form_with(model: connection, local: true) do |form| %>
-  <% if connection.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(connection.errors.count, "error") %> prohibited this connection from being saved:</h2>
-
-      <ul>
-        <% connection.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+<div class="columns">
+  <div class="column">
+    <%= form_with(model: connection, local: true) do |form| %>
+      <div class="field">
+        <%= form.label t('connection.name'), class: 'label' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.text_field :name, class: 'input', placeholder: t('connection.placeholder.name') %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
+          %>
         <% end %>
-      </ul>
-    </div>
-  <% end %>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="field">
+        <%= form.label t('connection.url'), class: 'label' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.text_field :url, class: 'input', placeholder: t('connection.placeholder.url') %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
+          %>
+        <% end %>
+        <span class="is-italic is-size-6 has-text-weight-light">i.e. https://core.collectionspace.org/cspace-services</span>
+      </div>
+
+      <div class="field">
+        <%= form.label t('connection.username'), class: 'label' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.text_field :username, class: 'input', placeholder: t('connection.placeholder.username') %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
+          %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('connection.password'), class: 'label' do %>
+          <%= t('connection.password') %>
+          <%= render partial: 'shared/icon',
+              locals: {
+                classes: "is-small is-right",
+                icon: 'lock'
+              }
+          %>
+        <% end %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.password_field :password, :autocomplete => "off", disabled: !connection.new_record?,
+              class: 'input', placeholder: t('connection.placeholder.password') %>
+          <%= render partial: 'shared/icon',
+              locals: {
+                classes: "has-text-#{connection.new_record? ? 'danger' : 'normal'} is-small is-left",
+                icon: 'asterisk'
+              }
+          %>
+        <% end %>
+      </div>
+
+      <div class="field">
+        <%= form.label t('connection.enabled'), class: 'checkbox' do %>
+          <%= content_tag :span, class: 'mr-1' do t('connection.enabled') ; end %>
+          <%= form.check_box :enabled %>
+        <% end %>
+
+        <%= form.label t('connection.primary'), class: 'checkbox' do %>
+          <%= content_tag :span, class: 'mr-1' do t('connection.primary') ; end %>
+          <%= form.check_box :primary %>
+        <% end %>
+      </div>
+
+      <% if connection.new_record? %>
+        <%= form.hidden_field :user_id, :value => current_user.id %>
+      <% end %>
+
+      <div class="field is-grouped mt-5">
+        <div class="control">
+          <%= form.submit t('action.submit'), class: 'button is-link' %>
+        </div>
+        <div class="control">
+          <%= link_to t('action.cancel'), edit_user_path(current_user), class: 'button is-info' %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <div class="column">
+  </div>
+</div>

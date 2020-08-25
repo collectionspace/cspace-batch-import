@@ -48,13 +48,20 @@ en:
     deleted: Connection was successfully deleted
     enabled: Enabled
     name: Name
+    password: Password
+    placeholder:
+      name: Enter a name for the connection
+      password: Connection password
+      username: Connection username
+      url: Connection url
     primary: Default
     title:
-      create: New connection
-      edit: Edit connection
+      create: Connection
+      edit: Connection
       index: Connections
     updated: Connection was successfully updated
     url: Url
+    username: Username
   demo:
     title: This is a demo deployment!
     message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"
@@ -115,6 +122,7 @@ en:
     return: "Back to: %{email}"
     role: Role
     title:
+      account: Details
       edit: Editing User
       index: Users
       profile: Profile

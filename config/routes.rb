@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
   root 'sites#home'
   resources :connections, except: %i[index show]
+  get '/connections', to: redirect('/connections/new')
   get '/connections/:id', to: redirect('/connections/%{id}/edit')
   resources :groups, only: %i[index create update]
   resources :mappers, only: %i[index]
