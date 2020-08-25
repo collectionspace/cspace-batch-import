@@ -50,6 +50,11 @@ class UserTest < ActiveSupport::TestCase
     assert_not users(:minion).is?(users(:outcast))
   end
 
+  test 'can identify a user as owner of another record' do
+    assert users(:superuser).owner_of?(connections(:core))
+    assert_not users(:admin).owner_of?(connections(:core))
+  end
+
   test 'active users should be able to authenticate' do
     assert users(:minion).active?
     assert users(:minion).active_for_authentication?

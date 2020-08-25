@@ -2,7 +2,7 @@
 
 class ConnectionPolicy < ApplicationPolicy
   def update?
-    user == record.user
+    user.owner_of?(record)
   end
 
   def edit?
@@ -10,12 +10,16 @@ class ConnectionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    user.manage?(record)
+    user.owner_of?(record)
   end
 
-  def permitted_attributes
-    if user.manage?(record)
-      %i[name url username password enabled primary profile user_id]
+  def permitted_attributes_for_create
+    %i[name url username password enabled primary profile user_id]
+  end
+
+  def permitted_attributes_for_update
+    if user.owner_of?(record)
+      %i[name url username password enabled primary profile]
     else
       []
     end

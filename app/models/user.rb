@@ -50,6 +50,10 @@ class User < ApplicationRecord
     role == Role.member
   end
 
+  def owner_of?(record)
+    self == record.user if record.respond_to?(:user)
+  end
+
   def role?(name)
     role.name == name
   end

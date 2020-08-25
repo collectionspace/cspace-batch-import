@@ -13,8 +13,8 @@ class ConnectionsController < ApplicationController
   def create
     respond_to do |format|
       @connection = Connection.new
-      check_for_connection_targets_another_user(connection_params[:user_id])
-      if @connection.update(connection_params)
+      check_for_connection_targets_another_user(params[:connection][:user_id])
+      if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_user_path(current_user),
                       notice: t('connection.created')
@@ -27,7 +27,7 @@ class ConnectionsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @connection.update(connection_params)
+      if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_connection_path(@connection), notice: t('connection.updated')
         end
@@ -48,14 +48,12 @@ class ConnectionsController < ApplicationController
   private
 
   def check_for_connection_targets_another_user(user_id)
-    raise Pundit::NotAuthorizedError if user_id.blank? || user_id.to_i != current_user.id
+    if user_id.blank? || user_id.to_i != current_user.id
+      raise Pundit::NotAuthorizedError
+    end
   end
 
   def set_connection
     @connection = authorize Connection.find(params[:id])
-  end
-
-  def connection_params
-    params.require(:connection).permit(policy(@connection).permitted_attributes)
   end
 end
