@@ -35,12 +35,14 @@
       <div class="field">
         <%= form.label t('connection.password'), class: 'label' do %>
           <%= t('connection.password') %>
-          <%= render partial: 'shared/icon',
-              locals: {
-                classes: "is-small is-right",
-                icon: 'lock'
-              }
-          %>
+          <% if !connection.new_record? %>
+            <%= render partial: 'shared/icon',
+                locals: {
+                  classes: "is-small is-right",
+                  icon: 'lock'
+                }
+            %>
+          <% end %>
         <% end %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
           <%= form.password_field :password, :autocomplete => "off", disabled: !connection.new_record?,
@@ -53,6 +55,33 @@
           %>
         <% end %>
       </div>
+
+      <%= content_tag :div, class: 'field',
+          'data-controller': 'autocomplete',
+          'data-autocomplete-url': "/mappers/autocomplete" do %>
+        <%= form.label t('connection.profile'), class: 'label' do %>
+          <%= t('connection.profile') %>
+          <% if current_user.group.profile? && !connection.new_record? %>
+            <%= render partial: 'shared/icon',
+                locals: {
+                  classes: "is-small is-right",
+                  icon: 'refresh'
+                }
+            %>
+          <% end %>
+        <% end %>
+        <%= form.text_field :profile,
+          disabled: current_user.group.profile?,
+          class: 'input',
+          value: (!connection.profile? ? current_user.group.profile : connection.profile),
+          placeholder: t('connection.placeholder.profile_version'),
+          'data-action': 'autocomplete#update',
+          'data-target': 'autocomplete.field'
+        %>
+        <% if current_user.group.profile? %>
+          <span class="is-italic is-size-6 has-text-weight-light"><%= t('connection.group_has_profile') %></span>
+        <% end %>
+      <% end %>
 
       <div class="field">
         <%= form.label t('connection.enabled'), class: 'checkbox' do %>

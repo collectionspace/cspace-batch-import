@@ -32,7 +32,7 @@
 
       <%= content_tag :div, class: 'field',
           'data-controller': 'autocomplete',
-          'data-autocomplete-url': "mappers/autocomplete" do %>
+          'data-autocomplete-url': "/mappers/autocomplete" do %>
         <%= form.text_field :profile,
           disabled: group.default? || group.disabled? || !manage?(group),
           class: 'input',

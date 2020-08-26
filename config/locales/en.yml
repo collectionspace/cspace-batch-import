@@ -46,15 +46,19 @@ en:
   connection:
     created: Connection was successfully created
     deleted: Connection was successfully deleted
+    domain: Domain
     enabled: Enabled
+    group_has_profile: Profile inherited from group
     name: Name
     password: Password
     placeholder:
       name: Enter a name for the connection
       password: Connection password
+      profile_version: Profile version (search)
       username: Connection username
       url: Connection url
     primary: Default
+    profile: Profile & Version
     title:
       create: Connection
       edit: Connection

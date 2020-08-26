@@ -25,14 +25,18 @@ class Group < ApplicationRecord
     Group.default
   end
 
+  def profile?
+    !profile.blank?
+  end
+
   def self.matching_domain?(domain)
     return [] if domain.blank?
 
-    Group.all.select { |g|
+    Group.all.select do |g|
       next if g.domain.blank?
 
       domain.end_with?(g.domain)
-    }.sort_by { |g| domain.length - g.domain.length }
+    end.sort_by { |g| domain.length - g.domain.length }
   end
 
   private
