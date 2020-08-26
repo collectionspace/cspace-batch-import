@@ -27,6 +27,7 @@ class ConnectionsController < ApplicationController
 
   def update
     respond_to do |format|
+      scrub_params(:connection, :password)
       if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_connection_path(@connection), notice: t('connection.updated')

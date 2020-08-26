@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
     value.yield_self { |s| '<span class="highlighted">%s</span>' % s }
   end
 
+  def scrub_params(type, field)
+    params[type].delete(field) if params[type][field].blank?
+  end
+
   private
 
   def user_not_authorized

@@ -36,18 +36,10 @@
       <div class="field">
         <%= form.label t('connection.password'), class: 'label' do %>
           <%= t('connection.password') %>
-          <% if !connection.new_record? %>
-            <%= render partial: 'shared/icon',
-                locals: {
-                  classes: "is-small is-right",
-                  icon: 'lock'
-                }
-            %>
-          <% end %>
         <% end %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
           <%= form.password_field :password, :autocomplete => "new-password",
-              disabled: !connection.new_record?, class: 'input', placeholder: t('connection.placeholder.password') %>
+              class: 'input', placeholder: t('connection.placeholder.password') %>
           <%= render partial: 'shared/icon',
               locals: {
                 classes: "has-text-#{connection.new_record? ? 'danger' : 'normal'} is-small is-left",

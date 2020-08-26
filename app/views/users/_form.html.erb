@@ -16,7 +16,7 @@
         <%= form.label t('user.password'), class: 'label' %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
           <%= form.password_field :password, :autocomplete => "new-password",
-              disabled: !current_user.is?(user), class: 'input' %>
+              class: 'input' %>
           <%= render partial: 'shared/icon',
               locals: { classes: 'is-small is-left', icon: 'key' }
           %>
@@ -27,7 +27,7 @@
         <%= form.label t('user.password_confirmation'), class: 'label' %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
           <%= form.password_field :password_confirmation,
-              disabled: !current_user.is?(user), class: 'input' %>
+              class: 'input' %>
           <%= render partial: 'shared/icon',
               locals: { classes: 'is-small is-left', icon: 'key' }
           %>

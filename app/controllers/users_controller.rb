@@ -14,6 +14,8 @@ class UsersController < ApplicationController
 
   def update
     respond_to do |format|
+      scrub_params(:user, :password)
+      scrub_params(:user, :password_confirmation)
       authorized_params = user_params
       check_for_illegal_promote_to_admin(authorized_params)
 
