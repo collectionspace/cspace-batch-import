@@ -9,6 +9,13 @@ module ApplicationHelper
     current_user.enabled?
   end
 
+  def can_edit_connection_profile?(connection)
+    return false if connection.new_record? && current_user.group.profile?
+    return false if connection.group&.profile?
+
+    true
+  end
+
   def can_edit_user_group?(user)
     current_user.admin? && !current_user.is?(user) && !user.admin?
   end

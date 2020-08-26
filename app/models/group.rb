@@ -3,6 +3,8 @@
 class Group < ApplicationRecord
   include PrefixChecker
   has_many :users
+  has_many :connections, through: :users
+  after_save :update_connection_profiles, if: -> { profile? }
   validate :profile_must_be_prefix
   validates :name, presence: true, uniqueness: true
   validates :supergroup, uniqueness: true, if: -> { supergroup }
@@ -38,5 +40,11 @@ class Group < ApplicationRecord
 
       domain.end_with?(g.domain)
     end.sort_by { |g| domain.length - g.domain.length }
+  end
+
+  private
+
+  def update_connection_profiles
+    connections.update_all(profile: profile)
   end
 end

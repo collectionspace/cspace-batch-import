@@ -3,6 +3,7 @@
 class Connection < ApplicationRecord
   include PrefixChecker
   belongs_to :user
+  has_one :group, through: :user
   encrypts :password
   after_initialize :find_domain, if: :new_record?
   before_save :resolve_primary, if: -> { primary? }
