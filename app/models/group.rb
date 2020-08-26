@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Group < ApplicationRecord
+  include PrefixChecker
   has_many :users
   validate :profile_must_be_prefix
   validates :name, presence: true, uniqueness: true
@@ -37,13 +38,5 @@ class Group < ApplicationRecord
 
       domain.end_with?(g.domain)
     end.sort_by { |g| domain.length - g.domain.length }
-  end
-
-  private
-
-  def profile_must_be_prefix
-    return unless profile.present? && !Mapper.mapper_profiles.include?(profile)
-
-    errors.add(:profile, I18n.t('group.invalid_profile'))
   end
 end

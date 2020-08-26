@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class Connection < ApplicationRecord
+  include PrefixChecker
   belongs_to :user
   encrypts :password
   after_initialize :find_domain, if: :new_record?
   before_save :resolve_primary, if: -> { primary? }
   before_save :unset_primary, if: -> { disabled? && primary? }
+  validate :profile_must_be_prefix
   validates :name, presence: true
   validates :url, presence: true
   validates :username, presence: true

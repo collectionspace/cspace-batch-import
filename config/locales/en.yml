@@ -79,7 +79,6 @@ en:
     domain: Email domain
     email: Support email
     enabled: Enabled
-    invalid_profile: is not a valid mapper prefix
     name: Name
     placeholder:
       profile_version: Profile version (search)
@@ -92,6 +91,7 @@ en:
     updated: Group was successfully updated
   mapper:
     batches: Batches
+    invalid_profile: is not a valid mapper prefix
     profile: Profile
     title:
       index: Mappers
