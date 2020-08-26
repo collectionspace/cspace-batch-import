@@ -52,9 +52,9 @@
     %>
   <td>
     <%=
-      link_to '', connection,
+      link_to t('navigation.delete'), user,
       method: :delete, data: { confirm: t('action.confirm_delete') },
-      class: 'tag is-delete is-danger'
+      class: 'button is-danger is-outlined is-small'
     %>
   </td>
 </tr>
