@@ -5,13 +5,17 @@
         <%= fa_icon "home", class: 'mr-2' %>
         <%= t('navigation.home') %>
       <% end %>
-      <%= link_to groups_path, class: 'navbar-item' do %>
-        <%= fa_icon "sitemap", class: 'mr-2' %>
-        <%= t('navigation.groups') %>
+      <% if admin? %>
+        <%= link_to groups_path, class: 'navbar-item' do %>
+          <%= fa_icon "sitemap", class: 'mr-2' %>
+          <%= t('navigation.groups') %>
+        <% end %>
       <% end %>
-      <%= link_to mappers_path, class: 'navbar-item' do %>
-        <%= fa_icon "map", class: 'mr-2' %>
-        <%= t('navigation.mappers') %>
+      <% if admin? %>
+        <%= link_to mappers_path, class: 'navbar-item' do %>
+          <%= fa_icon "map", class: 'mr-2' %>
+          <%= t('navigation.mappers') %>
+        <% end %>
       <% end %>
       <%= link_to users_path, class: 'navbar-item' do %>
         <%= fa_icon "users", class: 'mr-2' %>

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       check_for_illegal_promote_to_admin(authorized_params)
 
       if @user.update(authorized_params)
-        reset_user(@user)
+        # reset_user(@user)
         format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
       else
         @connections = @user.connections.order(:name)
