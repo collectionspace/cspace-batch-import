@@ -25,7 +25,8 @@
       <div class="field">
         <%= form.label t('connection.username'), class: 'label' %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
-          <%= form.text_field :username, class: 'input', placeholder: t('connection.placeholder.username') %>
+          <%= form.text_field :username, :autocomplete => "new-password",
+              class: 'input', placeholder: t('connection.placeholder.username') %>
           <%= render partial: 'shared/icon',
               locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
           %>
@@ -45,8 +46,8 @@
           <% end %>
         <% end %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
-          <%= form.password_field :password, :autocomplete => "off", disabled: !connection.new_record?,
-              class: 'input', placeholder: t('connection.placeholder.password') %>
+          <%= form.password_field :password, :autocomplete => "new-password",
+              disabled: !connection.new_record?, class: 'input', placeholder: t('connection.placeholder.password') %>
           <%= render partial: 'shared/icon',
               locals: {
                 classes: "has-text-#{connection.new_record? ? 'danger' : 'normal'} is-small is-left",
