@@ -1,5 +1,11 @@
 <div class="columns">
   <div class="column">
+    <% if !connection.new_record? && !current_user.is?(connection.user) %>
+      <div class="notification is-info is-light mt-3">
+        <%= raw t('connection.editing_for_user', email: connection.user.email) %>
+      </div>
+    <% end %>
+
     <%= form_with(model: connection, local: true) do |form| %>
       <div class="field">
         <%= form.label t('connection.name'), class: 'label' %>

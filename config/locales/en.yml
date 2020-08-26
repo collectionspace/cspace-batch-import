@@ -47,6 +47,7 @@ en:
     created: Connection was successfully created
     deleted: Connection was successfully deleted
     domain: Domain
+    editing_for_user: "Editing connection for: <strong>%{email}</strong>"
     enabled: Enabled
     group_has_profile: Profile inherited from group
     name: Name
