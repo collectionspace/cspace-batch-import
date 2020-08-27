@@ -82,7 +82,7 @@ en:
     enabled: Enabled
     name: Name
     placeholder:
-      profile_version: Profile version (search)
+      profile_version: Profile & Version (search)
     title:
       create: Add a new group
       edit: Edit existing groups

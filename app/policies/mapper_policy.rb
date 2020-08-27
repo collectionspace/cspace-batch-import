@@ -6,7 +6,7 @@ class MapperPolicy < ApplicationPolicy
   end
 
   def autocomplete?
-    user.admin?
+    true
   end
 
   class Scope < Scope
