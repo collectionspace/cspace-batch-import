@@ -5,7 +5,14 @@ require 'test_helper'
 class ConnectionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:superuser)
-    @connection = connections(:core)
+    @connection = connections(:core_superuser)
+    @valid_params = {
+      name: 'core.dev',
+      url: 'https://core.dev.collectionspace.org/cspace-services',
+      username: 'admin@core.collectionspace.org',
+      password: 'Administrator',
+      user_id: users(:superuser).id
+    }
   end
 
   test 'should get new when given the signed in users id' do
@@ -21,14 +28,13 @@ class ConnectionsControllerTest < ActionDispatch::IntegrationTest
     refute_can_view(new_connection_url)
   end
 
-  # TODO
-  # test 'should create connection' do
-  #   assert_difference('Connection.count') do
-  #     post connections_url, params: { connection: {} }
-  #   end
+  test 'should create connection' do
+    assert_difference('Connection.count') do
+      post connections_url, params: { connection: @valid_params }
+    end
 
-  #   assert_redirected_to connection_url(Connection.last)
-  # end
+    assert_redirected_to edit_user_url(users(:superuser))
+  end
 
   test 'should redirect show connection' do
     get connection_url(@connection)
@@ -40,11 +46,12 @@ class ConnectionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # TODO
-  # test 'should update connection' do
-  #   patch connection_url(@connection), params: { connection: {} }
-  #   assert_redirected_to connection_url(@connection)
-  # end
+  test 'should update connection' do
+    patch connection_url(@connection), params: { connection: @valid_params }
+    assert_redirected_to edit_connection_url(@connection)
+  end
+
+  # TODO: invalid params
 
   test 'should destroy connection' do
     assert_difference('Connection.count', -1) do

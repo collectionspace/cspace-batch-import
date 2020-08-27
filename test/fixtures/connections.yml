@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-core:
+core_superuser:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
@@ -11,5 +11,46 @@ core:
   profile: ''
   user: superuser
 
-# two: {}
-# column: value
+core_admin:
+  name: core.dev
+  url: https://core.dev.collectionspace.org/cspace-services
+  username: admin@core.collectionspace.org
+  password_ciphertext: Administrator
+  enabled: true
+  primary: true
+  domain: core.collectionspace.org
+  profile: ''
+  user: admin
+
+core_manager:
+  name: core.dev
+  url: https://core.dev.collectionspace.org/cspace-services
+  username: admin@core.collectionspace.org
+  password_ciphertext: Administrator
+  enabled: true
+  primary: true
+  domain: core.collectionspace.org
+  profile: ''
+  user: manager
+
+core_minion:
+  name: core.dev
+  url: https://core.dev.collectionspace.org/cspace-services
+  username: admin@core.collectionspace.org
+  password_ciphertext: Administrator
+  enabled: true
+  primary: true
+  domain: core.collectionspace.org
+  profile: ''
+  user: minion
+
+core_salmon:
+  name: core.dev
+  url: https://core.dev.collectionspace.org/cspace-services
+  username: admin@core.collectionspace.org
+  password_ciphertext: Administrator
+  enabled: true
+  primary: true
+  domain: core.collectionspace.org
+  profile: ''
+  user: salmon

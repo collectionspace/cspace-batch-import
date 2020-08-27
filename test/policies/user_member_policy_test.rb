@@ -50,4 +50,6 @@ class UserMemberPolicyTest < ActiveSupport::TestCase
   test 'member can update self' do
     assert_permit UserPolicy, users(:minion), users(:minion), :update
   end
+
+  # TODO cannot update group
 end

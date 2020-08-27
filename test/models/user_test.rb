@@ -51,8 +51,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'can identify a user as owner of another record' do
-    assert users(:superuser).owner_of?(connections(:core))
-    assert_not users(:admin).owner_of?(connections(:core))
+    assert users(:superuser).owner_of?(connections(:core_superuser))
+    assert_not users(:admin).owner_of?(connections(:core_superuser))
   end
 
   test 'active users should be able to authenticate' do

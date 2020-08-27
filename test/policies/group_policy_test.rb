@@ -3,7 +3,9 @@
 require 'test_helper'
 
 class GroupPolicyTest < ActiveSupport::TestCase
-  # TODO create
+  test 'admin can create a group' do
+    assert_permit GroupPolicy, users(:admin), Group.new, :create
+  end
 
   test 'admin cannot delete the default group' do
     refute_permit GroupPolicy, users(:admin), groups(:default), :destroy

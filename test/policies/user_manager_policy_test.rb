@@ -50,4 +50,6 @@ class UserManagerPolicyTest < ActiveSupport::TestCase
   test 'manager can update self' do
     assert_permit UserPolicy, users(:manager), users(:manager), :update
   end
+
+  # TODO can update group
 end

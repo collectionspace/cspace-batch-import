@@ -47,17 +47,26 @@ end
 module Policy
   module TestMethods
     def assert_permit(policy, user, record, action)
-      msg = "User #{user.inspect} should be permitted to #{action} #{record.inspect}, but isn't permitted"
-      assert permit(policy, user, record, action), msg
+      assert permit(policy, user, record, action), pundit_msg(user, record, action, true)
     end
 
     def refute_permit(policy, user, record, action)
-      msg = "User #{user.inspect} should NOT be permitted to #{action} #{record.inspect}, but is permitted"
-      refute permit(policy, user, record, action), msg
+      refute permit(policy, user, record, action), pundit_msg(user, record, action, false)
     end
 
     def permit(policy, user, record, action)
       policy.new(user, record).public_send("#{action}?")
+    end
+
+    private
+
+    def pundit_msg(user, record, action, affirmative = true)
+      msg = "User #{user.inspect} should #{affirmative ? '' : 'NOT '} be permitted to #{action} ".dup
+      begin
+        msg.concat record.inspect.to_s
+      rescue Lockbox::DecryptionError
+        msg.concat record.id.to_s
+      end
     end
   end
 end

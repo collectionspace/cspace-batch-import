@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ConnectionPolicy < ApplicationPolicy
+  def create?
+    true
+  end
+
   def update?
     user.manage?(record)
   end

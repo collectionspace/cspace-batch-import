@@ -19,9 +19,9 @@ class MappersControllerTest < ActionDispatch::IntegrationTest
     refute_can_view(mappers_path)
   end
 
-  test 'a manager cannot autocomplete mappers' do
+  test 'a manager can autocomplete mappers' do
     sign_in users(:manager)
-    refute_can_view('/mappers/autocomplete?query=1')
+    assert_can_view('/mappers/autocomplete?query=1')
   end
 
   test 'a member cannot view mappers' do
@@ -29,8 +29,8 @@ class MappersControllerTest < ActionDispatch::IntegrationTest
     refute_can_view(mappers_path)
   end
 
-  test 'a member cannot autocomplete mappers' do
+  test 'a member can autocomplete mappers' do
     sign_in users(:minion)
-    refute_can_view('/mappers/autocomplete?query=1')
+    assert_can_view('/mappers/autocomplete?query=1')
   end
 end
