@@ -26,12 +26,26 @@ class User < ApplicationRecord
     role == Role.default_scoped.admin
   end
 
+  def collaborator?(record)
+    return false if member?
+
+    if record.respond_to?(:group)
+      group.id == record.group.id
+    elsif record.respond_to?(:user)
+      group.id == record.user.group.id
+    end
+  end
+
   def disabled?
     !enabled?
   end
 
   def enabled?
     enabled && group.enabled?
+  end
+
+  def group?(group)
+    self.group == group
   end
 
   def is?(user)

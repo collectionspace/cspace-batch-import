@@ -38,6 +38,10 @@ class UserTest < ActiveSupport::TestCase
     assert users(:minion).member?
   end
 
+  test 'can lookup a user group' do
+    assert users(:minion).group?(groups(:default))
+  end
+
   test 'can lookup a user role' do
     assert users(:minion).role?('Member')
   end
@@ -48,6 +52,11 @@ class UserTest < ActiveSupport::TestCase
 
   test 'does not identify another user as self' do
     assert_not users(:minion).is?(users(:outcast))
+  end
+
+  test 'can identify a user as collaborator on another record' do
+    assert users(:manager).collaborator?(connections(:core_superuser))
+    assert_not users(:minion).collaborator?(connections(:core_superuser))
   end
 
   test 'can identify a user as owner of another record' do

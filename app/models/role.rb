@@ -35,15 +35,11 @@ class Role < ApplicationRecord
       return false if record.nil?
       return false if record.respond_to?(:role) && record.admin?
 
-      return true if user == record
-      return true if user.group == record
+      return true if user.is?(record)
+      return true if user.group?(record)
 
-      if record.respond_to? :group
-        user.group.id == record.group.id
-      elsif record.respond_to? :user
-        user.group.id == record.user.group.id
-      else
-        false
+      if record.respond_to?(:group) || record.respond_to?(:user)
+        user.collaborator?(record)
       end
     end
   end
@@ -52,8 +48,8 @@ class Role < ApplicationRecord
     def manage?(record)
       return false if record.nil?
 
-      return true if user == record
-      return true if record.respond_to?(:user) && user.id == record.user.id
+      return true if user.is?(record)
+      return true if user.owner_of?(record)
     end
   end
 end
