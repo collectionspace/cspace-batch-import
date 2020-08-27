@@ -1,0 +1,27 @@
+<h2 class="subtitle"><%= t('group.title.name') %></h2>
+<%= form_with(model: user.group, url: user_group_path(user), local: true) do |form| %>
+  <div class="field">
+    <%= form.label :name, class: 'label' %>
+    <%= form.text_field :name, class: 'input' %>
+  </div>
+  <div class="field">
+    <%= form.label :email, class: 'label' %>
+    <%= form.text_field :email, class: 'input' %>
+  </div>
+  <%= content_tag :div, class: 'field',
+      'data-controller': 'autocomplete',
+      'data-autocomplete-url': "/mappers/autocomplete" do %>
+    <%= form.label :profile, class: 'label' %>
+    <%= form.text_field :profile,
+      class: 'input',
+      placeholder: t('group.placeholder.profile_version'),
+      'data-action': 'autocomplete#update',
+      'data-target': 'autocomplete.field'
+    %>
+  <% end %>
+  <div class="field is-grouped mt-5">
+    <div class="control">
+      <%= form.submit t('action.submit'), class: 'button is-link' %>
+    </div>
+  </div>
+<% end %>

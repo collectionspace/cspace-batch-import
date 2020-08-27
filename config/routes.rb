@@ -14,5 +14,7 @@ Rails.application.routes.draw do
     post :stop_impersonating, on: :collection
   end
   get '/users/:id', to: redirect('/users/%{id}/edit')
+  get '/users/:id/group', to: redirect('/users/%{id}/edit')
+  patch '/users/:id/group', to: 'users#update_group', as: 'user_group'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

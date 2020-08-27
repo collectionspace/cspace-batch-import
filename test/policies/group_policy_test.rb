@@ -33,8 +33,14 @@ class GroupPolicyTest < ActiveSupport::TestCase
     end
   end
 
-  test 'manager cannot update any group' do
-    %i[default fish fruit veg].each do |group|
+  test 'manager can update their own group' do
+    %i[default].each do |group|
+      assert_permit GroupPolicy, users(:manager), groups(group), :update
+    end
+  end
+
+  test 'manager cannot update any other group' do
+    %i[fish fruit veg].each do |group|
       refute_permit GroupPolicy, users(:manager), groups(group), :update
     end
   end

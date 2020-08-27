@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[edit update destroy]
+  before_action :set_user, only: %i[edit update update_group destroy]
 
   def index
     authorize(User)
@@ -25,6 +25,20 @@ class UsersController < ApplicationController
       else
         @connections = @user.connections.order(:name)
         format.html { render :edit }
+      end
+    end
+  end
+
+  def update_group
+    respond_to do |format|
+      if @user.group.update(user_group_params)
+        format.html {
+          redirect_to edit_user_path(@user), notice: t('user.group_updated')
+        }
+      else
+        format.html {
+          redirect_to edit_user_path(@user), alert: error_messages(@user.group.errors)
+        }
       end
     end
   end
@@ -68,5 +82,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(policy(@user).permitted_attributes)
+  end
+
+  def user_group_params
+    params.require(:group).permit(:name, :email, :profile)
   end
 end

@@ -87,6 +87,7 @@ en:
       create: Add a new group
       edit: Edit existing groups
       index: Groups
+      name: Group
     tooltip:
       email: This email address will be presented to new users of the group to request access.
     updated: Group was successfully updated
@@ -121,6 +122,7 @@ en:
     email: Email
     enabled: Enabled
     group: Group
+    group_updated: Group was successfully updated
     password: Password
     password_confirmation: Password confirmation
     remember_me: Remember me?

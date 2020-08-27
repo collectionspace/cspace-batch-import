@@ -36,6 +36,7 @@ class Role < ApplicationRecord
       return false if record.respond_to?(:role) && record.admin?
 
       return true if user == record
+      return true if user.group == record
 
       if record.respond_to? :group
         user.group.id == record.group.id

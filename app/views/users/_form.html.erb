@@ -83,6 +83,11 @@
         <% end %>
       </div>
     <% end %>
+    <div class="level"></div>
+    <hr/>
+    <% if current_user.is?(user) && !user.group.default? && manage?(user.group) %>
+      <%= render partial: 'group', locals: { user: user } %>
+    <% end %>
   </div>
   <div class="column">
     <div class="level">

@@ -47,8 +47,12 @@ class RoleTest < ActiveSupport::TestCase
     assert Role::Manager.new(users(:manager)).manage?(users(:outcast))
   end
 
-  test 'a manager cannot manage a group' do
-    assert_not Role::Manager.new(users(:manager)).manage?(groups(:default))
+  test 'a manager can manage their own group' do
+    assert Role::Manager.new(users(:manager)).manage?(groups(:default))
+  end
+
+  test 'a manager cannot manage another group' do
+    assert_not Role::Manager.new(users(:manager)).manage?(groups(:fish))
   end
 
   # TODO: manager can manage own content

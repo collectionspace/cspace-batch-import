@@ -11,6 +11,10 @@ class UserPolicy < ApplicationPolicy
     user.manage?(record)
   end
 
+  def update_group?
+    user.manage?(record.group)
+  end
+
   def edit?
     update?
   end
