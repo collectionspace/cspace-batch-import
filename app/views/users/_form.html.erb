@@ -97,12 +97,14 @@
         </h2>
       </div>
       <div class="level-right">
-        <%= content_tag :div, class: 'tags has-addons mt-2' do %>
-          <%= content_tag :span, class: 'tag is-link' do %>
-            <%= t('action.create') %>
-          <% end %>
-          <%= link_to(new_connection_path(user_id: user.id), class: 'tag') do %>
-            <%= fa_icon "plus" %>
+        <% if current_user.is?(user) %>
+          <%= content_tag :div, class: 'tags has-addons mt-2' do %>
+            <%= content_tag :span, class: 'tag is-link' do %>
+              <%= t('action.create') %>
+            <% end %>
+            <%= link_to(new_connection_path(user_id: user.id), class: 'tag') do %>
+              <%= fa_icon "plus" %>
+            <% end %>
           <% end %>
         <% end %>
       </div>
