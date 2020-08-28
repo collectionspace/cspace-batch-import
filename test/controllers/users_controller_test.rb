@@ -53,6 +53,15 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_equal user.role_id, roles(:admin).id
   end
 
+  test 'an admin can delete a user (with connection)' do
+    sign_in users(:admin)
+    assert_difference('User.count', -1) do
+      delete user_url(users(:minion))
+    end
+
+    assert_redirected_to users_url
+  end
+
   test 'a manager can browse users from the same group' do
     sign_in users(:manager)
     assert_can_view users_path

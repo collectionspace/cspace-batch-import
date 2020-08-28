@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[update destroy]
+  before_action :set_group, only: %i[edit update destroy]
 
   def index
     authorize(Group)
@@ -22,15 +22,22 @@ class GroupsController < ApplicationController
     end
   end
 
+  def edit; end
+
   def update
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to groups_path, notice: t('group.updated') }
+        format.html { redirect_to edit_group_path(@group), notice: t('group.updated') }
       else
-        format.html do
-          redirect_to groups_path, alert: error_messages(@group.errors)
-        end
+        format.html { render :edit }
       end
+    end
+  end
+
+  def destroy
+    @group.destroy
+    respond_to do |format|
+      format.html { redirect_to groups_url, notice: t('group.deleted') }
     end
   end
 

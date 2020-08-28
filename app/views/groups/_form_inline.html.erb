@@ -1,0 +1,51 @@
+<%= form_with(model: group, local: true, id: dom_id(group), class: 'mt-3') do |form| %>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <%= content_tag :div, class: 'field' do %>
+        <%= form.text_field :name,
+          disabled: group.disabled? || !manage?(group),
+          class: 'input',
+          placeholder: t('group.name'),
+          autofocus: (group.name.blank? ? true : false)
+        %>
+      <% end %>
+
+      <%= content_tag :div, class: 'field' do %>
+        <%= form.text_field :domain,
+          disabled: group.default? || group.disabled? || !manage?(group),
+          class: 'input',
+          placeholder: t('group.domain')
+        %>
+      <% end %>
+
+      <%= content_tag :div, class: 'control field has-icons-left' do %>
+        <%= form.text_field :email,
+          disabled: group.disabled? || !manage?(group),
+          class: 'input',
+          placeholder: t('group.email'),
+          data: { 'tooltip': t('group.tooltip.email') }
+        %>
+        <%= render partial: 'shared/icon',
+            locals: { classes: 'is-small is-left', icon: 'envelope' }
+        %>
+      <% end %>
+
+      <%= content_tag :div, class: 'field',
+          'data-controller': 'autocomplete',
+          'data-autocomplete-url': "/mappers/autocomplete" do %>
+        <%= form.text_field :profile,
+          disabled: group.default? || group.disabled? || !manage?(group),
+          class: 'input',
+          placeholder: t('group.placeholder.profile_version'),
+          'data-action': 'autocomplete#update',
+          'data-target': 'autocomplete.field'
+        %>
+      <% end %>
+
+      <%= form.submit (group.name.blank? ? "#{t('action.create')}" : t('action.update')),
+        disabled: !manage?(group),
+        class: "button #{group.name.blank? ? 'is-primary' : 'is-link'}"
+      %>
+    </div>
+  </div>
+<% end %>

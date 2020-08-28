@@ -1,7 +1,22 @@
 <h1 class="title is-spaced"><%= t('group.title.index') %></h1>
 
 <h2 class="subtitle is-5"><%= fa_icon('plus') %> <%= t('action.create') %></h2>
-<%= render 'form', group: @group %>
+<%= render 'form_inline', group: @group %>
+<hr/>
 
-<h2 class="subtitle is-5 mt-5"><%= fa_icon('pencil') %> <%= t('action.edit') %></h2>
-<%= render partial: 'form', collection: policy_scope(@groups), as: :group %>
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th><%= t 'group.name' %></th>
+      <th><%= t 'group.domain' %></th>
+      <th><%= t 'group.email' %></th>
+      <th><%= t 'group.profile' %></th>
+      <th><%= t 'group.enabled' %></th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'row', collection: policy_scope(@groups), as: :group %>
+  </tbody>
+</table>

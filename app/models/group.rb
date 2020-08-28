@@ -2,7 +2,7 @@
 
 class Group < ApplicationRecord
   include PrefixChecker
-  has_many :users
+  has_many :users, dependent: :destroy
   has_many :connections, through: :users
   after_save :update_connection_profiles, if: -> { profile? }
   validate :profile_must_be_prefix

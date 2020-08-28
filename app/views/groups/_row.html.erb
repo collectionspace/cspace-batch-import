@@ -1,0 +1,46 @@
+<tr id="<%= dom_id(group) %>" data-group-id="<%= group.id %>">
+  <td class='pt-3'>
+    <%= link_to edit_group_path(group) do %>
+<%= render partial: 'shared/icon',
+    locals: { classes: 'is-small is-left', icon: 'pencil' }
+%>
+      <%= group.name %>
+    <% end %>
+  </td>
+  <td class='pt-3'><%= group.domain %></td>
+  <td class='pt-3'><%= group.email %></td>
+  <td class='pt-3'><%= group.profile %></td>
+  <td class='pt-3'>
+    <% if group.enabled? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'ban' }
+      %>
+    <% end %>
+    <% if can_toggle_status?(group) %>
+      <%= check_box_tag nil, nil, group.enabled?,
+        {
+          disabled: group.default?,
+          id: "toggle_status_#{dom_id(group)}",
+          data: {
+            'reflex': 'click->ApplicationReflex#toggle_status',
+            'reflex-dataset': 'combined',
+            'model': 'group',
+            'id': group.id
+          }
+        }
+      %>
+    <% end %>
+  </td>
+    <td>
+      <%=
+        link_to t('navigation.delete'), group,
+        method: :delete, data: { confirm: t('action.confirm_delete') },
+        disabled: group.default?,
+        class: 'button is-danger is-outlined is-small'
+      %>
+    </td>
+</tr>

@@ -1,7 +1,8 @@
-<%= form_with(model: group, local: true, id: dom_id(group), class: 'mt-3') do |form| %>
-  <div class="field is-horizontal">
-    <div class="field-body">
+<div class="columns">
+  <div class="column">
+    <%= form_with(model: group, local: true, id: dom_id(group), class: 'mt-3') do |form| %>
       <%= content_tag :div, class: 'field' do %>
+        <%= form.label t('group.name'), class: 'label' %>
         <%= form.text_field :name,
           disabled: group.disabled? || !manage?(group),
           class: 'input',
@@ -11,6 +12,7 @@
       <% end %>
 
       <%= content_tag :div, class: 'field' do %>
+        <%= form.label t('group.domain'), class: 'label' %>
         <%= form.text_field :domain,
           disabled: group.default? || group.disabled? || !manage?(group),
           class: 'input',
@@ -19,20 +21,24 @@
       <% end %>
 
       <%= content_tag :div, class: 'control field has-icons-left' do %>
-        <%= form.text_field :email,
-          disabled: group.disabled? || !manage?(group),
-          class: 'input',
-          placeholder: t('group.email'),
-          data: { 'tooltip': t('group.tooltip.email') }
-        %>
-        <%= render partial: 'shared/icon',
-            locals: { classes: 'is-small is-left', icon: 'envelope' }
-        %>
+        <%= form.label t('group.email'), class: 'label' %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.text_field :email,
+            disabled: group.disabled? || !manage?(group),
+            class: 'input',
+            placeholder: t('group.email'),
+            data: { 'tooltip': t('group.tooltip.email') }
+          %>
+          <%= render partial: 'shared/icon',
+              locals: { classes: 'is-small is-left', icon: 'envelope' }
+          %>
+        <% end %>
       <% end %>
 
       <%= content_tag :div, class: 'field',
           'data-controller': 'autocomplete',
           'data-autocomplete-url': "/mappers/autocomplete" do %>
+        <%= form.label t('group.profile'), class: 'label' %>
         <%= form.text_field :profile,
           disabled: group.default? || group.disabled? || !manage?(group),
           class: 'input',
@@ -42,7 +48,7 @@
         %>
       <% end %>
 
-      <%= content_tag :div, class: 'field has-text-centered' do %>
+      <%= content_tag :div, class: 'field' do %>
         <%= form.label :enabled do %>
           <%= t('group.enabled') %>
           <%= form.check_box :enabled,
@@ -52,10 +58,16 @@
         <% end %>
       <% end %>
 
-      <%= form.submit (group.name.blank? ? "#{t('action.create')}!" : t('action.update')),
-        disabled: !manage?(group),
-        class: "button #{group.name.blank? ? 'is-primary' : 'is-link'}"
-      %>
-    </div>
+      <div class="field is-grouped mt-5">
+        <div class="control">
+          <%= form.submit t('action.submit'), class: 'button is-link' %>
+        </div>
+        <div class="control">
+          <%= link_to t('action.cancel'), groups_path, class: 'button is-info' %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <div class="column">
+  </div>
+</div>

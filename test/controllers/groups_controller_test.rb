@@ -55,7 +55,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       group_url(group),
       group,
       { group: { name: 'Fish updated!', profile: 'anthro-4_0_0' } },
-      groups_path
+      edit_group_path(group)
     )
     assert_equal group.name, 'Fish updated!'
     assert_equal group.profile, 'anthro-4_0_0'
@@ -68,7 +68,6 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       group_url(group),
       group,
       { group: { name: nil } },
-      groups_path
     )
     assert_not_equal group.name, nil
   end
@@ -80,7 +79,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       group_url(group),
       group,
       { group: { profile: 'core' } },
-      groups_path
+      edit_group_path(group)
     )
     assert_nil group.profile
   end
@@ -91,19 +90,18 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
     run_update(
       group_url(group),
       group,
-      { group: { domain: 'veg.edu' } },
-      groups_path
+      { group: { domain: 'veg.edu' } }
     )
     assert_not_equal group.domain, 'veg.edu'
   end
 
   # DELETE
-  # test 'an admin can delete a group' do
-  #   sign_in users(:admin)
-  #   group = groups(:fish)
-  #   assert_difference('Group.count', -1) do
-  #     delete group_url(group)
-  #   end
-  #   assert_redirected_to groups_url
-  # end
+  test 'an admin can delete a group' do
+    sign_in users(:admin)
+    group = groups(:fish)
+    assert_difference('Group.count', -1) do
+      delete group_url(group)
+    end
+    assert_redirected_to groups_url
+  end
 end

@@ -6,7 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :connections
+  has_many :connections, dependent: :destroy
   belongs_to :group
   belongs_to :role
   after_initialize :setup, if: :new_record?

@@ -70,13 +70,14 @@ en:
     url: Url
     username: Username
   demo:
-    title: This is a demo deployment!
+    title: This is a dev deployment!
     message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"
   devise:
     failure:
       inactive: Your account is not activated
   group:
     created: Group was successfully created
+    deleted: Group was successfully deleted
     description: Description
     disabled: Group is disabled
     domain: Email domain
@@ -85,6 +86,7 @@ en:
     name: Name
     placeholder:
       profile_version: Profile & Version (search)
+    profile: Profile & Version
     title:
       create: Add a new group
       edit: Edit existing groups

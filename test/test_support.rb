@@ -35,10 +35,10 @@ module Integration
     # EDIT
 
     # UPDATE
-    def run_update(path, record, params, redirected_path)
+    def run_update(path, record, params, redirected_path = nil)
       put path, params: params
       record.reload
-      assert_redirected_to redirected_path
+      assert_redirected_to redirected_path if redirected_path
     end
   end
 end
