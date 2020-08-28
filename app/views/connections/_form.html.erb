@@ -90,6 +90,14 @@
         <%= form.hidden_field :user_id, :value => current_user.id %>
       <% end %>
 
+      <div class="field">
+        <%= form.label t('connection.domain'), class: 'label' %>
+        <%= content_tag :div, class: 'control' do %>
+          <%= form.text_field :domain, disabled: true,
+              class: 'input highlighted', placeholder: t('connection.placeholder.domain') %>
+        <% end %>
+      </div>
+
       <div class="field is-grouped mt-5">
         <div class="control">
           <%= form.submit t('action.submit'), class: 'button is-link' %>
@@ -101,5 +109,10 @@
     <% end %>
   </div>
   <div class="column">
+    <% if !connection.new_record? && connection.domain.blank? %>
+      <div class="notification is-danger is-light mt-3">
+        <%= raw t('connection.no_domain') %>
+      </div>
+    <% end %>
   </div>
 </div>

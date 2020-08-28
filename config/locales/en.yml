@@ -51,8 +51,10 @@ en:
     enabled: Enabled
     group_has_profile: Profile inherited from group
     name: Name
+    no_domain: <strong>Domain</strong> is not set. Check connection settings and retry.
     password: Password
     placeholder:
+      domain: Not a user editable field
       name: Enter a name for the connection
       password: Connection password
       profile_version: Profile version (search)

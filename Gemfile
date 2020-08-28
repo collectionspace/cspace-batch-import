@@ -63,6 +63,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'aws-sdk-s3', require: false
 gem 'bulma-rails', '~> 0.9.0'
+gem 'collectionspace-client', tag: 'v0.7.0', git: 'https://github.com/collectionspace/collectionspace-client.git'
 gem 'devise'
 gem 'font-awesome-rails'
 gem 'http'
