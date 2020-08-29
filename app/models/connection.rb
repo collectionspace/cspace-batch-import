@@ -32,10 +32,6 @@ class Connection < ApplicationRecord
     enabled
   end
 
-  def find_domain
-    # TODO: lookup domain
-  end
-
   def resolve_primary
     Connection.resolve_primary(user, self)
   end

@@ -100,7 +100,10 @@
 
       <div class="field is-grouped mt-5">
         <div class="control">
-          <%= form.submit t('action.submit'), class: 'button is-link' %>
+          <%= form.button t('action.submit'), class: 'button is-link',
+              data: { 'disable-with': spinner },
+              style: 'min-width: 5rem;'
+          %>
         </div>
         <div class="control">
           <%= link_to t('action.cancel'), edit_user_path(current_user), class: 'button is-info' %>

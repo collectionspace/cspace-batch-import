@@ -37,6 +37,10 @@ module ApplicationHelper
     current_user.manage?(record)
   end
 
+  def spinner
+    "<i class='fa fa-spinner fa-spin'></i>"
+  end
+
   def unassigned_message
     if current_user.group.disabled?
       raw t('user.unassigned_group')
