@@ -24,21 +24,21 @@ module Integration
       assert_redirected_to redirect_path
     end
 
-    def refute_can_create(path, model, params, redirect_path)
+    def refute_can_create(path, model, params, redirect_path = nil)
       assert_no_difference("#{model}.count") do
         post path, params: params
       end
-      assert_redirected_to redirect_path
+      assert_redirected_to redirect_path if redirect_path
     end
 
     # DELETE
     # EDIT
 
     # UPDATE
-    def run_update(path, record, params, redirected_path = nil)
+    def run_update(path, record, params, redirect_path = nil)
       put path, params: params
       record.reload
-      assert_redirected_to redirected_path if redirected_path
+      assert_redirected_to redirect_path if redirect_path
     end
   end
 end

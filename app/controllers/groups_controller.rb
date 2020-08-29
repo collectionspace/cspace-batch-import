@@ -15,9 +15,8 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.created') }
       else
-        format.html do
-          redirect_to groups_path, alert: error_messages(@group.errors)
-        end
+        @groups = policy_scope(Group).order(:name)
+        format.html { render :index }
       end
     end
   end

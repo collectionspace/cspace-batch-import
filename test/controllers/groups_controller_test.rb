@@ -29,21 +29,21 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   test 'an admin cannot create a group with invalid attributes' do
     sign_in users(:admin)
     refute_can_create(
-      groups_url, 'Group', { group: { name: nil } }, groups_path
+      groups_url, 'Group', { group: { name: nil } }
     )
   end
 
   test 'a manager cannot create a group' do
     sign_in users(:manager)
     refute_can_create(
-      groups_url, 'Group', { group: { name: 'Birds' } }, groups_path
+      groups_url, 'Group', { group: { name: 'Birds' } }
     )
   end
 
   test 'a member cannot create a group' do
     sign_in users(:minion)
     refute_can_create(
-      groups_url, 'Group', { group: { name: 'Birds' } }, groups_path
+      groups_url, 'Group', { group: { name: 'Birds' } }
     )
   end
 
