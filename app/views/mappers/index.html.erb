@@ -9,7 +9,9 @@
   <%= content_tag :span, class: 'tag is-primary' do %>
     <%= t('action.refresh') %>
   <% end %>
-  <%= link_to '', class: 'tag', data: { 'reflex': 'click->MapperReflex#refresh' } do %>
+  <%= link_to '', id: 'refresh', class: 'tag',
+      data: { 'reflex': 'click->MapperReflex#refresh' },
+      onclick: 'document.getElementById("refresh").querySelector(".fa-refresh").classList.add("fa-spin")' do %>
     <%= fa_icon "refresh" %>
   <% end %>
 <% end %>
