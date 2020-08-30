@@ -11,7 +11,7 @@
   <% end %>
   <%= link_to '', id: 'refresh', class: 'tag',
       data: { 'reflex': 'click->MapperReflex#refresh' },
-      onclick: 'document.getElementById("refresh").querySelector(".fa-refresh").classList.add("fa-spin")' do %>
+      onclick: 'this.querySelector(".fa-refresh").classList.add("fa-spin")' do %>
     <%= fa_icon "refresh" %>
   <% end %>
 <% end %>
