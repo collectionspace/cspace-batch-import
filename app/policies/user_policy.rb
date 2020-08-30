@@ -46,7 +46,7 @@ class UserPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        scope.joins(:group).where(groups: { id: user.group_id })
+        user.group.users
       end
     end
   end
