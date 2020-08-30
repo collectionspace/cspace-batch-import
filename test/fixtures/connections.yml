@@ -4,10 +4,21 @@ core_superuser:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
-  password_ciphertext: Administrator
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
   primary: true
   domain: core.collectionspace.org
+  profile: ''
+  user: superuser
+
+fcart_superuser:
+  name: fcart.dev
+  url: https://fcart.dev.collectionspace.org/cspace-services
+  username: admin@fcart.collectionspace.org
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
+  enabled: true
+  primary: false
+  domain: fcart.collectionspace.org
   profile: ''
   user: superuser
 
@@ -15,7 +26,7 @@ core_admin:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
-  password_ciphertext: Administrator
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
   primary: true
   domain: core.collectionspace.org
@@ -26,7 +37,7 @@ core_manager:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
-  password_ciphertext: Administrator
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
   primary: true
   domain: core.collectionspace.org
@@ -37,7 +48,7 @@ core_minion:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
-  password_ciphertext: Administrator
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
   primary: true
   domain: core.collectionspace.org
@@ -48,7 +59,7 @@ core_salmon:
   name: core.dev
   url: https://core.dev.collectionspace.org/cspace-services
   username: admin@core.collectionspace.org
-  password_ciphertext: Administrator
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
   primary: true
   domain: core.collectionspace.org

@@ -2,9 +2,9 @@
 
 class ConnectionsController < ApplicationController
   before_action :set_connection, only: %i[edit update destroy]
+  before_action :check_for_connection_targets_another_user, only: %i[new create]
 
   def new
-    check_for_connection_targets_another_user(params[:user_id])
     @connection = Connection.new
   end
 
@@ -13,7 +13,6 @@ class ConnectionsController < ApplicationController
   def create
     respond_to do |format|
       @connection = Connection.new
-      check_for_connection_targets_another_user(params[:connection][:user_id])
       if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_user_path(current_user),
@@ -48,7 +47,8 @@ class ConnectionsController < ApplicationController
 
   private
 
-  def check_for_connection_targets_another_user(user_id)
+  def check_for_connection_targets_another_user
+    user_id = params.dig(:connection, :user_id) || params[:user_id]
     if user_id.blank? || user_id.to_i != current_user.id
       raise Pundit::NotAuthorizedError
     end

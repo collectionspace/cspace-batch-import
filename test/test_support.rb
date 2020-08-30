@@ -62,11 +62,7 @@ module Policy
 
     def pundit_msg(user, record, action, affirmative = true)
       msg = "User #{user.inspect} should #{affirmative ? '' : 'NOT'} be permitted to #{action} ".dup
-      begin
-        msg.concat record.inspect.to_s
-      rescue Lockbox::DecryptionError
-        msg.concat record.id.to_s
-      end
+      msg.concat record.inspect.to_s
     end
   end
 end

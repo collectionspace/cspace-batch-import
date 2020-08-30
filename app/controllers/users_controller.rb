@@ -2,6 +2,7 @@
 
 class UsersController < ApplicationController
   before_action :set_user, only: %i[edit update update_group destroy]
+  before_action :check_for_illegal_promote_to_admin, only: %i[update]
 
   def index
     authorize(User)
@@ -16,10 +17,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       scrub_params(:user, :password)
       scrub_params(:user, :password_confirmation)
-      authorized_params = user_params
-      check_for_illegal_promote_to_admin(authorized_params)
 
-      if @user.update(authorized_params)
+      if @user.update(user_params)
         # reset_user(@user)
         format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
       else
@@ -64,10 +63,9 @@ class UsersController < ApplicationController
 
   private
 
-  def check_for_illegal_promote_to_admin(authorized_params)
-    if !current_user.admin? &&
-       authorized_params.key?(:role_id) &&
-       Role.find(authorized_params[:role_id]).name == Role::TYPE[:admin]
+  def check_for_illegal_promote_to_admin
+    role_id = params.dig(:user, :role_id) || params[:role_id]
+    if !current_user.admin? && role_id && Role.find(role_id).name == Role::TYPE[:admin]
       raise Pundit::NotAuthorizedError
     end
   end
