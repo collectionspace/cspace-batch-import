@@ -6,6 +6,7 @@ require_relative 'test_support'
 require 'rails/test_help'
 require 'minitest/autorun'
 require 'webmock/minitest'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
