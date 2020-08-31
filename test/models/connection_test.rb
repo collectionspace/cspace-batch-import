@@ -8,7 +8,8 @@ class ConnectionTest < ActiveSupport::TestCase
       name: 'core.dev',
       url: 'https://core.dev.collectionspace.org/cspace-services',
       username: 'admin@core.collectionspace.org',
-      password_ciphertext: Connection.generate_password_ciphertext('Administrator').inspect
+      password: 'Administrator',
+      user_id: users(:superuser).id
     }
   end
 
@@ -28,8 +29,15 @@ class ConnectionTest < ActiveSupport::TestCase
   end
 
   test 'cannot create connection without a password' do
-    @params.delete(:password_ciphertext)
+    @params.delete(:password)
     refute Connection.new(@params).valid?
+  end
+
+  test 'can create a connection and set the domain' do
+    domain = 'test.collectionspace.org'
+    c = Connection.new(@params)
+    c.save
+    assert_equal domain, c.domain
   end
 
   test 'disabling connection unsets primary (default)' do
