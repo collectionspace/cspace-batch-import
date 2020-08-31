@@ -11,7 +11,7 @@ class MappersControllerTest < ActionDispatch::IntegrationTest
     assert_can_view('/mappers/autocomplete?query=anthro')
     results = JSON.parse(@response.body)
     assert_not_empty results
-    assert_equal results.count, 2 # TODO: NOT HC
+    assert_equal 2, results.count # TODO: NOT HC
   end
 
   test 'a manager cannot view mappers' do

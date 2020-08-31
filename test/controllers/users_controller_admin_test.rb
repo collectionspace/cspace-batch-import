@@ -16,7 +16,6 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
   end
 
   test 'an admin can access an admin' do
-    sign_in users(:admin) # re-init controller
     assert_can_view edit_user_path users(:admin2)
   end
 
@@ -30,7 +29,6 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
   end
 
   test "an admin can update a member's group" do
-    sign_in users(:admin) # re-init controller
     user = users(:manager)
     run_update(
       user_url(user),
@@ -42,7 +40,6 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
   end
 
   test 'an admin can promote a user to be admin' do
-    sign_in users(:admin)
     user = users(:manager)
     run_update(
       user_url(user),

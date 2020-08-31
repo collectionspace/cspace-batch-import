@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class UsersControllerAdminTest < ActionDispatch::IntegrationTest
+class UsersControllerMemberTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:minion)
   end
@@ -24,18 +24,13 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
     refute_can_view edit_user_path users(:disabled)
   end
 
-  # DISABLED USER
-  test 'a disabled user can sign in' do
-    sign_in users(:disabled)
-    get root_path
-    assert_response :success
-    assert_select 'article.message', /You are not currently enabled/
-  end
-
-  test 'a disabled user cannot update self' do
-    sign_in users(:disabled)
-    get edit_user_path users(:disabled)
-    assert_response :success
-    assert_select 'article.message', /You are not currently enabled/
+  test 'a member cannot de-promote a mananger' do
+    user = users(:manager)
+    run_update(
+      user_url(user),
+      user,
+      { user: { role_id: roles(:member).id } }
+    )
+    assert_equal roles(:manager).id, user.role_id
   end
 end

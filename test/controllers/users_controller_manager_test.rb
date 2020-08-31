@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class UsersControllerAdminTest < ActionDispatch::IntegrationTest
+class UsersControllerManagerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:manager)
   end
@@ -41,7 +41,7 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
       { user: { enabled: false } },
       edit_user_path(user)
     )
-    assert_equal user.enabled, false
+    assert_not user.enabled?
   end
 
   test "a manager cannot update a member's group" do
@@ -52,7 +52,7 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
       { user: { group_id: groups(:fish).id } },
       edit_user_path(user)
     )
-    assert_not_equal user.group_id, groups(:fish).id
+    assert_not_equal groups(:fish).id, user.group_id
   end
 
   test 'a manager can promote a user to be manager' do
@@ -63,7 +63,7 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
       { user: { role_id: roles(:manager).id } },
       edit_user_path(user)
     )
-    assert_equal user.role_id, roles(:manager).id
+    assert_equal roles(:manager).id, user.role_id
   end
 
   test 'a manager cannot promote a user to be admin' do
@@ -73,6 +73,6 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
       user,
       { user: { role_id: roles(:admin).id } },
     )
-    assert_not_equal user.role.name, roles(:admin).name
+    assert_not_equal roles(:admin).name, user.role.name
   end
 end

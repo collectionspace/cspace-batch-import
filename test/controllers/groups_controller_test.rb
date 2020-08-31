@@ -57,8 +57,8 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       { group: { name: 'Fish updated!', profile: 'anthro-4_0_0' } },
       edit_group_path(group)
     )
-    assert_equal group.name, 'Fish updated!'
-    assert_equal group.profile, 'anthro-4_0_0'
+    assert_equal 'Fish updated!', group.name
+    assert_equal 'anthro-4_0_0', group.profile
   end
 
   test 'an admin cannot update a group with invalid attributes' do
@@ -69,7 +69,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       group,
       { group: { name: nil } },
     )
-    assert_not_equal group.name, nil
+    refute_nil group.name
   end
 
   test 'an admin cannot set the profile for the default group' do
@@ -92,7 +92,7 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
       group,
       { group: { domain: 'veg.edu' } }
     )
-    assert_not_equal group.domain, 'veg.edu'
+    assert_not_equal 'veg.edu', group.domain
   end
 
   # DELETE
