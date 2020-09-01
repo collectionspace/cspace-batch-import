@@ -6,6 +6,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :batches, dependent: :destroy
   has_many :connections, dependent: :destroy
   belongs_to :group
   belongs_to :role
@@ -24,16 +25,6 @@ class User < ApplicationRecord
 
   def admin?
     role == Role.default_scoped.admin
-  end
-
-  def collaborator?(record)
-    return false if member?
-
-    if record.respond_to?(:group)
-      group.id == record.group.id
-    elsif record.respond_to?(:user)
-      group.id == record.user.group.id
-    end
   end
 
   def disabled?

@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+superuser_default_batch:
+  name: superuser_default_batch
+  user: superuser
+  group: default
+
+minion_default_batch:
+  name: minion_default_batch
+  user: minion
+  group: default
+
+fishmonger_fish_batch:
+  name: fishmonger_fish_batch
+  user: fishmonger
+  group: fish
+
+tuna_fish_batch:
+  name: tuna_fish_batch
+  user: tuna
+  group: fish

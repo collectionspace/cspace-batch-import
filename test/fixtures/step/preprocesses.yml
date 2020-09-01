@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+preprocess_superuser_default_batch:
+  batch: superuser_default_batch
+
+preprocess_fishmonger_fish_batch:
+  batch: fishmonger_fish_batch

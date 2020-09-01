@@ -50,9 +50,17 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
     assert_equal roles(:admin).id, user.role_id
   end
 
-  test 'an admin can delete a user (with connection)' do
+  test 'an admin can delete a user with a connection' do
     assert_difference('User.count', -1) do
       delete user_url(users(:minion))
+    end
+
+    assert_redirected_to users_url
+  end
+
+  test 'an admin can delete a user with a batch' do
+    assert_difference('User.count', -1) do
+      delete user_url(users(:fishmonger))
     end
 
     assert_redirected_to users_url

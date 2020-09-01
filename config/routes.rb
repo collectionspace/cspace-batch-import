@@ -3,6 +3,11 @@
 Rails.application.routes.draw do
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
   root 'sites#home'
+  resources :batches, only: %i[index new create destroy] do
+    namespace :step do
+      resources :preprocess, only: %i[new create show]
+    end
+  end
   resources :connections, except: %i[index show]
   get '/connections', to: redirect('/connections/new')
   get '/connections/:id', to: redirect('/connections/%{id}/edit')

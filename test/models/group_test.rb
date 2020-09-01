@@ -60,4 +60,6 @@ class GroupTest < ActiveSupport::TestCase
     assert_equal Group.select_options(users(:manager)).count, 1
     assert_includes Group.select_options(users(:manager)), Group.default
   end
+
+  # TODO: updating group profile updates connection profile
 end

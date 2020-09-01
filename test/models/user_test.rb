@@ -54,9 +54,9 @@ class UserTest < ActiveSupport::TestCase
     assert_not users(:minion).is?(users(:outcast))
   end
 
-  test 'can identify a user as collaborator on another record' do
-    assert users(:manager).collaborator?(connections(:core_superuser))
-    assert_not users(:minion).collaborator?(connections(:core_superuser))
+  test 'can identify a user as able to manage another record in the same group' do
+    assert users(:manager).manage?(connections(:core_superuser))
+    assert_not users(:minion).manage?(connections(:core_superuser))
   end
 
   test 'can identify a user as owner of another record' do

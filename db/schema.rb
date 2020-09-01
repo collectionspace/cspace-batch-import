@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_160258) do
+ActiveRecord::Schema.define(version: 2020_09_01_050237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 2020_08_22_160258) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "batches", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.bigint "group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["group_id"], name: "index_batches_on_group_id"
+    t.index ["user_id"], name: "index_batches_on_user_id"
   end
 
   create_table "connections", force: :cascade do |t|
@@ -85,6 +95,13 @@ ActiveRecord::Schema.define(version: 2020_08_22_160258) do
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
+  create_table "step_preprocesses", force: :cascade do |t|
+    t.bigint "batch_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_id"], name: "index_step_preprocesses_on_batch_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -106,7 +123,10 @@ ActiveRecord::Schema.define(version: 2020_08_22_160258) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "batches", "groups"
+  add_foreign_key "batches", "users"
   add_foreign_key "connections", "users"
+  add_foreign_key "step_preprocesses", "batches"
   add_foreign_key "users", "groups"
   add_foreign_key "users", "roles"
 end
