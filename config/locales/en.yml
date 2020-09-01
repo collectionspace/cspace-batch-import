@@ -107,6 +107,7 @@ en:
     url_link_prefix: "Configuration:"
   navigation:
     back: Back
+    batches: Batches
     become: Become
     delete: Delete
     edit: Edit

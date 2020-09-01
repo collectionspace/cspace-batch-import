@@ -5,6 +5,10 @@
         <%= fa_icon "home", class: 'mr-2' %>
         <%= t('navigation.home') %>
       <% end %>
+      <%= link_to batches_path, class: 'navbar-item' do %>
+        <%= fa_icon "wrench", class: 'mr-2' %>
+        <%= t('navigation.batches') %>
+      <% end %>
       <% if admin? %>
         <%= link_to groups_path, class: 'navbar-item' do %>
           <%= fa_icon "user-plus", class: 'mr-2' %>
