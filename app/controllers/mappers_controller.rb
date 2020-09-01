@@ -13,7 +13,7 @@ class MappersController < ApplicationController
   def autocomplete
     authorize(Mapper)
     q = params[:query]
-    results = Mapper.mapper_profiles.find_all do |mp|
+    results = Mapper.profile_versions.find_all do |mp|
       mp.starts_with?(q)
     end.map do |mp|
       mp.gsub(/^#{q}/, highlight(q))

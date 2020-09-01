@@ -49,7 +49,7 @@
       <div class="field">
         <%= form.label t('user.group'), class: 'label' %>
         <div class="select">
-          <%= form.collection_select :group_id, Group.group_options(current_user), :id, :name, {},
+          <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name, {},
               disabled: !can_edit_user_group?(user) %>
         </div>
       </div>
@@ -57,7 +57,7 @@
       <div class="field">
         <%= form.label t('user.role'), class: 'label' %>
         <div class="select">
-          <%= form.collection_select :role_id, Role.role_options(current_user), :id, :name, {},
+          <%= form.collection_select :role_id, Role.select_options(current_user), :id, :name, {},
               disabled: current_user.is?(user) %>
         </div>
       </div>

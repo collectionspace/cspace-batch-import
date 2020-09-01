@@ -4,7 +4,7 @@ module PrefixChecker
   extend ActiveSupport::Concern
 
   def profile_must_be_prefix
-    return unless profile.present? && !Mapper.mapper_profiles.include?(profile)
+    return unless profile.present? && !Mapper.profile_versions.include?(profile)
 
     errors.add(:profile, I18n.t('mapper.invalid_profile'))
   end

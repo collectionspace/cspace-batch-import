@@ -22,11 +22,11 @@ class RoleTest < ActiveSupport::TestCase
   end
 
   test 'scope role options includes admin role for admin user' do
-    assert_includes Role.role_options(users(:admin)), Role.admin
+    assert_includes Role.select_options(users(:admin)), Role.admin
   end
 
   test 'scope role options does not include admin role for non-admin user' do
-    refute_includes Role.role_options(users(:manager)), Role.admin
+    refute_includes Role.select_options(users(:manager)), Role.admin
   end
 
   # MANAGE

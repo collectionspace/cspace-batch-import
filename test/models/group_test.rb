@@ -52,12 +52,12 @@ class GroupTest < ActiveSupport::TestCase
 
   test 'scope group options includes all groups for admin user' do
     %i[default fruit veg].each do |group|
-      assert_includes Group.group_options(users(:admin)), Group.find_by(name: groups(group).name)
+      assert_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
     end
   end
 
   test 'scope group options only includes assigned group for non-admin user' do
-    assert_equal Group.group_options(users(:manager)).count, 1
-    assert_includes Group.group_options(users(:manager)), Group.default
+    assert_equal Group.select_options(users(:manager)).count, 1
+    assert_includes Group.select_options(users(:manager)), Group.default
   end
 end

@@ -8,8 +8,8 @@ class Mapper < ApplicationRecord
   validates :type, presence: true
   validates :version, presence: true
   validates :url, presence: true, uniqueness: true
-  scope :mapper_options, ->(connection) { where("title LIKE ?", "#{connection.profile}%") }
-  scope :mapper_profiles, -> {
+  scope :select_options, ->(connection) { where("title LIKE ?", "#{connection.profile}%") }
+  scope :profile_versions, -> {
     order('profile asc, version asc').pluck(:profile, :version).map { |m| m.join('-') }.uniq
   }
 

@@ -10,7 +10,7 @@ class Group < ApplicationRecord
   validates :supergroup, uniqueness: true, if: -> { supergroup }
   validates_uniqueness_of :domain, allow_blank: true
   scope :default, -> { where(supergroup: true).first }
-  scope :group_options, ->(user) { user.admin? ? all : where(id: user.group.id) }
+  scope :select_options, ->(user) { user.admin? ? all : where(id: user.group.id) }
 
   def default?
     self == Group.default

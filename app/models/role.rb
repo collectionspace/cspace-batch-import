@@ -13,7 +13,7 @@ class Role < ApplicationRecord
   scope :default, -> { where(name: TYPE[:member]).first }
   scope :manager, -> { where(name: TYPE[:manager]).first }
   scope :member, -> { where(name: TYPE[:member]).first }
-  scope :role_options, ->(user) { user.admin? ? all : where.not(name: TYPE[:admin]) }
+  scope :select_options, ->(user) { user.admin? ? all : where.not(name: TYPE[:admin]) }
 
   class Type
     attr_reader :user

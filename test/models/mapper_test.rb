@@ -8,11 +8,11 @@ class MapperTest < ActiveSupport::TestCase
   end
 
   test 'scope can match options with profile and version' do
-    assert_includes Mapper.mapper_options(@connection), mappers(:core_collectionobject_6_0)
+    assert_includes Mapper.select_options(@connection), mappers(:core_collectionobject_6_0)
   end
 
   test 'scope can skip options with profile and version' do
-    assert_not_includes Mapper.mapper_options(@connection), mappers(:anthro_collectionobject_4_0)
+    assert_not_includes Mapper.select_options(@connection), mappers(:anthro_collectionobject_4_0)
   end
 
   test 'reports found status correctly' do
