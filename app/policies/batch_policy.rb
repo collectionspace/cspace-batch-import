@@ -10,7 +10,7 @@ class BatchPolicy < ApplicationPolicy
   end
 
   def new?
-    create?
+    !user.connections.where(enabled: true).count.zero?
   end
 
   def destroy?
@@ -18,7 +18,7 @@ class BatchPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    # TODO
+    %i[name group_id]
   end
 
   class Scope < Scope

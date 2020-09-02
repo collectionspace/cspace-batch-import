@@ -1,11 +1,6 @@
 <h1 class="title"><%= t('mapper.title.index') %></h1>
 
-<%= content_tag :p do %>
-  <%= t('mapper.url_link_prefix') %>
-  <%= link_to Rails.configuration.mappers_url, Rails.configuration.mappers_url %>
-<% end %>
-
-<%= content_tag :div, class: 'tags has-addons mt-2' do %>
+<%= content_tag :div, class: 'tags has-addons' do %>
   <%= content_tag :span, class: 'tag is-primary' do %>
     <%= t('action.refresh') %>
   <% end %>
@@ -16,7 +11,11 @@
   <% end %>
 <% end %>
 
-<table class="table is-fullwidth is-hoverable mt-3">
+<table class="table is-fullwidth is-hoverable">
+  <caption>
+    <%= t('mapper.url_link_prefix') %>
+    <%= link_to Rails.configuration.mappers_url, Rails.configuration.mappers_url %>
+  </caption>
   <thead>
     <tr>
       <th><%= t 'mapper.profile' %></th>
