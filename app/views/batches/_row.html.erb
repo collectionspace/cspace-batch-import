@@ -1,0 +1,13 @@
+<tr id="<%= dom_id(batch) %>" data-batch-id="<%= batch.id %>">
+  <td class='pt-3'><%= batch.name %></td>
+  <td class='pt-3'><%= batch.user.email %></td>
+  <td class='pt-3'><%= batch.created_at %></td>
+  <td>
+    <%=
+      link_to t('navigation.delete'), batch,
+      method: :delete, data: { confirm: t('action.confirm_delete') },
+      disabled: !manage?(batch),
+      class: 'button is-danger is-outlined is-small'
+    %>
+  </td>
+</tr>

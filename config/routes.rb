@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
   root 'sites#home'
   resources :batches, only: %i[index new create destroy] do
-    namespace :step do
-      resources :preprocess, only: %i[new create show]
+    namespace :steps do
+      resources :preprocesses, only: %i[new create show]
     end
   end
   resources :connections, except: %i[index show]

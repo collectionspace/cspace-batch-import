@@ -27,22 +27,23 @@ class Mapper < ApplicationRecord
   end
 
   def self.create_mapper(json)
+    url_found = HTTP.get(json['url']).status.success?
     mapper = Mapper.find_or_create_by!(\
       profile: json['profile'], version: json['version'], type: json['type']
     ) do |m|
       logger.info "Creating mapper for: #{json.inspect}"
       m.url = json['url']
-      m.status = HTTP.get(json['url']).status.success?
+      m.status = url_found
     end
     if mapper.url != json['url']
       logger.info "Updating mapper for: #{json.inspect}"
       mapper.config.purge if mapper.config.attached?
       mapper.update(
         url: json['url'],
-        status: HTTP.get(json['url']).status.success?
+        status: url_found
       )
     end
-    return mapper if mapper.config.attached? || !mapper.found?
+    return mapper if mapper.config.attached? || !url_found
 
     mapper.download
   end

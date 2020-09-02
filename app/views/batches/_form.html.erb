@@ -1,0 +1,23 @@
+<%= form_with(model: batch, local: true, id: dom_id(batch), class: 'mt-3') do |form| %>
+  <div class="columns">
+    <div class="column">
+        <%= content_tag :div, class: 'field' do %>
+          <%= form.label t('batch.name'), class: 'label' %>
+          <%= form.text_field :name,
+            class: 'input',
+            placeholder: t('batch.name'),
+            autofocus: (batch.name.blank? ? true : false)
+          %>
+        <% end %>
+    </div>
+    <div class="column">
+        <%= content_tag :div, class: 'field' do %>
+          <%= form.label t('batch.group'), class: 'label' %>
+          <div class="select">
+            <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name, {},
+                disabled: !admin? %>
+          </div>
+        <% end %>
+    </div>
+  </div>
+<% end %>

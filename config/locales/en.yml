@@ -43,6 +43,14 @@ en:
     signup: Sign up
     submit: Submit
     update: Update
+  batch:
+    created: Batch was successfully created
+    deleted: Batch was successfully deleted
+    group: Group
+    name: Name
+    title:
+      create: Batch
+      index: Batches
   connection:
     created: Connection was successfully created
     deleted: Connection was successfully deleted

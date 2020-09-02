@@ -1,2 +1,16 @@
-<h1>Batches#index</h1>
-<p>Find me in app/views/batches/index.html.erb</p>
+<h1 class="title is-spaced"><%= t('batch.title.index') %></h1>
+
+<table class="table is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th><%= t 'batch.name' %></th>
+      <th><%= t 'batch.created_by' %></th>
+      <th><%= t 'batch.created_at' %></th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= render partial: 'row', collection: policy_scope(@batches), as: :batch %>
+  </tbody>
+</table>

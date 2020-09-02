@@ -5,6 +5,11 @@ superuser_default_batch:
   user: superuser
   group: default
 
+superuser_default_batch_no_steps:
+  name: superuser_default_batch_no_preprocess
+  user: superuser
+  group: default
+
 minion_default_batch:
   name: minion_default_batch
   user: minion
