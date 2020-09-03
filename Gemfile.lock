@@ -11,6 +11,8 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.1.1)
+      concurrent-ruby (~> 1.0)
     actioncable (6.0.3.2)
       actionpack (= 6.0.3.2)
       nio4r (~> 2.0)
@@ -68,6 +70,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    after_commit_everywhere (0.1.5)
+      activerecord (>= 4.2)
     ast (2.4.0)
     aws-eventstream (1.1.0)
     aws-partitions (1.355.0)
@@ -323,6 +327,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
+  after_commit_everywhere (~> 0.1, >= 0.1.5)
   aws-sdk-s3
   better_errors
   binding_of_caller

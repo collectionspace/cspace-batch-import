@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2020_09_01_050237) do
 
   create_table "batches", force: :cascade do |t|
     t.string "name"
+    t.string "step_state"
+    t.string "status_state"
     t.bigint "user_id", null: false
     t.bigint "group_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -96,6 +98,7 @@ ActiveRecord::Schema.define(version: 2020_09_01_050237) do
   end
 
   create_table "step_preprocesses", force: :cascade do |t|
+    t.boolean "done", default: false, null: false
     t.bigint "batch_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

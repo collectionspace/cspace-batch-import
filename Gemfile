@@ -62,6 +62,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'aasm'
+gem 'after_commit_everywhere', '~> 0.1', '>= 0.1.5'
 gem 'aws-sdk-s3', require: false
 gem 'bulma-rails', '~> 0.9.0'
 gem 'collectionspace-client', tag: 'v0.7.0', git: 'https://github.com/collectionspace/collectionspace-client.git'
