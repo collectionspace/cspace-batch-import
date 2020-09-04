@@ -1,23 +1,19 @@
 <h1 class="title is-spaced"><%= t('batch.title.index') %></h1>
 
 <%= content_tag :div, class: 'level' do %>
-    <%= content_tag :div, class: 'tags has-addons' do %>
-      <%= content_tag :span, class: 'tag is-link' do %>
-        <%= t('action.create') %>
-      <% end %>
-      <%= link_to new_batch_path, class: 'tag' do %>
-        <%= fa_icon "plus" %>
-      <% end %>
-
-      <%= content_tag :span, class: 'tag is-primary ml-3' do %>
-        <%= t('action.refresh') %>
-      <% end %>
-      <%= link_to '', id: 'refresh', class: 'tag',
-          data: { 'reflex': 'click' },
-          onclick: 'this.querySelector(".fa-refresh").classList.add("fa-spin")' do %>
-        <%= fa_icon "refresh" %>
-      <% end %>
+  <%= content_tag :div, class: 'tags has-addons' do %>
+    <%= content_tag :span, class: 'tag is-link' do %>
+      <%= t('action.create') %>
     <% end %>
+    <%= link_to new_batch_path, class: 'tag' do %>
+      <%= fa_icon "plus" %>
+    <% end %>
+
+    <%= content_tag :span, class: 'tag is-primary ml-3' do %>
+      <%= t('action.refresh') %>
+    <% end %>
+    <%= render partial: 'shared/refresh', locals: { reflex: 'click' } %>
+  <% end %>
 <% end %>
 
 <table class="table is-fullwidth is-hoverable">

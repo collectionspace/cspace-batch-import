@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   resources :connections, except: %i[index show]
   get '/connections', to: redirect('/connections/new')
   get '/connections/:id', to: redirect('/connections/%{id}/edit')
-  resources :groups, only: %i[index create edit update destroy]
+  resources :groups, only: %i[index new create edit update destroy]
   get '/groups/:id', to: redirect('/groups/%{id}/edit')
   resources :mappers, only: %i[index]
   get '/mappers/autocomplete', to: 'mappers#autocomplete'

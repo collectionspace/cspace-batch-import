@@ -6,6 +6,9 @@ class GroupsController < ApplicationController
   def index
     authorize(Group)
     @groups = policy_scope(Group).order(:name)
+  end
+
+  def new
     @group = Group.new
   end
 
@@ -15,7 +18,6 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.created') }
       else
-        @groups = policy_scope(Group).order(:name)
         format.html { render :index }
       end
     end

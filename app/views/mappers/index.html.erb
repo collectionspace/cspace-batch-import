@@ -4,15 +4,11 @@
   <%= content_tag :span, class: 'tag is-primary' do %>
     <%= t('action.refresh') %>
   <% end %>
-  <%= link_to '', id: 'refresh', class: 'tag',
-      data: { 'reflex': 'click->MapperReflex#refresh' },
-      onclick: 'this.querySelector(".fa-refresh").classList.add("fa-spin")' do %>
-    <%= fa_icon "refresh" %>
-  <% end %>
+  <%= render partial: 'shared/refresh', locals: { reflex: 'click->MapperReflex#refresh' } %>
 <% end %>
 
 <table class="table is-fullwidth is-hoverable">
-  <caption>
+  <caption class="mb-2 py-2 has-background-light">
     <%= t('mapper.url_link_prefix') %>
     <%= link_to Rails.configuration.mappers_url, Rails.configuration.mappers_url %>
   </caption>

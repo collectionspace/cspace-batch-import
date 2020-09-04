@@ -1,8 +1,15 @@
 <h1 class="title is-spaced"><%= t('group.title.index') %></h1>
 
-<h2 class="subtitle is-6"><%= fa_icon('plus') %> <%= t('action.create') %></h2>
-<%= render 'form_inline', group: @group %>
-<hr/>
+<%= content_tag :div, class: 'level' do %>
+  <%= content_tag :div, class: 'tags has-addons' do %>
+    <%= content_tag :span, class: 'tag is-link' do %>
+      <%= t('action.create') %>
+    <% end %>
+    <%= link_to new_group_path, class: 'tag' do %>
+      <%= fa_icon "plus" %>
+    <% end %>
+  <% end %>
+<% end %>
 
 <table class="table is-fullwidth is-hoverable">
   <thead>
