@@ -1,4 +1,4 @@
-<h1 class="title is-spaced"><%= t('batch.title.index') %></h1>
+<h1 class="title has-text-centered is-spaced"><%= t('batch.title.index') %></h1>
 
 <%= content_tag :div, class: 'level' do %>
   <%= content_tag :div, class: 'tags has-addons' do %>
@@ -21,6 +21,9 @@
     <tr>
       <th><%= t 'batch.name' %></th>
       <th><%= t 'batch.group' %></th>
+      <th><%= t 'batch.file' %></th>
+      <th><%= t 'batch.current_step' %></th>
+      <th><%= t 'batch.current_state' %></th>
       <th><%= t 'batch.created_by' %></th>
       <th><%= t 'batch.created_at' %></th>
       <th colspan="1"></th>

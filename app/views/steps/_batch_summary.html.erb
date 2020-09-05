@@ -1,0 +1,68 @@
+<div class="box">
+  <%= content_tag :div, class: 'level mb-1' do %>
+    <%= content_tag :div, class: 'level-left' do %>
+      <h3 class="subtitle has-text-weight-bold is-6 mb-2">
+        <%= render partial: 'shared/icon',
+            locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+        %>
+        <%= t 'batch.summary' %>
+      </h3>
+    <% end %>
+    <%= content_tag :div, class: 'level-right' do %>
+      <%=
+        link_to t('navigation.return'), batches_path,
+        class: 'button is-info is-outlined is-small mb-2'
+      %>
+      <%=
+        link_to t('navigation.delete'), batch,
+        method: :delete, data: { confirm: t('action.confirm_delete') },
+        class: 'button is-danger is-outlined is-small ml-2 mb-2'
+      %>
+    <% end %>
+  <% end %>
+  <hr class="mt-2 mb-4"/>
+  <div class="columns">
+    <div class="column">
+      <dl>
+        <dt class="is-italic"><%= t 'batch.name' %></dt>
+        <dd><%= batch.name %></dd>
+      </dl>
+    </div>
+    <div class="column">
+      <dl>
+        <dt class="is-italic">
+          <%= fa_icon "user-plus", class: 'mr-1' %>
+          <%= t 'batch.group' %>
+        </dt>
+        <dd><%= batch.group.name %></dd>
+      </dl>
+    </div>
+    <div class="column">
+      <dl>
+        <dt class="is-italic">
+          <%= fa_icon "file", class: 'mr-1' %>
+          <%= t 'batch.file' %>
+        </dt>
+        <dd></dd>
+      </dl>
+    </div>
+    <div class="column">
+      <dl>
+        <dt class="is-italic">
+          <%= fa_icon "user-circle", class: 'mr-1' %>
+          <%= t 'batch.created_by' %>
+        </dt>
+        <dd><%= batch.user.email %></dd>
+      </dl>
+    </div>
+    <div class="column">
+      <dl>
+        <dt class="is-italic">
+          <%= fa_icon "calendar", class: 'mr-1' %>
+          <%= t 'batch.created_at' %>
+        </dt>
+        <dd><%= batch.created_at %></dd>
+      </dl>
+    </div>
+  </div>
+</div>

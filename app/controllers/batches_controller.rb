@@ -21,8 +21,7 @@ class BatchesController < ApplicationController
         permitted_attributes(@batch).merge(user_id: current_user.id, group_id: group_id)
       )
         format.html do
-          # TODO: 1st step
-          redirect_to batches_path, notice: t('batch.created')
+          redirect_to new_batch_steps_preprocess_path(@batch), notice: t('batch.created')
         end
       else
         format.html { render :new }

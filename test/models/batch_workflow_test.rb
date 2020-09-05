@@ -37,8 +37,8 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     )
   end
 
-  test 'a new batch has the default workflow state' do
-    assert_have_state @batch, :new, on: :step
+  test 'a new batch has the default (post create) workflow state' do
+    assert_have_state @batch, :preprocessing, on: :step
     assert_have_state @batch, :ready, on: :status
   end
 

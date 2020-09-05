@@ -45,12 +45,25 @@ en:
     update: Update
   batch:
     created: Batch was successfully created
+    created_at: Created at
+    created_by: Created by
+    current_state: State
+    current_step: Step
     deleted: Batch was successfully deleted
+    file: File
     group: Group
     name: Name
+    step:
+      title:
+        preprocess: Preprocessing
+        process: Processing
+        transfer: Transfering
+        archive: Archiving
     title:
-      create: Batch
+      create: New Batch
       index: Batches
+      step: Batch
+    summary: Summary
   connection:
     created: Connection was successfully created
     deleted: Connection was successfully deleted
@@ -71,8 +84,8 @@ en:
     primary: Default
     profile: Profile & Version
     title:
-      create: Connection
-      edit: Connection
+      create: New Connection
+      edit: Update Connection
       index: Connections
     updated: Connection was successfully updated
     url: Url
@@ -96,8 +109,8 @@ en:
       profile_version: Profile & Version (search)
     profile: Profile & Version
     title:
-      create: Add a new group
-      edit: Edit existing groups
+      create: New Group
+      edit: Update group
       index: Groups
       name: Group
     tooltip:

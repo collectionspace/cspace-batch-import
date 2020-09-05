@@ -1,2 +1,19 @@
-<h1>Step::Preprocesses#new</h1>
-<p>Find me in app/views/step/preprocesses/new.html.erb</p>
+<h1 class="title has-text-centered"><%= t('batch.title.step') %></h1>
+
+<%= render partial: 'steps/batch_summary', locals: { batch: @batch } %>
+<%= render partial: 'steps/breadcrumb', locals: { batch: @batch, step: :preprocess } %>
+
+<div class="box">
+  <h3 class="subtitle has-text-weight-bold is-6 mb-2">
+    <%= render partial: 'shared/icon',
+        locals: { classes: 'has-text-info', icon: 'pause' }
+    %>
+    <%= t('batch.step.title.preprocess') %>
+  </h3>
+  <hr class="mt-4 mb-4"/>
+  <div class="columns">
+    <div class="column">
+      <p>Get ready!</p>
+    </div>
+  </div>
+</div>

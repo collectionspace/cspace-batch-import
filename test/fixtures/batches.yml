@@ -3,24 +3,34 @@
 superuser_default_batch:
   name: superuser_default_batch
   user: superuser
+  step_state: preprocessing
+  status_state: ready
   group: default
 
 superuser_default_batch_no_steps:
   name: superuser_default_batch_no_preprocess
   user: superuser
+  step_state: preprocessing
+  status_state: ready
   group: default
 
 minion_default_batch:
   name: minion_default_batch
   user: minion
+  step_state: preprocessing
+  status_state: ready
   group: default
 
 fishmonger_fish_batch:
   name: fishmonger_fish_batch
   user: fishmonger
+  step_state: preprocessing
+  status_state: ready
   group: fish
 
 tuna_fish_batch:
   name: tuna_fish_batch
   user: tuna
+  step_state: preprocessing
+  status_state: ready
   group: fish

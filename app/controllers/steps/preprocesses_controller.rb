@@ -2,6 +2,7 @@
 
 class Steps::PreprocessesController < ApplicationController
   before_action :set_batch
+  before_action :set_batch_state, only: :new
 
   def new
     if @batch.step_preprocess
@@ -9,7 +10,6 @@ class Steps::PreprocessesController < ApplicationController
         @batch, @batch.step_preprocess
       )
     end
-    # TODO: batch.step :preprocess, batch.[status].ready!
     @preprocess = Step::Preprocess.new(batch: @batch)
   end
 
@@ -44,5 +44,10 @@ class Steps::PreprocessesController < ApplicationController
 
   def set_batch
     @batch = authorize Batch.find(params[:batch_id])
+  end
+
+  def set_batch_state
+    @batch.preprocess! unless @batch.preprocessing?
+    @batch.ready! unless @batch.ready?
   end
 end

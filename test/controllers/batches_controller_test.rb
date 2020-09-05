@@ -5,7 +5,6 @@ require 'test_helper'
 class BatchesControllerTest < ActionDispatch::IntegrationTest
   setup do
     sign_in users(:admin)
-    @batch = batches(:minion_default_batch)
     @valid_params = {
       name: 'batch1',
       group_id: groups(:default).id
@@ -25,8 +24,9 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
       post batches_url, params: { batch: @valid_params }
     end
 
-    # TODO: this will be updated
-    assert_redirected_to batches_path
+    assert_response :redirect
+    follow_redirect!
+    assert_response :success
   end
 
   # TODO: admin can create batch for another group
@@ -34,8 +34,9 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
   # TODO: cannot create a batch without a connection
 
   test 'should destroy batch' do
+    batch = batches(:minion_default_batch)
     assert_difference('Batch.count', -1) do
-      delete batch_url(@batch)
+      delete batch_url(batch)
     end
 
     assert_redirected_to batches_path
