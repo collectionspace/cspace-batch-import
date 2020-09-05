@@ -99,12 +99,7 @@
       <div class="level-right">
         <% if current_user.is?(user) %>
           <%= content_tag :div, class: 'tags has-addons mt-2' do %>
-            <%= content_tag :span, class: 'tag is-link' do %>
-              <%= t('action.create') %>
-            <% end %>
-            <%= link_to(new_connection_path(user_id: user.id), class: 'tag') do %>
-              <%= fa_icon "plus" %>
-            <% end %>
+            <%= render partial: 'shared/button_create', locals: { path: new_connection_path(user_id: user.id) } %>
           <% end %>
         <% end %>
       </div>

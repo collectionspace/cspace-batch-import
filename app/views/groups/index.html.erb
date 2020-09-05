@@ -2,12 +2,7 @@
 
 <%= content_tag :div, class: 'level' do %>
   <%= content_tag :div, class: 'tags has-addons' do %>
-    <%= content_tag :span, class: 'tag is-link' do %>
-      <%= t('action.create') %>
-    <% end %>
-    <%= link_to new_group_path, class: 'tag' do %>
-      <%= fa_icon "plus" %>
-    <% end %>
+    <%= render partial: 'shared/button_create', locals: { path: new_group_path } %>
   <% end %>
 <% end %>
 

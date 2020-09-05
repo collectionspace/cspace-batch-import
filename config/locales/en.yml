@@ -38,6 +38,8 @@ en:
     disabled: Disabled
     edit: Edit
     login: Log in
+    next: Next
+    previous: Previous
     refresh: Refresh
     reload: Reload
     signup: Sign up

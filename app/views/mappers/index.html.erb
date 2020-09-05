@@ -1,10 +1,9 @@
 <h1 class="title has-text-centered"><%= t('mapper.title.index') %></h1>
 
 <%= content_tag :div, class: 'tags has-addons' do %>
-  <%= content_tag :span, class: 'tag is-primary' do %>
-    <%= t('action.refresh') %>
-  <% end %>
-  <%= render partial: 'shared/refresh', locals: { reflex: 'click->MapperReflex#refresh' } %>
+  <%= render partial: 'shared/button_refresh',
+    locals: { classes: 'tag is-primary', reflex: 'click->Mapper#refresh' }
+  %>
 <% end %>
 
 <table class="table is-fullwidth is-hoverable">
