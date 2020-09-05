@@ -25,7 +25,9 @@ export default class extends Controller {
           },
         },
       },
-    ]).on("autocomplete:selected", (event, suggestion, dataset, context) => {
+    ]).on("autocomplete:cursorchanged", (event, suggestion, dataset) => {
+      this.ac.autocomplete.setVal(suggestion.value.replace(/<[^>]+>/g, ''));
+    }).on("autocomplete:selected", (event, suggestion, dataset, context) => {
       this.ac.autocomplete.setVal(suggestion.value.replace(/<[^>]+>/g, ''));
       this.fieldTarget.classList.remove('is-danger');
     }).on("autocomplete:empty", (event) => {
