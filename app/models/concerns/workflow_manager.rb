@@ -48,6 +48,7 @@ module WorkflowManager
       state :ready, initial: true
       state :pending
       state :running
+      state :cancelled
       state :failed
       state :finished
 
@@ -59,12 +60,16 @@ module WorkflowManager
         transitions from: :pending, to: :running
       end
 
+      event :cancel do
+        transitions from: [:pending, :running], to: :cancelled
+      end
+
       event :failed do
         transitions from: :running, to: :failed
       end
 
       event :retry do
-        transitions from: :failed, to: :ready
+        transitions from: [:cancelled, :failed], to: :ready
       end
 
       event :finished do

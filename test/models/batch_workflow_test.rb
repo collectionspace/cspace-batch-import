@@ -7,6 +7,12 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     @batch = batches(:superuser_default_batch)
   end
 
+  def run_steps_cancel
+    @batch.start!
+    @batch.run!
+    @batch.cancel!
+  end
+
   def run_steps_fail
     @batch.start!
     @batch.run!
@@ -59,6 +65,18 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     transition_to_preprocessing
     run_steps_fail
     refute_transition_to_allowed @batch, :processing, on: :step
+    assert_have_state @batch, :failed, on: :status
+    @batch.retry!
+    assert_have_state @batch, :ready, on: :status
+  end
+
+  test 'cannot transition to processing if status cancelled' do
+    transition_to_preprocessing
+    run_steps_cancel
+    refute_transition_to_allowed @batch, :processing, on: :step
+    assert_have_state @batch, :cancelled, on: :status
+    @batch.retry!
+    assert_have_state @batch, :ready, on: :status
   end
 
   # TODO: remaining workflow

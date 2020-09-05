@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-class Steps::PreprocessesController < ApplicationController
+class Step::PreprocessesController < ApplicationController
   before_action :set_batch
   before_action :set_batch_state, only: :new
+  before_action :set_preprocess, only: :show
 
   def new
     if @batch.step_preprocess
-      return redirect_to batch_steps_preprocess_path(
+      return redirect_to batch_step_preprocess_path(
         @batch, @batch.step_preprocess
       )
     end
@@ -18,9 +19,9 @@ class Steps::PreprocessesController < ApplicationController
       @preprocess = Step::Preprocess.new(batch: @batch)
       if @preprocess.update(preprocess_params)
         format.html do
-          # TODO: batch.[status].pending!
+          @batch.start!
           # TODO: kickoff job i.e. JOB.perform_later(@preprocess)
-          redirect_to batch_steps_preprocess_path(
+          redirect_to batch_step_preprocess_path(
             @batch, @batch.step_preprocess
           ), notice: t('step.preprocess.created')
         end
@@ -48,6 +49,9 @@ class Steps::PreprocessesController < ApplicationController
 
   def set_batch_state
     @batch.preprocess! unless @batch.preprocessing?
-    @batch.ready! unless @batch.ready?
+  end
+
+  def set_preprocess
+    @preprocess = @batch.step_preprocess
   end
 end

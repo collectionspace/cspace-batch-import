@@ -31,12 +31,7 @@ module ApplicationHelper
 
   def current_step_path(batch)
     step_state = batch.aasm(:step).human_state.to_sym
-    if batch.current_status == :ready
-      send("new_batch_steps_#{step_state}_path", batch)
-    else
-      step = batch.send(step_state)
-      send("batch_steps_#{step_state}_path", batch, step)
-    end
+    send("new_batch_step_#{step_state}_path", batch)
   end
 
   def impersonating_user?
