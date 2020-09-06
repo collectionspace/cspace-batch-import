@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   include Pundit
@@ -22,7 +24,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def user_not_authorized
+  def user_not_authorized(_exception)
     flash[:alert] = t('user.unauthorized')
     redirect_to(request.referrer || root_path)
   end

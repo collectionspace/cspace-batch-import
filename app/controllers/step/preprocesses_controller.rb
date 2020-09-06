@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Step::PreprocessesController < ApplicationController
-  before_action :set_batch
+  before_action :set_batch, except: :create
+  before_action :set_batch_for_create, only: :create
   before_action :set_batch_state, only: :new
   before_action :set_preprocess, only: :show
 
@@ -47,11 +48,15 @@ class Step::PreprocessesController < ApplicationController
     @batch = authorize Batch.find(params[:batch_id])
   end
 
+  def set_batch_for_create
+    @batch = authorize Batch.find(params[:batch_id]), policy_class: Step::Policy
+  end
+
   def set_batch_state
     @batch.preprocess! unless @batch.preprocessing?
   end
 
   def set_preprocess
-    @preprocess = @batch.step_preprocess
+    @preprocess = authorize(@batch).step_preprocess
   end
 end

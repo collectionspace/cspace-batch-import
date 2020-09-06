@@ -34,6 +34,24 @@ module ApplicationHelper
     send("new_batch_step_#{step_state}_path", batch)
   end
 
+  def status_color(status)
+    case status
+    when :ready
+      'primary'
+    when :pending
+      'info'
+    end
+  end
+
+  def status_icon(status)
+    case status
+    when :ready
+      'plus'
+    when :pending
+      'pause'
+    end
+  end
+
   def impersonating_user?
     current_user != true_user
   end

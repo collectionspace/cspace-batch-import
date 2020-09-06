@@ -3,7 +3,12 @@
   <td class='pt-3'><%= batch.group.name %></td>
   <td class='pt-3'><%= nil %></td>
   <td class='pt-3'><%= batch.current_step %></td>
-  <td class='pt-3'><%= batch.current_status %></td>
+  <td class='pt-3'>
+    <span class="has-text-<%= status_color(batch.current_status) %> mr-1">
+      <%= fa_icon status_icon(batch.current_status) %>
+    </span>
+    <%= batch.current_status %>
+  </td>
   <td class='pt-3'><%= batch.user.email %></td>
   <td class='pt-3'><%= batch.created_at %></td>
   <td>
