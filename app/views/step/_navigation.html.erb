@@ -1,7 +1,7 @@
 <%= content_tag :div, class: 'level' do %>
   <%= content_tag :div, class: 'level-left' do %>
     <div class="control">
-      <%= link_to '#', class: 'button is-info is-small', disabled: true do %>
+      <%= link_to previous_step, class: 'button is-info is-small', disabled: !previous_ok do %>
         <%= fa_icon 'backward', class: 'mr-2 mt-1' %>
         <%= t('action.previous') %>
       <% end %>
@@ -9,8 +9,8 @@
   <% end %>
   <%= content_tag :div, class: 'level-right' do %>
     <div class="control">
-      <%= link_to '#', class: 'button is-info is-small', disabled: true do %>
-        <%= fa_icon 'lock', class: 'mr-2 mt-1' %>
+      <%= link_to next_step, class: 'button is-info is-small', disabled: !next_ok do %>
+        <%= fa_icon next_ok ? 'unlock' : 'lock', class: 'mr-2 mt-1' %>
         <%= t('action.next') %>
         <%= fa_icon 'forward', class: 'ml-2 mt-1' %>
       <% end %>

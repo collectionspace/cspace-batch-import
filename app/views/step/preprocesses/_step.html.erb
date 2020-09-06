@@ -1,54 +1,70 @@
 <%= render partial: 'step/batch_summary', locals: { batch: batch } %>
-<%= render partial: 'step/breadcrumb', locals: { batch: batch, step: :preprocess } %>
+<%= render partial: 'step/breadcrumb', locals: { batch: batch } %>
 
 <div class="box">
   <%= content_tag :div, class: 'level mb-1' do %>
     <%= content_tag :div, class: 'level-left' do %>
-      <h3 class="subtitle has-text-weight-bold is-6 mb-2">
-        <%= render partial: 'shared/icon',
-            locals: { classes: 'has-text-info', icon: 'pause' }
-        %>
-        <%= t('batch.step.title.preprocess') %>
-      </h3>
+      <%= render partial: 'step/title', locals: { batch: batch } %>
     <% end %>
     <%= content_tag :div, class: 'level-right' do %>
       <%= form_with(model: [batch, step], local: true) do |form| %>
-        <!-- TODO: partial, step/controls -->
-        <div class="field is-horizontal has-addons">
-          <p class="control">
-            <button class="button is-small is-outlined">
-              <span class="icon is-small">
-                <i class="fa fa-play"></i>
-              </span>
-              <span>Start</span>
-            </button>
-          </p>
-          <p class="control">
-            <button class="button is-small is-outlined" disabled>
-              <span class="icon is-small">
-                <i class="fa fa-stop"></i>
-              </span>
-              <span>Cancel</span>
-            </button>
-          </p>
-          <p class="control">
-            <button class="button is-small is-outlined" disabled>
-              <span class="icon is-small">
-                <i class="fa fa-undo"></i>
-              </span>
-              <span>Reset</span>
-            </button>
-          </p>
-        </div>
+        <!-- Step specific form fields can go here! -->
+        <%= render partial: 'step/form_actions', locals: { form: form, batch: batch } %>
       <% end %>
     <% end %>
   <% end %>
   <hr class="mt-2 mb-2"/>
   <div class="columns">
     <div class="column">
-      <div class="content"><p>Get ready!</p></div>
+      <ul>
+        <li>
+          Job created at: <%= step.created_at || '<span class="is-italic">not started</span'.html_safe %>
+        </li>
+      </ul>
+      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Job Status</h3>
+      <table class="table is-fullwidth">
+        <caption class="is-italic is-size-7">Reload page when complete to update all batch information.</caption>
+        <thead>
+          <tr>
+            <th class="has-text-grey">Started at</th>
+            <th class="has-text-grey">Runtime</th>
+            <th class="has-text-grey">Progress</th>
+            <th class="has-text-grey">% Complete</th>
+            <th class="has-text-grey">Errors</th>
+            <th class="has-text-grey">Warnings</th>
+            <th colspan="1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="<%= dom_id(step) %>" data-connection-id="<%= step.id %>">
+            <td>2020-09-06 04:24:21 UTC </td>
+            <td>30 seconds</td>
+            <td><progress class="progress is-success" value="60" max="100">60%</progress></td>
+            <td>60</td>
+            <td>0</td>
+            <td>0</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Files</h3>
+      <p>0 attached<p>
+    </div>
+    <div class="column">
+      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Terms found</h3>
+      <p>0<p>
     </div>
   </div>
   <hr/>
-  <%= render partial: 'step/navigation', locals: { batch: batch } %>
+  <%= render partial: 'step/navigation', locals: {
+      previous_step: '#',
+      previous_ok: false,
+      next_step: new_batch_step_process_path,
+      next_ok: batch.may_process?
+    }
+  %>
 </div>

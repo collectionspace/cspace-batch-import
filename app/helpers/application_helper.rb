@@ -40,6 +40,14 @@ module ApplicationHelper
       'primary'
     when :pending
       'info'
+    when :running
+      'dark'
+    when :cancelled
+      'warning'
+    when :finished
+      'success'
+    when :failed
+      'danger'
     end
   end
 
@@ -49,6 +57,14 @@ module ApplicationHelper
       'plus'
     when :pending
       'pause'
+    when :running
+      'refresh spin'
+    when :cancelled
+      'exclamation-circle'
+    when :finished
+      'thumbs-up'
+    when :failed
+      'exclamation-triangle'
     end
   end
 
@@ -58,6 +74,14 @@ module ApplicationHelper
 
   def manage?(record)
     current_user.manage?(record)
+  end
+
+  def preprocessing?(batch)
+    batch.current_step == :preprocessing
+  end
+
+  def processing?(batch)
+    batch.current_step == :processing
   end
 
   def spinner

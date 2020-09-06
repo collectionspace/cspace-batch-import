@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :batches, only: %i[index new create destroy] do
     namespace :step do
       resources :preprocesses, only: %i[new create show]
+      resources :processes, only: %i[new create show]
     end
   end
   resources :connections, except: %i[index show]

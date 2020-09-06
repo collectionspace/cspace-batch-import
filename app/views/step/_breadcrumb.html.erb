@@ -2,11 +2,17 @@
   <ol type="1">
     <li>
       <%= link_to new_batch_step_preprocess_path(batch) do %>
-        <%= fa_icon "star", class: 'mr-2' %>
+        <% if preprocessing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
         <%= t('batch.step.title.preprocess') %>
+        (<%= fa_icon 'check' %>)
       <% end %>
     </li>
-    <li><a href="#"><%= t('batch.step.title.process') %></a></li>
+    <li>
+      <%= link_to new_batch_step_process_path(batch) do %>
+        <% if processing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
+        <%= t('batch.step.title.process') %>
+      <% end %>
+    </li>
     <li><a href="#"><%= t('batch.step.title.transfer') %></a></li>
     <li><a href="#"><%= t('batch.step.title.archive') %></a></li>
   </ol>

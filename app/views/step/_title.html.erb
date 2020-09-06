@@ -1,0 +1,9 @@
+<h3 class="subtitle has-text-weight-bold is-6 mb-2">
+  <%= render partial: 'shared/icon',
+      locals: {
+        classes: "has-text-#{status_color(batch.current_status)}",
+        icon: status_icon(batch.current_status)
+      }
+  %>
+  <%= t('batch.step.title.preprocess') %>
+</h3>

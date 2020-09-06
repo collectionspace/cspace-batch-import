@@ -42,7 +42,10 @@ en:
     previous: Previous
     refresh: Refresh
     reload: Reload
+    reset: Reset
     signup: Sign up
+    start: Start
+    stop: Cancel
     submit: Submit
     update: Update
   batch:
