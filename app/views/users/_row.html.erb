@@ -10,7 +10,7 @@
   </td>
   <td class='pt-3'><%= user.group.name %></td>
   <td class='pt-3'><%= user.role.name %></td>
-  <td class='pt-3'>
+  <td class='pt-2'>
     <% if user.enabled? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }
@@ -35,12 +35,8 @@
     <% end %>
   </td>
   <% if admin? %>
-    <td>
-      <%=
-        link_to t('navigation.delete'), user,
-        method: :delete, data: { confirm: t('action.confirm_delete') },
-        class: 'button is-danger is-outlined is-small'
-      %>
+    <td class="pt-2">
+      <%= render partial: 'shared/button_delete', locals: { record: user } %>
     </td>
   <% end %>
 </tr>

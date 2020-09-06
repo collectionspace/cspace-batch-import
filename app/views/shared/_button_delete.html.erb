@@ -1,0 +1,10 @@
+<%= content_tag :span, class: 'tag is-danger' do %>
+  <%= t('action.delete') %>
+<% end %>
+<%= link_to record,
+    method: :delete,
+    disabled: !manage?(record),
+    data: { confirm: t('action.confirm_delete') },
+    class: 'tag' do %>
+  <%= fa_icon "times" %>
+<% end %>

@@ -5,7 +5,7 @@
       <%= connection.name %>
     <% end %>
   </td>
-  <td class='pt-3'>
+  <td class='pt-2'>
     <% if connection.enabled? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }
@@ -29,7 +29,7 @@
       %>
     <% end %>
   </td>
-  <td class='pt-3'>
+  <td class='pt-2'>
     <% if connection.primary? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }
@@ -50,11 +50,7 @@
         disabled: !connection.enabled?
       }
     %>
-  <td>
-    <%=
-      link_to t('navigation.delete'), connection,
-      method: :delete, data: { confirm: t('action.confirm_delete') },
-      class: 'button is-danger is-outlined is-small'
-    %>
+  <td class='pt-2'>
+    <%= render partial: 'shared/button_delete', locals: { record: connection } %>
   </td>
 </tr>

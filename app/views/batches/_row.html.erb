@@ -1,22 +1,19 @@
 <tr id="<%= dom_id(batch) %>" data-batch-id="<%= batch.id %>">
-  <td class='pt-3'><%= link_to batch.name, current_step_path(batch) %></td>
-  <td class='pt-3'><%= batch.group.name %></td>
-  <td class='pt-3'><%= nil %></td>
-  <td class='pt-3'><%= batch.current_step %></td>
-  <td class='pt-3'>
+  <td class="pt-2"><%= link_to batch.name, current_step_path(batch) %></td>
+  <td class="pt-2"><%= batch.group.name %></td>
+  <td class="pt-2"><%= nil %></td>
+  <td class="pt-2"><%= batch.current_step %></td>
+  <td class="pt-2">
     <span class="has-text-<%= status_color(batch.current_status) %> mr-1">
       <%= fa_icon status_icon(batch.current_status) %>
     </span>
     <%= batch.current_status %>
   </td>
-  <td class='pt-3'><%= batch.user.email %></td>
-  <td class='pt-3'><%= batch.created_at %></td>
+  <td class="pt-2"><%= batch.user.email %></td>
+  <td class="pt-2"><%= batch.created_at %></td>
   <td>
-    <%=
-      link_to t('navigation.delete'), batch,
-      method: :delete, data: { confirm: t('action.confirm_delete') },
-      disabled: !manage?(batch),
-      class: 'button is-danger is-outlined is-small'
-    %>
+    <%= content_tag :div, class: 'tags has-addons is-outline' do %>
+      <%= render partial: 'shared/button_delete', locals: { record: batch } %>
+    <% end %>
   </td>
 </tr>

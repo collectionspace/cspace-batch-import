@@ -10,7 +10,7 @@
   <td class='pt-3'><%= group.domain %></td>
   <td class='pt-3'><%= group.email %></td>
   <td class='pt-3'><%= group.profile %></td>
-  <td class='pt-3'>
+  <td class='pt-2'>
     <% if group.enabled? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }
@@ -35,12 +35,7 @@
       %>
     <% end %>
   </td>
-    <td>
-      <%=
-        link_to t('navigation.delete'), group,
-        method: :delete, data: { confirm: t('action.confirm_delete') },
-        disabled: group.default?,
-        class: 'button is-danger is-outlined is-small'
-      %>
-    </td>
+  <td class='pt-2'>
+    <%= render partial: 'shared/button_delete', locals: { record: group } %>
+  </td>
 </tr>
