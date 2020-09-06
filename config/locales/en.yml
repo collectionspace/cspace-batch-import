@@ -58,6 +58,8 @@ en:
     step:
       preprocess:
         created: Preprocess job was successfully created
+      process:
+        created: Process job was successfully created
       title:
         preprocess: Preprocessing
         process: Processing

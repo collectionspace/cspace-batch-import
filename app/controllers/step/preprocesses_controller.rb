@@ -1,34 +1,28 @@
 # frozen_string_literal: true
 
 class Step::PreprocessesController < ApplicationController
-  before_action :set_batch, except: :create
-  before_action :set_batch_for_create, only: :create
+  include Stepable
+  before_action :redirect_if_created, only: :new
   before_action :set_batch_state, only: :new
-  before_action :set_preprocess, only: :show
 
   def new
-    if @batch.step_preprocess
-      return redirect_to batch_step_preprocess_path(
-        @batch, @batch.step_preprocess
-      )
-    end
-    @preprocess = Step::Preprocess.new(batch: @batch)
+    @step = Step::Preprocess.new(batch: @batch)
   end
 
   def create
     respond_to do |format|
-      @preprocess = Step::Preprocess.new(batch: @batch)
-      if @preprocess.update(preprocess_params)
+      @step = Step::Preprocess.new(batch: @batch)
+      if @step.update(preprocess_params)
         format.html do
           @batch.start!
-          # TODO: kickoff job i.e. JOB.perform_later(@preprocess)
+          # TODO: kickoff job i.e. JOB.perform_later(@step)
           redirect_to batch_step_preprocess_path(
             @batch, @batch.step_preprocess
-          ), notice: t('step.preprocess.created')
+          ), notice: t('batch.step.preprocess.created')
         end
       else
         format.html do
-          @preprocess = Step::Preprocess.new(batch: @batch)
+          @step = Step::Preprocess.new(batch: @batch)
           render :new
         end
       end
@@ -44,19 +38,15 @@ class Step::PreprocessesController < ApplicationController
     {}
   end
 
-  def set_batch
-    @batch = authorize Batch.find(params[:batch_id])
-  end
+  def redirect_if_created
+    return unless @batch.step_preprocess
 
-  def set_batch_for_create
-    @batch = authorize Batch.find(params[:batch_id]), policy_class: Step::Policy
+    redirect_to batch_step_preprocess_path(
+      @batch, @batch.step_preprocess
+    )
   end
 
   def set_batch_state
     @batch.preprocess! unless @batch.preprocessing?
-  end
-
-  def set_preprocess
-    @preprocess = authorize(@batch).step_preprocess
   end
 end
