@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Denial of Service",
+      "warning_code": 76,
+      "fingerprint": "36db58d807926aa5a6b9917b4a10fa45209a50e4762eee1a2ce05605a51a8613",
+      "check_name": "RegexDoS",
+      "message": "Parameter value used in regular expression",
+      "file": "app/controllers/mappers_controller.rb",
+      "line": 19,
+      "link": "https://brakemanscanner.org/docs/warning_types/denial_of_service/",
+      "code": "/^#{params[:query]}/",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MappersController",
+        "method": "autocomplete"
+      },
+      "user_input": "params[:query]",
+      "confidence": "High",
+      "note": ""
+    }
+  ],
+  "updated": "2020-09-07 07:50:07 -0700",
+  "brakeman_version": "4.9.1"
+}
