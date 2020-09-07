@@ -1,5 +1,5 @@
 <tr id="<%= dom_id(group) %>" data-group-id="<%= group.id %>">
-  <td class='pt-3'>
+  <td class='pt-2'>
     <%= link_to edit_group_path(group) do %>
 <%= render partial: 'shared/icon',
     locals: { classes: 'is-small is-left', icon: 'pencil' }
@@ -7,9 +7,9 @@
       <%= group.name %>
     <% end %>
   </td>
-  <td class='pt-3'><%= group.domain %></td>
-  <td class='pt-3'><%= group.email %></td>
-  <td class='pt-3'><%= group.profile %></td>
+  <td class='pt-2'><%= group.domain %></td>
+  <td class='pt-2'><%= group.email %></td>
+  <td class='pt-2'><%= group.profile %></td>
   <td class='pt-2'>
     <% if group.enabled? %>
       <%= render partial: 'shared/icon',
@@ -35,7 +35,9 @@
       %>
     <% end %>
   </td>
-  <td class='pt-2'>
-    <%= render partial: 'shared/button_delete', locals: { record: group } %>
+  <td>
+    <%= content_tag :div, class: 'tags has-addons is-outline' do %>
+      <%= render partial: 'shared/button_delete', locals: { record: group } %>
+    <% end %>
   </td>
 </tr>

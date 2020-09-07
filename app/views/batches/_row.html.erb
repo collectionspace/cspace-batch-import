@@ -11,7 +11,7 @@
   </td>
   <td class="pt-2"><%= batch.user.email %></td>
   <td class="pt-2"><%= batch.created_at %></td>
-  <td>
+  <td class="pt-2">
     <%= content_tag :div, class: 'tags has-addons is-outline' do %>
       <%= render partial: 'shared/button_delete', locals: { record: batch } %>
     <% end %>

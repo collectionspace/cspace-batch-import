@@ -1,7 +1,7 @@
 <%= content_tag :span, class: classes do %>
   <%= t('action.refresh') %>
 <% end %>
-<%= link_to '', id: 'refresh', class: 'tag', data: { 'reflex': reflex },
+<%= link_to '#', id: 'refresh', class: 'tag', data: { 'reflex': reflex },
     onclick: 'this.querySelector(".fa-refresh").classList.add("fa-spin");' do %>
   <%= fa_icon "refresh" %>
 <% end %>

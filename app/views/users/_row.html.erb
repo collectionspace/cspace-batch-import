@@ -1,5 +1,5 @@
 <tr id="<%= dom_id(user) %>" data-user-id="<%= user.id %>">
-  <td class='pt-3'>
+  <td class='pt-2'>
     <% if manage?(user) && !user.superuser? %>
       <%= link_to edit_user_path(user) do %>
         <%= render partial: 'user', locals: { icon: 'pencil', user: user } %>
@@ -8,8 +8,8 @@
       <%= render partial: 'user', locals: { icon: 'user', user: user } %>
     <% end %>
   </td>
-  <td class='pt-3'><%= user.group.name %></td>
-  <td class='pt-3'><%= user.role.name %></td>
+  <td class='pt-2'><%= user.group.name %></td>
+  <td class='pt-2'><%= user.role.name %></td>
   <td class='pt-2'>
     <% if user.enabled? %>
       <%= render partial: 'shared/icon',
@@ -35,8 +35,10 @@
     <% end %>
   </td>
   <% if admin? %>
-    <td class="pt-2">
-      <%= render partial: 'shared/button_delete', locals: { record: user } %>
+    <td>
+      <%= content_tag :div, class: 'tags has-addons is-outline' do %>
+        <%= render partial: 'shared/button_delete', locals: { record: user } %>
+      <% end %>
     </td>
   <% end %>
 </tr>

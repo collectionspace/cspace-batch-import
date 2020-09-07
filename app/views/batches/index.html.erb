@@ -4,7 +4,7 @@
   <%= content_tag :div, class: 'tags has-addons' do %>
     <%= render partial: 'shared/button_create', locals: { path: new_batch_path } %>
     <%= render partial: 'shared/button_refresh',
-      locals: { classes: 'tag is-primary ml-3', reflex: 'click->Application#reload' }
+      locals: { classes: 'tag is-primary', reflex: 'click->Application#reload' }
     %>
   <% end %>
 <% end %>

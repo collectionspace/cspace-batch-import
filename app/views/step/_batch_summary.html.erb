@@ -12,15 +12,10 @@
       </h3>
     <% end %>
     <%= content_tag :div, class: 'level-right' do %>
-      <%=
-        link_to t('navigation.return'), batches_path,
-        class: 'button is-info is-small ml-2 mb-2'
-      %>
-      <%=
-        link_to t('navigation.delete'), batch,
-        method: :delete, data: { confirm: t('action.confirm_delete') },
-        class: 'button is-danger is-small ml-2 mb-2'
-      %>
+      <%= content_tag :div, class: 'tags has-addons mb-2' do %>
+        <%= render partial: 'shared/button_return', locals: { path: batches_path } %>
+        <%= render partial: 'shared/button_delete', locals: { record: batch } %>
+      <% end %>
     <% end %>
   <% end %>
   <hr class="mt-2 mb-4"/>

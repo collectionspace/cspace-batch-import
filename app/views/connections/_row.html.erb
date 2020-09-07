@@ -1,5 +1,5 @@
 <tr id="<%= dom_id(connection) %>" data-connection-id="<%= connection.id %>">
-  <td class='pt-3'>
+  <td class='pt-2'>
     <%= link_to edit_connection_path(connection) do %>
       <%= fa_icon('pencil') %>
       <%= connection.name %>
@@ -50,7 +50,9 @@
         disabled: !connection.enabled?
       }
     %>
-  <td class='pt-2'>
-    <%= render partial: 'shared/button_delete', locals: { record: connection } %>
+  <td>
+    <%= content_tag :div, class: 'tags has-addons is-outline' do %>
+      <%= render partial: 'shared/button_delete', locals: { record: connection } %>
+    <% end %>
   </td>
 </tr>
