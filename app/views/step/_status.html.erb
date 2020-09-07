@@ -1,0 +1,31 @@
+<ul>
+  <li>
+    Job created at: <%= step.created_at || '<span class="is-italic">not started</span'.html_safe %>
+  </li>
+</ul>
+<h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Job Status</h3>
+<table class="table is-fullwidth">
+  <caption class="is-italic is-size-7">Reload page when complete to update all batch information.</caption>
+  <thead>
+    <tr>
+      <th class="has-text-grey">Started at</th>
+      <th class="has-text-grey">Runtime</th>
+      <th class="has-text-grey">Progress</th>
+      <th class="has-text-grey">% Complete</th>
+      <th class="has-text-grey">Errors</th>
+      <th class="has-text-grey">Warnings</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="<%= dom_id(step) %>">
+      <td><%= '<span class="is-italic">not started</span'.html_safe %></td>
+      <td>0 seconds</td>
+      <td><progress class="progress is-success" value="0" max="100"></progress></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
