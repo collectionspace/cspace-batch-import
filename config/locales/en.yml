@@ -63,7 +63,8 @@ en:
       preprocess:
         created: Preprocess job was successfully created
       process:
-        created: Process job was successfully created
+        check_records: Check for existing records?
+        check_terms: Check for existing terms?
       state:
         ready_message: "Start the %{step} job and receive status updates."
       title:
@@ -71,6 +72,10 @@ en:
         process: Processing
         transfer: Transfering
         archive: Archiving
+      transfer:
+        created: Process job was successfully created
+        create: Create new records?
+        update: Update existing records?
     title:
       create: New Batch
       index: Batches

@@ -1,0 +1,13 @@
+<%= content_tag :div, class: 'level mb-1' do %>
+  <%= content_tag :div, class: 'level-left' do %>
+    <%= render partial: 'step/title', locals: { batch: batch, step: step } %>
+  <% end %>
+  <%= content_tag :div, class: 'level-right' do %>
+    <%= form_with(model: [batch, step], local: true) do |form| %>
+      <%= render layout: 'step/form_actions', locals: { form: form, batch: batch, step: step } do |form| %>
+        <%= yield form %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+<hr class="mt-2 mb-2"/>

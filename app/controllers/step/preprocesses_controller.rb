@@ -5,6 +5,7 @@ module Step
     include Stepable
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
+    before_action :set_step, only: :show
 
     def new
       @step = Step::Preprocess.new(batch: @batch)
@@ -49,6 +50,10 @@ module Step
 
     def set_batch_state
       @batch.preprocess! unless @batch.preprocessing?
+    end
+
+    def set_step
+      @step = authorize(@batch).step_preprocess
     end
   end
 end

@@ -7,5 +7,9 @@ module Step
     def done?
       done
     end
+
+    def name
+      :processing
+    end
   end
 end

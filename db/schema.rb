@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
   create_table "batches", force: :cascade do |t|
     t.string "name"
     t.integer "job_id"
+    t.integer "num_rows"
     t.string "step_state"
     t.string "status_state"
     t.bigint "user_id", null: false
@@ -115,6 +116,8 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
     t.integer "step_errors", default: 0
     t.integer "step_warnings", default: 0
     t.bigint "batch_id", null: false
+    t.boolean "check_records", default: true, null: false
+    t.boolean "check_terms", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["batch_id"], name: "index_step_processes_on_batch_id"

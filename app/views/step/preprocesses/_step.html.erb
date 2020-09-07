@@ -1,46 +1,22 @@
 <%= render partial: 'step/batch_summary', locals: { batch: batch } %>
 <%= render partial: 'step/breadcrumbs', locals: { batch: batch } %>
 
+<%= content_for :step_ready do %>
+  <p class="is-italic"><%= t('batch.step.state.ready_message', step: batch.current_step) %></p>
+<% end %>
+
 <div class="box">
-  <%= content_tag :div, class: 'level mb-1' do %>
-    <%= content_tag :div, class: 'level-left' do %>
-      <%= render partial: 'step/title', locals: { batch: batch } %>
-    <% end %>
-    <%= content_tag :div, class: 'level-right' do %>
-      <%= form_with(model: [batch, step], local: true) do |form| %>
-        <!-- Step specific form fields can go here! -->
-        <%= render partial: 'step/form_actions', locals: { form: form, batch: batch } %>
-      <% end %>
-    <% end %>
+  <%= render layout: 'step/header', locals: { batch: batch, step: step } do |form| %>
+    <!-- No additions -->
   <% end %>
-  <hr class="mt-2 mb-2"/>
-  <% if !step.new_record? && !batch.ready? %>
-    <div class="columns">
-      <div class="column">
-          <%= render partial: 'step/status', locals: { step: step } %>
-      </div>
-    </div>
-    <div class="columns">
-      <div class="column">
-        <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">
-          <%= t('batch.step.files') %>
-        </h3>
-        <p>0 attached<p>
-      </div>
-      <div class="column">
-        <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Terms found</h3>
-        <p>0<p>
-      </div>
-    </div>
-  <% else %>
-    <p class="is-italic"><%= t('batch.step.state.ready_message', step: batch.current_step) %></p>
-  <% end %>
+
+  <%= render partial: 'step/body', locals: { batch: batch, step: step }%>
   <hr/>
   <%= render partial: 'step/navigation', locals: {
       previous_step: '#',
       previous_ok: false,
       next_step: new_batch_step_process_path,
-      next_ok: batch.may_process?
+      next_ok: (batch.may_process? || batch.preprocessed?)
     }
   %>
 </div>

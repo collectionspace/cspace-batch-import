@@ -1,9 +1,18 @@
 <h3 class="subtitle has-text-weight-bold is-6 mb-2">
-  <%= render partial: 'shared/icon',
-      locals: {
-        classes: "has-text-#{status_color(batch.current_status)}",
-        icon: status_icon(batch.current_status)
-      }
-  %>
-  <%= t("batch.step.title.#{batch.current_step}") %>
+  <% if batch.current_step == step.name %>
+    <%= render partial: 'shared/icon',
+        locals: {
+          classes: "has-text-#{status_color(batch.current_status)}",
+          icon: status_icon(batch.current_status)
+        }
+    %>
+  <% else %>
+    <%= render partial: 'shared/icon',
+        locals: {
+        classes: "has-text-#{status_color(:finished)}",
+          icon: status_icon(:finished)
+        }
+    %>
+  <% end %>
+  <%= t("batch.step.title.#{step.name}") %>
 </h3>

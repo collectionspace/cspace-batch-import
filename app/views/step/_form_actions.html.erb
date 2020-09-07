@@ -1,7 +1,8 @@
 <div class="field is-horizontal has-addons">
+  <%= yield form %>
   <div class="control">
-    <%= form.button class: 'button is-small is-outlined is-rounded',
-        disabled: !batch.ready?, data: { 'disable-with': spinner } do %>
+    <%= form.button class: 'button is-small is-outlined is-rounded ml-2',
+        disabled: !batch.ready? || step.done?, data: { 'disable-with': spinner } do %>
         <%= content_tag :span, class: 'mr-2' do %><%= fa_icon 'play' %><% end %>
         <%= content_tag :span do %><%= t('action.start') %><% end %>
     <% end %>

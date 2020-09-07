@@ -6,6 +6,7 @@ module Step
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
     before_action :set_previous_step_complete, only: :new
+    before_action :set_step, only: :show
 
     def new
       @step = Step::Process.new(batch: @batch)
@@ -54,6 +55,10 @@ module Step
 
     def set_previous_step_complete
       @batch.step_preprocess.update(done: true) unless @batch.step_preprocess.done?
+    end
+
+    def set_step
+      @step = authorize(@batch).step_process
     end
   end
 end

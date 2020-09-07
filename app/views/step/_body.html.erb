@@ -1,0 +1,21 @@
+<% if !step.new_record? && !batch.ready? %>
+  <div class="columns">
+    <div class="column">
+        <%= render partial: 'step/status', locals: { step: step } %>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">
+        <%= t('batch.step.files') %>
+      </h3>
+      <p>0 attached<p>
+    </div>
+    <div class="column">
+      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Terms found</h3>
+      <p>0<p>
+    </div>
+  </div>
+<% else %>
+  <%= yield :step_ready %>
+<% end %>

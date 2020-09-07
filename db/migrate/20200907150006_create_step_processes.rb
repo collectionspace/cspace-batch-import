@@ -9,6 +9,10 @@ class CreateStepProcesses < ActiveRecord::Migration[6.0]
       t.integer :step_warnings, default: 0
       t.references :batch, null: false, foreign_key: true
 
+      # step specific fields
+      t.boolean :check_records, null: false, default: true
+      t.boolean :check_terms, null: false, default: true
+
       t.timestamps
     end
   end

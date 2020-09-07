@@ -8,13 +8,29 @@
       <% end %>
     </li>
     <li>
-      <%= link_to new_batch_step_process_path(batch) do %>
-        <% if processing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
-        <%= t('batch.step.title.process') %>
-        <% if batch.processed? %>(<%= fa_icon 'check' %>)<% end %>
+      <% if batch.preprocessed? %>
+        <%= link_to new_batch_step_process_path(batch) do %>
+          <% if processing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
+          <%= t('batch.step.title.process') %>
+          <% if batch.processed? %>(<%= fa_icon 'check' %>)<% end %>
+        <% end %>
+      <% else %>
+        <span class="is-italic pl-2 pr-2"><%= t('batch.step.title.process') %></span>
       <% end %>
     </li>
-    <li><a href="#"><%= t('batch.step.title.transfer') %></a></li>
-    <li><a href="#"><%= t('batch.step.title.archive') %></a></li>
+    <li>
+      <% if false %>
+        <a href="#"><%= t('batch.step.title.transfer') %></a>
+      <% else %>
+        <span class="is-italic pl-2 pr-2"><%= t('batch.step.title.transfer') %></span>
+      <% end %>
+    </li>
+    <li>
+      <% if false %>
+        <a href="#"><%= t('batch.step.title.archive') %></a>
+      <% else %>
+        <span class="is-italic pl-2 pr-2"><%= t('batch.step.title.archive') %></span>
+      <% end %>
+    </li>
   </ol>
 </nav>
