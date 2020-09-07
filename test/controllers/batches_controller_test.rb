@@ -34,7 +34,7 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
   # TODO: cannot create a batch without a connection
 
   test 'should destroy batch' do
-    batch = batches(:minion_default_batch)
+    batch = batches(:minion_batch)
     assert_difference('Batch.count', -1) do
       delete batch_url(batch)
     end

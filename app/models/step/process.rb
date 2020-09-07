@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Step
-  class Preprocess < ApplicationRecord
+  class Process < ApplicationRecord
     belongs_to :batch
 
     def done?

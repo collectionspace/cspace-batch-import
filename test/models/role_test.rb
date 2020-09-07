@@ -56,15 +56,15 @@ class RoleTest < ActiveSupport::TestCase
   end
 
   test 'a manager can manage their own batch' do
-    assert Role::Manager.new(users(:fishmonger)).manage?(batches(:fishmonger_fish_batch))
+    assert Role::Manager.new(users(:fishmonger)).manage?(batches(:fishmonger_batch))
   end
 
   test "a manager can manage their member's batch" do
-    assert Role::Manager.new(users(:fishmonger)).manage?(batches(:tuna_fish_batch))
+    assert Role::Manager.new(users(:fishmonger)).manage?(batches(:tuna_batch))
   end
 
   test "a manager cannot manage another group member's batch" do
-    assert_not Role::Manager.new(users(:fishmonger)).manage?(batches(:minion_default_batch))
+    assert_not Role::Manager.new(users(:fishmonger)).manage?(batches(:minion_batch))
   end
 
   test 'a member can manage self' do
@@ -76,10 +76,10 @@ class RoleTest < ActiveSupport::TestCase
   end
 
   test 'a member can manage their own batch' do
-    assert Role::Member.new(users(:minion)).manage?(batches(:minion_default_batch))
+    assert Role::Member.new(users(:minion)).manage?(batches(:minion_batch))
   end
 
   test "a member cannot manage another user's batch" do
-    assert_not Role::Member.new(users(:minion)).manage?(batches(:superuser_default_batch))
+    assert_not Role::Member.new(users(:minion)).manage?(batches(:superuser_batch))
   end
 end

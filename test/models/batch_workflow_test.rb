@@ -4,7 +4,7 @@ require 'test_helper'
 
 class BatchWorkflowTest < ActiveSupport::TestCase
   setup do
-    @batch = batches(:superuser_default_batch)
+    @batch = batches(:superuser_batch)
   end
 
   def run_steps_cancel

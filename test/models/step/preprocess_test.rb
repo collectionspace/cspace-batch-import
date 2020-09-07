@@ -5,7 +5,7 @@ require 'test_helper'
 class Step::PreprocessTest < ActiveSupport::TestCase
   setup do
     @params = {
-      batch_id: batches(:superuser_default_batch).id
+      batch_id: batches(:superuser_batch).id
     }
   end
 

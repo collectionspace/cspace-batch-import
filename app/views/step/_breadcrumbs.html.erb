@@ -4,13 +4,14 @@
       <%= link_to new_batch_step_preprocess_path(batch) do %>
         <% if preprocessing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
         <%= t('batch.step.title.preprocess') %>
-        (<%= fa_icon 'check' %>)
+        <% if batch.preprocessed? %>(<%= fa_icon 'check' %>)<% end %>
       <% end %>
     </li>
     <li>
       <%= link_to new_batch_step_process_path(batch) do %>
         <% if processing?(batch) %><%= fa_icon "star", class: 'mr-2' %><% end %>
         <%= t('batch.step.title.process') %>
+        <% if batch.processed? %>(<%= fa_icon 'check' %>)<% end %>
       <% end %>
     </li>
     <li><a href="#"><%= t('batch.step.title.transfer') %></a></li>

@@ -1,35 +1,56 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-superuser_default_batch:
-  name: superuser_default_batch
+superuser_batch: # no steps
+  name: superuser_batch
   user: superuser
   step_state: preprocessing
   status_state: ready
   group: default
 
-superuser_default_batch_no_steps:
-  name: superuser_default_batch_no_preprocess
+superuser_batch_preprocessing:
+  name: superuser_batch
   user: superuser
   step_state: preprocessing
   status_state: ready
   group: default
 
-minion_default_batch:
-  name: minion_default_batch
+superuser_batch_preprocessed:
+  name: superuser_batch
+  user: superuser
+  step_state: preprocessing
+  status_state: finished
+  group: default
+
+superuser_batch_processing:
+  name: superuser_batch
+  user: superuser
+  step_state: processing
+  status_state: ready
+  group: default
+
+superuser_batch_processed:
+  name: superuser_batch
+  user: superuser
+  step_state: processing
+  status_state: finished
+  group: default
+
+minion_batch:
+  name: minion_batch
   user: minion
   step_state: preprocessing
   status_state: ready
   group: default
 
-fishmonger_fish_batch:
-  name: fishmonger_fish_batch
+fishmonger_batch:
+  name: fishmonger_batch
   user: fishmonger
   step_state: preprocessing
   status_state: ready
   group: fish
 
-tuna_fish_batch:
-  name: tuna_fish_batch
+tuna_batch:
+  name: tuna_batch
   user: tuna
   step_state: preprocessing
   status_state: ready
