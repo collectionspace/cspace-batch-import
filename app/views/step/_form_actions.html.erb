@@ -16,7 +16,7 @@
   </div>
   <div class="control">
     <%= link_to '#', class: 'button is-small is-outlined is-rounded',
-        disabled: (!batch.may_process?), data: { 'disable-with': spinner } do %>
+        disabled: !(batch.cancelled? || batch.failed?), data: { 'disable-with': spinner } do %>
         <%= content_tag :span, class: 'mr-2' do %><%= fa_icon 'undo' %><% end %>
         <%= content_tag :span do %><%= t('action.reset') %><% end %>
     <% end %>

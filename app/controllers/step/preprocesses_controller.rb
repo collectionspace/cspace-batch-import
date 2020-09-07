@@ -17,7 +17,8 @@ module Step
         if @step.update(preprocess_params)
           format.html do
             @batch.start!
-            # TODO: kickoff job i.e. JOB.perform_later(@step)
+            job = PreprocessJob.perform_later(@step)
+            @batch.update(job_id: job.provider_job_id)
             redirect_to batch_step_preprocess_path(
               @batch, @batch.step_preprocess
             ), notice: t('batch.step.preprocess.created')

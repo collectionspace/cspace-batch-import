@@ -97,4 +97,8 @@ module ApplicationHelper
       t('user.unassigned')
     end
   end
+
+  def waiting_to_start
+    '<span class="is-italic">not started</span>'
+  end
 end

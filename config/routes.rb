@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
@@ -24,4 +25,8 @@ Rails.application.routes.draw do
   get '/users/:id/group', to: redirect('/users/%{id}/edit')
   patch '/users/:id/group', to: 'users#update_group', as: 'user_group'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

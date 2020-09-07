@@ -5,6 +5,8 @@ class CreateStepPreprocesses < ActiveRecord::Migration[6.0]
     create_table :step_preprocesses do |t|
       t.boolean :done, null: false, default: false
       t.datetime :started_at
+      t.datetime :completed_at
+      t.integer :step_num_row, default: 0
       t.integer :step_errors, default: 0
       t.integer :step_warnings, default: 0
       t.references :batch, null: false, foreign_key: true

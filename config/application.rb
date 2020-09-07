@@ -16,6 +16,7 @@ module CspaceBatchImport
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
+    config.active_job.queue_adapter = :sidekiq
     # We don't need these for our csv / excel uploads
     config.active_storage.analyzers = []
     config.active_storage.previewers = []

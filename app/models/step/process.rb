@@ -2,11 +2,8 @@
 
 module Step
   class Process < ApplicationRecord
+    include WorkflowMetadata
     belongs_to :batch
-
-    def done?
-      done
-    end
 
     def name
       :processing

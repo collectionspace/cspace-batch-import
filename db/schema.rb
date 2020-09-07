@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
   create_table "step_preprocesses", force: :cascade do |t|
     t.boolean "done", default: false, null: false
     t.datetime "started_at"
+    t.datetime "completed_at"
+    t.integer "step_num_row", default: 0
     t.integer "step_errors", default: 0
     t.integer "step_warnings", default: 0
     t.bigint "batch_id", null: false
@@ -113,6 +115,8 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
   create_table "step_processes", force: :cascade do |t|
     t.boolean "done", default: false, null: false
     t.datetime "started_at"
+    t.datetime "completed_at"
+    t.integer "step_num_row", default: 0
     t.integer "step_errors", default: 0
     t.integer "step_warnings", default: 0
     t.bigint "batch_id", null: false

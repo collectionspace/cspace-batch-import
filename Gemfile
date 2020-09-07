@@ -73,6 +73,7 @@ gem 'http'
 gem 'lockbox'
 gem 'pretender'
 gem 'pundit'
+gem 'sidekiq'
 
 gem 'stimulus_reflex', '~> 3.2'
 
