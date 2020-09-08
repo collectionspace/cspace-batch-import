@@ -3,6 +3,11 @@
     Job created at: <%= step.created_at || '<span class="is-italic">not started</span'.html_safe %>
   </li>
 </ul>
+<%= content_tag :div, class: 'tags has-addons mt-1 mb-1' do %>
+  <%= render partial: 'shared/button_refresh',
+    locals: { classes: 'tag is-primary', reflex: 'click->Application#reload' }
+  %>
+<% end %>
 <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Job Status</h3>
 <table class="table is-fullwidth">
   <caption class="is-italic is-size-7">Reload page when complete to update all batch information.</caption>
@@ -18,16 +23,6 @@
     </tr>
   </thead>
   <tbody>
-    <tr id="<%= dom_id(step) %>">
-      <td><%= step.started_at || waiting_to_start.html_safe %></td>
-      <td><%= step.started_at ? step.current_runtime : '0' %> seconds</td>
-      <td>
-        <progress class="progress is-success" value="<%= step.step_num_row %>" max="<%= step.batch.num_rows || 10 %>"></progress>
-      </td>
-      <td><%= step.percentage_complete? %></td>
-      <td><%= step.step_errors %></td>
-      <td><%= step.step_warnings %></td>
-      <td></td>
-    </tr>
+    <%= render partial: 'step/progress', locals: { step: step } %>
   </tbody>
 </table>

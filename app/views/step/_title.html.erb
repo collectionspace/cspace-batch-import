@@ -15,4 +15,5 @@
     %>
   <% end %>
   <%= t("batch.step.title.#{step.name}") %>
+  <% if batch.current_step == step.name %>(<%= batch.current_status %>)<% end %>
 </h3>

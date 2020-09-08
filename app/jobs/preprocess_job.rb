@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PreprocessJob < ApplicationJob
+  include CableReady::Broadcaster
   queue_as :default
   sidekiq_options retry: false
 
@@ -15,6 +16,7 @@ class PreprocessJob < ApplicationJob
       preprocess.update(step_num_row: preprocess.step_num_row += 1)
       # do some work!
       sleep 1
+      update_progress(preprocess)
     end
 
     preprocess.batch.finished! # we'll call it good for now

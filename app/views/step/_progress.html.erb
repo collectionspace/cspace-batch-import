@@ -1,0 +1,11 @@
+<tr id="<%= dom_id(step) %>">
+  <td><%= step.started_at || waiting_to_start.html_safe %></td>
+  <td><%= step.started_at ? step.current_runtime : '0' %> seconds</td>
+  <td>
+    <progress class="progress is-success" value="<%= step.step_num_row %>" max="<%= step.batch.num_rows || 10 %>"></progress>
+  </td>
+  <td><%= step.percentage_complete? %></td>
+  <td><%= step.step_errors %></td>
+  <td><%= step.step_warnings %></td>
+  <td></td>
+</tr>
