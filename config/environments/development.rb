@@ -3,12 +3,12 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL') { 'redis://localhost:6379/1' } }
+  config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL') { 'redis://localhost:6379/0' } }
   config.session_store :cache_store,
                        key: '_session',
                        compress: true,
                        pool_size: 5,
-                       expire_after: 1.week
+                       expire_after: 2.hours
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

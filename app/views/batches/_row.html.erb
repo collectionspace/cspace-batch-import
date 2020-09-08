@@ -1,7 +1,6 @@
 <tr id="<%= dom_id(batch) %>" data-batch-id="<%= batch.id %>">
   <td class="pt-2"><%= link_to batch.name, current_step_path(batch) %></td>
   <td class="pt-2"><%= batch.group.name %></td>
-  <td class="pt-2"><%= nil %></td>
   <td class="pt-2"><%= batch.current_step %></td>
   <td class="pt-2">
     <span class="has-text-<%= status_color(batch.current_status) %> mr-1">
