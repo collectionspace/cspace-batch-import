@@ -14,6 +14,10 @@ module WorkflowManager
       aasm(:step).current_state
     end
 
+    def current_step?(step)
+      current_step == step
+    end
+
     def current_status
       aasm(:status).current_state
     end

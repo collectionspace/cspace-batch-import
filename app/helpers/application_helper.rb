@@ -76,14 +76,6 @@ module ApplicationHelper
     current_user.manage?(record)
   end
 
-  def preprocessing?(batch)
-    batch.current_step == :preprocessing
-  end
-
-  def processing?(batch)
-    batch.current_step == :processing
-  end
-
   def spinner
     "<i class='fa fa-spinner fa-spin'></i>"
   end

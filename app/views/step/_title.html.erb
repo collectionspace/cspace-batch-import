@@ -1,5 +1,5 @@
 <h3 class="subtitle has-text-weight-bold is-6 mb-2">
-  <% if batch.current_step == step.name %>
+  <% if batch.current_step? step.name %>
     <%= render partial: 'shared/icon',
         locals: {
           classes: "has-text-#{status_color(batch.current_status)}",
@@ -15,5 +15,5 @@
     %>
   <% end %>
   <%= t("batch.step.title.#{step.name}") %>
-  <% if batch.current_step == step.name %>(<%= batch.current_status %>)<% end %>
+  <% if batch.current_step? step.name %>(<%= batch.current_status %>)<% end %>
 </h3>
