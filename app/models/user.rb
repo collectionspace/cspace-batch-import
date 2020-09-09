@@ -28,7 +28,9 @@ class User < ApplicationRecord
   end
 
   def default_connection
-    connections.where(primary: true).first || connections.first
+    connection = connections.where(primary: true).first
+    connection ||= connections.where(enabled: true).first
+    connection
   end
 
   def disabled?

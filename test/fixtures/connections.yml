@@ -28,8 +28,19 @@ core_admin:
   username: admin@core.collectionspace.org
   password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
   enabled: true
-  primary: true
+  primary: false
   domain: core.collectionspace.org
+  profile: ''
+  user: admin
+
+fcart_admin:
+  name: fcart.dev
+  url: https://fcart.dev.collectionspace.org/cspace-services
+  username: admin@fcart.collectionspace.org
+  password_ciphertext: <%= Connection.generate_password_ciphertext("Administrator").inspect %>
+  enabled: true
+  primary: false
+  domain: fcart.collectionspace.org
   profile: ''
   user: admin
 

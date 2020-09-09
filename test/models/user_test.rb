@@ -142,4 +142,17 @@ class UserTest < ActiveSupport::TestCase
     assert member.role?(Role.member.name)
     assert_not member.enabled?
   end
+
+  # Connections
+  test 'can return the primary (default) connection' do
+    assert_equal 'core.dev', users(:superuser).default_connection.name
+  end
+
+  test 'can return a connection if no primary (default) set' do
+    assert_instance_of Connection, users(:admin).default_connection
+  end
+
+  test 'can return nil if no connections are found' do
+    assert_nil users(:outcast).default_connection
+  end
 end
