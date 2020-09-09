@@ -12,11 +12,14 @@ class PreprocessJob < ApplicationJob
     preprocess.batch.run! # update status to running
     preprocess.update(started_at: Time.now.utc)
 
-    (1..10).each do |_i|
-      preprocess.update(step_num_row: preprocess.step_num_row += 1)
-      # do some work!
-      sleep 1
-      update_progress(preprocess)
+    # this is fake placeholder stuff for now
+    unless Rails.env.test?
+      (1..10).each do |_i|
+        preprocess.update(step_num_row: preprocess.step_num_row += 1)
+        # do some work!
+        sleep 1
+        update_progress(preprocess)
+      end
     end
 
     preprocess.batch.finished! # we'll call it good for now

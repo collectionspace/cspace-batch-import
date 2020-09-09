@@ -22,6 +22,11 @@ module WorkflowManager
       aasm(:status).current_state
     end
 
+    # we transitioned beyond run!
+    def ran?
+      cancelled? || failed? || finished?
+    end
+
     aasm(:step, column: 'step_state') do
       state :new, initial: true, display: 'new'
       state :preprocessing, display: 'preprocess'

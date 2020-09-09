@@ -1,6 +1,6 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-superuser_batch: # no steps
+superuser_batch: # no associated steps
   name: superuser_batch
   user: superuser
   step_state: preprocessing

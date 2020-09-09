@@ -18,4 +18,7 @@ To re/start all services:
 
 # to start the dev server
 ./bin/rails s
+
+# to run jobs
+bundle exec sidekiq
 ```

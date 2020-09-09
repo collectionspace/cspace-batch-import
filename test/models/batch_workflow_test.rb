@@ -46,15 +46,21 @@ class BatchWorkflowTest < ActiveSupport::TestCase
   test 'a new batch has the default (post create) workflow state' do
     assert_have_state @batch, :preprocessing, on: :step
     assert_have_state @batch, :ready, on: :status
+    refute @batch.ran?
   end
 
   test 'can transition to preprocessing' do
     transition_to_preprocessing
+    assert :preprocessing, @batch.current_step
+    assert @batch.current_step?(:preprocessing)
+    refute @batch.ran?
   end
 
   test 'can transition to processing if status steps succeed' do
     transition_to_preprocessing
     run_steps_success
+    assert :finished, @batch.current_status
+    assert @batch.ran?
     assert_transition_to_allowed @batch, :processing, on: :step
     transition_to_processing
     assert_have_state @batch, :processing, on: :step
@@ -64,6 +70,8 @@ class BatchWorkflowTest < ActiveSupport::TestCase
   test 'cannot transition to processing if status steps fail' do
     transition_to_preprocessing
     run_steps_fail
+    assert :failed, @batch.current_status
+    assert @batch.ran?
     refute_transition_to_allowed @batch, :processing, on: :step
     assert_have_state @batch, :failed, on: :status
     @batch.retry!
@@ -73,6 +81,8 @@ class BatchWorkflowTest < ActiveSupport::TestCase
   test 'cannot transition to processing if status cancelled' do
     transition_to_preprocessing
     run_steps_cancel
+    assert :cancelled, @batch.current_status
+    assert @batch.ran?
     refute_transition_to_allowed @batch, :processing, on: :step
     assert_have_state @batch, :cancelled, on: :status
     @batch.retry!

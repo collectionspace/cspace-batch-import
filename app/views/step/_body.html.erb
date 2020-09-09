@@ -4,18 +4,50 @@
         <%= render partial: 'step/status', locals: { step: step } %>
     </div>
   </div>
-  <div class="columns">
-    <div class="column">
-      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">
-        <%= t('batch.step.files') %>
-      </h3>
-      <p>0 attached<p>
+  <% if step.done? || batch.ran? %>
+    <div class="columns">
+      <div class="column">
+        <article class="message is-small">
+          <div class="message-header">
+            <p>Files</p>
+          </div>
+          <div class="message-body">
+            <table class="table is-fullwidth is-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Size</th>
+                  <th>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>report.csv</td>
+                  <td>12kb</td>
+                  <td><%= fa_icon('download') %></td>
+                </tr>
+                <tr>
+                  <td>report.json</td>
+                  <td>12kb</td>
+                  <td><%= fa_icon('download') %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+      <div class="column">
+        <article class="message is-small">
+          <div class="message-header">
+            <p>Messages</p>
+          </div>
+          <div class="message-body">
+            <p>Nothing to report!</p>
+          </div>
+        </article>
+      </div>
     </div>
-    <div class="column">
-      <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Terms found</h3>
-      <p>0<p>
-    </div>
-  </div>
+  <% end %>
 <% else %>
   <%= yield :step_ready %>
 <% end %>

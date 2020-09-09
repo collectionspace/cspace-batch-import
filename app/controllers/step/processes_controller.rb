@@ -44,7 +44,6 @@ module Step
     def redirect_if_created
       return unless @batch.step_process
 
-      flash.clear
       redirect_to batch_step_process_path(
         @batch, @batch.step_process
       )

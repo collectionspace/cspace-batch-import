@@ -4,9 +4,11 @@ require 'test_helper'
 
 module Step
   class PreprocessesControllerTest < ActionDispatch::IntegrationTest
+    include ActiveJob::TestHelper
+
     setup do
       sign_in users(:superuser)
-      @batch = batches(:superuser_batch_preprocessing)
+      @batch = batches(:superuser_batch)
       # @valid_params = {
       #   step_preprocess: {
       #     message: 'preprocess'
@@ -17,16 +19,20 @@ module Step
     test 'a user can access the new preprocess form' do
       assert_can_view(
         new_batch_step_preprocess_path(
-          batches(:superuser_batch_preprocessing)
+          batches(:superuser_batch)
         )
       )
     end
 
     test 'should create a preprocess' do
       assert_difference('Step::Preprocess.count') do
-        post batch_step_preprocesses_path(@batch), params: {} # @valid_params
+        assert_enqueued_with(job: PreprocessJob) do
+          post batch_step_preprocesses_path(@batch), params: {} # @valid_params
+        end
       end
 
+      perform_enqueued_jobs
+      assert_performed_jobs 1
       assert_redirected_to batch_step_preprocess_url(@batch, Step::Preprocess.last)
     end
 

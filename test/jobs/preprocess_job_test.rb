@@ -1,7 +1,14 @@
 require 'test_helper'
 
 class PreprocessJobTest < ActiveJob::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  setup do
+    @preprocess = step_preprocesses(:preprocess_superuser_batch_ready) # ready to go!
+    @preprocess.batch.start! # put the job into pending status (required transition)
+  end
+
+  test "finishes the job" do
+    assert @preprocess.batch.pending?
+    PreprocessJob.perform_now(@preprocess)
+    assert @preprocess.batch.finished?
+  end
 end
