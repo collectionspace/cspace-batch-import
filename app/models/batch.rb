@@ -2,6 +2,7 @@
 
 class Batch < ApplicationRecord
   include WorkflowManager
+  has_one_attached :spreadsheet
   has_one :step_preprocess, class_name: 'Step::Preprocess', dependent: :destroy
   has_one :step_process, class_name: 'Step::Process', dependent: :destroy
   belongs_to :user

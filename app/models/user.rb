@@ -27,6 +27,10 @@ class User < ApplicationRecord
     role == Role.default_scoped.admin
   end
 
+  def default_connection
+    connections.where(primary: true).first || connections.first
+  end
+
   def disabled?
     !enabled?
   end

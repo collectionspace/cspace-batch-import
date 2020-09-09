@@ -49,6 +49,7 @@ en:
     submit: Submit
     update: Update
   batch:
+    connection: Connection
     created: Batch was successfully created
     created_at: Created at
     created_by: Created by
@@ -57,6 +58,7 @@ en:
     deleted: Batch was successfully deleted
     file: File
     group: Group
+    mapper: Mapper
     name: Name
     step:
       files: Files
