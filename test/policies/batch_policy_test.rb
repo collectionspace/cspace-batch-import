@@ -62,4 +62,17 @@ class BatchPolicyTest < ActiveSupport::TestCase
   test "a member cannot delete another user's batch" do
     assert_permit BatchPolicy, users(:manager), batches(:superuser_batch), :destroy
   end
+
+  test 'a queued batch cannot be deleted' do
+    batch = batches(:superuser_batch)
+    batch.start!
+    refute_permit BatchPolicy, users(:superuser), batch, :destroy
+  end
+
+  test 'a running batch cannot be deleted' do
+    batch = batches(:superuser_batch)
+    batch.start!
+    batch.run!
+    refute_permit BatchPolicy, users(:superuser), batch, :destroy
+  end
 end

@@ -17,6 +17,9 @@ class BatchPolicy < ApplicationPolicy
   end
 
   def destroy?
+    # don't allow queued / running batches to be destroyed
+    return false if record.pending? || record.running?
+
     user.manage?(record)
   end
 
