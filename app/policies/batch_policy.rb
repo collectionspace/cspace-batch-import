@@ -24,7 +24,7 @@ class BatchPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name spreadsheet group_id]
+    %i[name spreadsheet group_id mapper_id]
   end
 
   class Scope < Scope

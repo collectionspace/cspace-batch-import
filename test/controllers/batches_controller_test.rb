@@ -7,7 +7,8 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:admin)
     @valid_params = {
       name: 'batch1',
-      group_id: groups(:default).id
+      group_id: groups(:default).id,
+      mapper_id: mappers(:core_collectionobject_6_0).id
     }
   end
 

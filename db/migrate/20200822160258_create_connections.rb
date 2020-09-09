@@ -8,7 +8,7 @@ class CreateConnections < ActiveRecord::Migration[6.0]
       t.boolean :enabled, null: false, default: true
       t.boolean :primary, null: false, default: false
       t.string :domain
-      t.string :profile
+      t.string :profile, null: false
       t.references :user, null: false, foreign_key: true
 
       t.timestamps

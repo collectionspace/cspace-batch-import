@@ -3,10 +3,9 @@
 class Mapper < ApplicationRecord
   self.inheritance_column = :_type_disabled
   has_one_attached :config
+  has_many :batches
   before_save :set_title
-  validates :profile, presence: true
-  validates :type, presence: true
-  validates :version, presence: true
+  validates :profile, :type, :version, presence: true
   validates :url, presence: true, uniqueness: true
   scope :select_options, ->(connection) { where("title LIKE ?", "#{connection.profile}%") }
   scope :profile_versions, -> {

@@ -1,77 +1,107 @@
 <%= form_with(model: batch, local: true, id: dom_id(batch), class: 'mt-3') do |form| %>
   <div class="columns">
-    <div class="column is-one-third">
-      <%= content_tag :div, class: 'field' do %>
-        <%= form.label t('batch.name'), class: 'label' %>
-        <%= form.text_field :name,
-          class: 'input',
-          placeholder: t('batch.name'),
-          autofocus: (batch.name.blank? ? true : false)
-        %>
-      <% end %>
-    </div>
-    <div class="column is-one-third">
-      <%= form.label t('batch.file'), class: 'label' %>
-      <%= content_tag :div, class: 'file is-fullwidth' do %>
-        <%= content_tag :label, class: 'file-label' do %>
-          <%=
-            form.file_field :spreadsheet, class: 'file-input',
-            onchange: 'document.getElementById("file-name").textContent = document.getElementById("batch_spreadsheet").value'
-          %>
-          <%= content_tag :span, class: 'file-cta' do %>
-            <%= fa_icon('upload') %>
-            <%= content_tag :span, class: 'file-label ml-2' do %>
-              Select file
+    <div class="column is-three-fifths">
+      <div class="columns">
+        <div class="column">
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.name'), class: 'label' %>
+            <%= form.text_field :name,
+              class: 'input',
+              placeholder: t('batch.name'),
+              autofocus: (batch.name.blank? ? true : false)
+            %>
+          <% end %>
+          <div class="field">
+            <%= form.label t('batch.connection'), class: 'label' %>
+            <div class="select">
+              <%= form.collection_select :connection_id, current_user.connections, :id, :name, {} %>
+            </div>
+          </div>
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.group'), class: 'label' %>
+            <div class="select">
+              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
+                  { selected: current_user.group_id }, disabled: !admin? %>
+            </div>
+          <% end %>
+          <!-- SUBMIT bottom of 1st col-->
+          <div class="field is-grouped mt-5">
+            <div class="control">
+              <%= form.button t('action.submit'), class: 'button is-link',
+                  data: { 'disable-with': spinner },
+                  style: 'min-width: 5rem;'
+              %>
+            </div>
+            <div class="control">
+              <%= link_to t('action.cancel'), batches_path, class: 'button is-info' %>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <%= form.label t('batch.file'), class: 'label' %>
+          <%= content_tag :div, class: 'file mb-3' do %>
+            <%= content_tag :label, class: 'file-label' do %>
+              <%=
+                form.file_field :spreadsheet, class: 'file-input',
+                onchange: 'document.getElementById("file-name").textContent = document.getElementById("batch_spreadsheet").value'
+              %>
+              <%= content_tag :span, class: 'file-cta' do %>
+                <%= fa_icon('upload') %>
+                <%= content_tag :span, class: 'file-label ml-2' do %>
+                  Select file
+                <% end %>
+              <% end %>
+              <%= content_tag :span, id: 'file-name', class: 'file-name' do %>
+                No file selected
+              <% end %>
             <% end %>
           <% end %>
-          <%= content_tag :span, id: 'file-name', class: 'file-name' do %>
-            No file selected
-          <% end %>
-        <% end %>
-      <% end %>
-    </div>
-    <div class="column is-one-third">
-      <%= content_tag :div, class: 'field' do %>
-        <%= form.label t('batch.group'), class: 'label' %>
-        <div class="select">
-          <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
-              { selected: current_user.group_id }, disabled: !admin? %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-  <div class="columns">
-    <div class="column is-one-third">
-      <div class="field">
-        <%= form.label t('batch.connection'), class: 'label' %>
-        <div class="select">
-          <%= form.collection_select :connection_id, current_user.connections, :id, :name, {} %>
-        </div>
-      </div>
-      <span class="is-info is-italic is-size-7">Using profile: <%= @connection.profile || 'none' %></span>
-    </div>
-    <div class="column is-one-third">
-      <div class="field">
-        <%= form.label t('batch.mapper'), class: 'label' %>
-        <div class="select">
-          <%= form.collection_select :mapper_id, Mapper.select_options(@connection),
-              :id, (@connection.profile.blank? ? :title : :type), {}
-          %>
+          <div class="field">
+            <%= form.label t('batch.mapper'), class: 'label' %>
+            <div class="select is-fullwidth">
+              <%= form.collection_select :mapper_id, Mapper.select_options(@connection),
+                  :id, :title, {}
+              %>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="column is-one-third">
-    </div>
-  </div>
-  <div class="field is-grouped">
-    <div class="control">
-      <%= form.button t('action.submit'), class: 'button is-link',
-          data: { 'disable-with': spinner },
-          style: 'min-width: 5rem;'
-      %>
-    </div>
-    <div class="control">
-      <%= link_to t('action.cancel'), batches_path, class: 'button is-info' %>
+    <div class="column is-two-fifths">
+      <article class="message mt-3">
+        <div class="message-header has-background-white-ter has-text-dark">
+          <p>Field definitions</p>
+        </div>
+        <div class="message-body has-background-white-bis">
+          <table class="table is-fullwidth is-bordered">
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="is-italic">Name</td>
+                <td>A name for the batch</td>
+              </tr>
+              <tr>
+                <td class="is-italic">File</td>
+                <td>A csv / xls file to upload</td>
+              </tr>
+              <tr>
+                <td class="is-italic">Connection</td>
+                <td>The CollectionSpace API target</td>
+              </tr>
+              <tr>
+                <td class="is-italic"><%= link_to "Mapper", '#' %></td>
+                <td>The configuration to use (by record type)</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="content"><%= link_to "View the complete documentation", '#' %></p>
+        </div>
+      </article>
     </div>
   </div>
 <% end %>

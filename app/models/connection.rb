@@ -8,11 +8,9 @@ class Connection < ApplicationRecord
   before_save :resolve_primary, if: -> { primary? }
   before_save :unset_primary, if: -> { disabled? && primary? }
   after_save :set_domain
-  validate :profile_must_be_prefix
-  validates :name, presence: true
-  validates :url, presence: true
-  validates :username, presence: true
+  validates :name, :profile, :url, :username, presence: true
   validates :password, presence: true, length: { minimum: 6, maximum: 18 }
+  validate :profile_must_be_prefix
 
   def client
     CollectionSpace::Client.new(

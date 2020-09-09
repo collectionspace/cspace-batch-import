@@ -5,7 +5,8 @@ class BatchTest < ActiveSupport::TestCase
     @params = {
       name: 'batch1',
       user_id: users(:superuser).id,
-      group_id: users(:superuser).group.id
+      group_id: users(:superuser).group.id,
+      mapper_id: mappers(:core_collectionobject_6_0).id
     }
   end
 

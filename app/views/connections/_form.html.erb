@@ -61,14 +61,22 @@
         <%= form.label t('connection.profile'), class: 'label' do %>
           <%= t('connection.profile') %>
         <% end %>
-        <%= form.text_field :profile,
-          disabled: !can_edit_connection_profile?(connection),
-          class: 'input',
-          value: (!connection.profile? ? current_user.group.profile : connection.profile),
-          placeholder: t('connection.placeholder.profile_version'),
-          'data-action': 'autocomplete#update',
-          'data-target': 'autocomplete.field'
-        %>
+        <%= content_tag :div, class: 'control has-icons-left' do %>
+          <%= form.text_field :profile,
+            disabled: !can_edit_connection_profile?(connection),
+            class: 'input has-icons-left',
+            value: (!connection.profile? ? current_user.group.profile : connection.profile),
+            placeholder: t('connection.placeholder.profile_version'),
+            'data-action': 'autocomplete#update',
+            'data-target': 'autocomplete.field'
+          %>
+          <%= render partial: 'shared/icon',
+            locals: {
+              classes: "has-text-#{connection.new_record? ? 'danger' : 'normal'} is-small is-left",
+              icon: 'asterisk'
+            }
+          %>
+        <% end %>
         <% unless can_edit_connection_profile?(connection) %>
           <span class="is-italic is-size-6 has-text-weight-light"><%= t('connection.group_has_profile') %></span>
         <% end %>

@@ -18,6 +18,9 @@ Role.find_or_create_by!(name: 'Admin')
 Role.find_or_create_by!(name: 'Manager')
 Role.find_or_create_by!(name: 'Member')
 
+# Setup initial set of mappers (this may change)
+Mapper.refresh
+
 connections = [
   {
     name: 'core.dev',
@@ -25,7 +28,8 @@ connections = [
     username: 'admin@core.collectionspace.org',
     password: 'Administrator',
     enabled: true,
-    primary: false
+    primary: false,
+    profile: 'core-6_0_0'
   },
   {
     name: 'fcart.dev',
@@ -33,7 +37,8 @@ connections = [
     username: 'admin@fcart.collectionspace.org',
     password: 'Administrator',
     enabled: true,
-    primary: false
+    primary: false,
+    profile: 'fcart-2_0_0'
   }
 ]
 
@@ -45,9 +50,6 @@ User.find_or_create_by!(superuser: true) do |user|
   user.role = Role.admin
   connections.each { |c| user.connections.build(c) }
 end
-
-# Setup initial set of mappers (this may change)
-Mapper.refresh
 
 if ENV.fetch('RAILS_ENV', 'development') == 'development'
   User.find_or_create_by!(email: 'admin@collectionspace.org') do |user|
