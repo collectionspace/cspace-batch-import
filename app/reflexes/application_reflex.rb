@@ -11,8 +11,7 @@ class ApplicationReflex < StimulusReflex::Reflex
 
   def toggle_status
     model = element.dataset['model'].camelize.constantize
-    id = element.dataset['id']
-    record = model.find(id)
-    record.update(enabled: record.enabled? ? false : true)
+    record = model.find(element.dataset['id'])
+    record.update(enabled: element[:checked])
   end
 end
