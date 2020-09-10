@@ -23,7 +23,7 @@ Mapper.refresh
 
 connections = [
   {
-    name: 'core.dev',
+    name: 'Core Dev Server',
     url: 'https://core.dev.collectionspace.org/cspace-services',
     username: 'admin@core.collectionspace.org',
     password: 'Administrator',
@@ -32,7 +32,7 @@ connections = [
     profile: 'core-6_0_0'
   },
   {
-    name: 'fcart.dev',
+    name: 'Fcart Dev Server',
     url: 'https://fcart.dev.collectionspace.org/cspace-services',
     username: 'admin@fcart.collectionspace.org',
     password: 'Administrator',

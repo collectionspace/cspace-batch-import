@@ -44,9 +44,11 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
     t.string "status_state"
     t.bigint "user_id", null: false
     t.bigint "group_id", null: false
+    t.bigint "connection_id"
     t.bigint "mapper_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["connection_id"], name: "index_batches_on_connection_id"
     t.index ["group_id"], name: "index_batches_on_group_id"
     t.index ["mapper_id"], name: "index_batches_on_mapper_id"
     t.index ["user_id"], name: "index_batches_on_user_id"
@@ -151,6 +153,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "batches", "connections"
   add_foreign_key "batches", "groups"
   add_foreign_key "batches", "mappers"
   add_foreign_key "batches", "users"

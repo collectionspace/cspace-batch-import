@@ -6,6 +6,7 @@ class BatchTest < ActiveSupport::TestCase
       name: 'batch1',
       user_id: users(:superuser).id,
       group_id: users(:superuser).group.id,
+      connection_id: connections(:core_superuser).id,
       mapper_id: mappers(:core_collectionobject_6_0).id
     }
   end

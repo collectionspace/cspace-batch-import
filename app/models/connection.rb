@@ -3,6 +3,7 @@
 class Connection < ApplicationRecord
   include PrefixChecker
   belongs_to :user
+  has_many :batches, dependent: :nullify # TODO: alrighty?
   has_one :group, through: :user
   encrypts :password
   before_save :resolve_primary, if: -> { primary? }

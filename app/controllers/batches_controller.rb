@@ -25,7 +25,6 @@ class BatchesController < ApplicationController
           redirect_to new_batch_step_preprocess_path(@batch), notice: t('batch.created')
         end
       else
-        @batch = Batch.new
         @connection ||= current_user.default_connection
         format.html { render :new }
       end

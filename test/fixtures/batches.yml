@@ -6,6 +6,7 @@ superuser_batch: # no associated steps
   step_state: preprocessing
   status_state: ready
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 superuser_batch_preprocessing:
@@ -14,6 +15,7 @@ superuser_batch_preprocessing:
   step_state: preprocessing
   status_state: ready
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 superuser_batch_preprocessed:
@@ -22,6 +24,7 @@ superuser_batch_preprocessed:
   step_state: preprocessing
   status_state: finished
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 superuser_batch_processing:
@@ -30,6 +33,7 @@ superuser_batch_processing:
   step_state: processing
   status_state: ready
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 superuser_batch_processed:
@@ -38,6 +42,7 @@ superuser_batch_processed:
   step_state: processing
   status_state: finished
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 minion_batch:
@@ -46,6 +51,7 @@ minion_batch:
   step_state: preprocessing
   status_state: ready
   group: default
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 fishmonger_batch:
@@ -54,6 +60,7 @@ fishmonger_batch:
   step_state: preprocessing
   status_state: ready
   group: fish
+  connection: core_superuser
   mapper: core_collectionobject_6_0
 
 tuna_batch:
@@ -62,4 +69,5 @@ tuna_batch:
   step_state: preprocessing
   status_state: ready
   group: fish
+  connection: core_superuser
   mapper: core_collectionobject_6_0

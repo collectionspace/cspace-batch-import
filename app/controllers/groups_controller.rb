@@ -18,7 +18,7 @@ class GroupsController < ApplicationController
       if @group.update(group_params)
         format.html { redirect_to groups_path, notice: t('group.created') }
       else
-        format.html { render :index }
+        format.html { render :new }
       end
     end
   end

@@ -7,8 +7,9 @@ class Batch < ApplicationRecord
   has_one :step_process, class_name: 'Step::Process', dependent: :destroy
   belongs_to :user
   belongs_to :group
+  belongs_to :connection
   belongs_to :mapper, counter_cache: true
-  validates :name, :group, :mapper, presence: true
+  validates :name, :spreadsheet, :user, :group, :connection, :mapper, presence: true
 
   def processed?
     step_process&.done?

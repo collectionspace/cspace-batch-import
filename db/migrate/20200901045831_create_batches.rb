@@ -8,6 +8,7 @@ class CreateBatches < ActiveRecord::Migration[6.0]
       t.string :status_state
       t.references :user, null: false, foreign_key: true
       t.references :group, null: false, foreign_key: true
+      t.references :connection, null: true, foreign_key: true
       t.references :mapper, null: true, foreign_key: true
 
       t.timestamps
