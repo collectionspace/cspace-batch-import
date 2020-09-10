@@ -9,6 +9,8 @@ superuser_batch: # no associated steps
   connection: core_superuser
   mapper: core_collectionobject_6_0
 
+# STEP 1. PREPROCESSING
+
 superuser_batch_preprocessing:
   name: superuser_batch
   user: superuser
@@ -27,6 +29,8 @@ superuser_batch_preprocessed:
   connection: core_superuser
   mapper: core_collectionobject_6_0
 
+# STEP 2. PROCESSING
+
 superuser_batch_processing:
   name: superuser_batch
   user: superuser
@@ -44,6 +48,8 @@ superuser_batch_processed:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+
+# BATCHES TO TEST AUTHZ
 
 minion_batch:
   name: minion_batch

@@ -9,7 +9,8 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
       name: 'batch1',
       group_id: groups(:default).id,
       connection_id: connections(:core_superuser).id,
-      mapper_id: mappers(:core_collectionobject_6_0).id
+      mapper_id: mappers(:core_collectionobject_6_0).id,
+      spreadsheet: fixture_file_upload('files/core-cataloging.csv', 'text/csv')
     }
   end
 
@@ -29,6 +30,7 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
     assert_response :redirect
     follow_redirect!
     assert_response :success
+    assert_equal 'core-cataloging.csv', Batch.last.spreadsheet.filename.to_s
   end
 
   # TODO: admin can create batch for another group

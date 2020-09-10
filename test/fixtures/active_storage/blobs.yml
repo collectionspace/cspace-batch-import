@@ -1,0 +1,8 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+core_cataloging_csv:
+  key: can_be_anything
+  filename: core-cataloging.csv
+  content_type: 'text/csv'
+  byte_size: 100
+  checksum: 123

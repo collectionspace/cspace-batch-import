@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+superuser_batch_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+superuser_batch_preprocessing_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_preprocessing) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+superuser_batch_preprocessed_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_preprocessed) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>

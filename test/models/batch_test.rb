@@ -1,13 +1,15 @@
 require 'test_helper'
 
 class BatchTest < ActiveSupport::TestCase
+  include ActionDispatch::TestProcess
   setup do
     @params = {
       name: 'batch1',
       user_id: users(:superuser).id,
       group_id: users(:superuser).group.id,
       connection_id: connections(:core_superuser).id,
-      mapper_id: mappers(:core_collectionobject_6_0).id
+      mapper_id: mappers(:core_collectionobject_6_0).id,
+      spreadsheet: fixture_file_upload('files/core-cataloging.csv', 'text/csv')
     }
   end
 
