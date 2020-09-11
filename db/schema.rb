@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
     t.string "type", null: false
     t.string "version", null: false
     t.string "url", null: false
+    t.boolean "enabled", default: true, null: false
     t.boolean "status", null: false
     t.integer "batches_count", default: 0
     t.datetime "created_at", precision: 6, null: false

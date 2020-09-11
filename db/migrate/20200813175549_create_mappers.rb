@@ -8,6 +8,7 @@ class CreateMappers < ActiveRecord::Migration[6.0]
       t.string :type, null: false
       t.string :version, null: false
       t.string :url, null: false, unique: true
+      t.boolean :enabled, null: false, default: true
       t.boolean :status, null: false
       t.integer :batches_count, default: 0
 

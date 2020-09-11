@@ -7,8 +7,10 @@ class Mapper < ApplicationRecord
   before_save :set_title
   validates :profile, :type, :version, presence: true
   validates :url, presence: true, uniqueness: true
-  scope :select_options, ->(connection) { where("title LIKE ?", "#{connection.profile}%") }
-  scope :profile_versions, -> {
+  scope :select_options, lambda { |connection|
+    where('title LIKE ?', "#{connection.profile}%").where(enabled: true)
+  }
+  scope :profile_versions, lambda {
     order('profile asc, version asc').pluck(:profile, :version).map { |m| m.join('-') }.uniq
   }
 
@@ -21,6 +23,10 @@ class Mapper < ApplicationRecord
     self.status = true
   end
 
+  def enabled?
+    found? && enabled
+  end
+
   def found?
     status
   end
@@ -29,7 +35,7 @@ class Mapper < ApplicationRecord
     "#{profile}-#{version}"
   end
 
-  def self.create_mapper(json)
+  def self.create_or_update_mapper(json)
     url_found = HTTP.get(json['url']).status.success?
     mapper = Mapper.find_or_create_by!(\
       profile: json['profile'], version: json['version'], type: json['type']
@@ -46,6 +52,7 @@ class Mapper < ApplicationRecord
         status: url_found
       )
     end
+    mapper.update(enabled: json['enabled']) if mapper.enabled != json['enabled']
     return mapper if mapper.config.attached? || !url_found
 
     mapper.download
@@ -58,7 +65,7 @@ class Mapper < ApplicationRecord
 
     begin
       JSON.parse(mappers_response.body.to_s)['mappers'].each do |m|
-        create_mapper(m)
+        create_or_update_mapper(m)
       rescue StandardError => e
         logger.error(e.message)
       end
