@@ -5,9 +5,7 @@
         <%= content_tag :div, class: 'column is-half' do %>
           <%= content_tag :div, class: 'field' do %>
             <%= form.label t('batch.name'), class: 'label' %>
-            <%= form.text_field :name,
-              class: 'input',
-              placeholder: t('batch.name'),
+            <%= form.text_field :name, class: 'input', placeholder: t('batch.name'),
               autofocus: (batch.name.blank? ? true : false)
             %>
           <% end %>
@@ -46,7 +44,8 @@
           <%= content_tag :div, class: 'file mb-3 is-fullwidth' do %>
             <%= content_tag :label, class: 'file-label' do %>
               <%=
-                form.file_field :spreadsheet, class: 'file-input', onchange: filename_js
+                form.file_field :spreadsheet, accept: csv_content_types, required: true,
+                class: 'file-input', onchange: filename_js
               %>
               <%= content_tag :span, class: 'file-cta' do %>
                 <%= fa_icon('upload') %>

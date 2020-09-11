@@ -29,6 +29,13 @@ module ApplicationHelper
     manage?(record)
   end
 
+  def csv_content_types
+    [
+      'application/vnd.ms-excel',
+      'text/csv'
+    ].join(',')
+  end
+
   def current_step_path(batch)
     step_state = batch.aasm(:step).human_state.to_sym
     send("new_batch_step_#{step_state}_path", batch)
