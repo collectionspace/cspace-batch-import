@@ -1,28 +1,49 @@
 <%= form_with(model: batch, local: true, id: dom_id(batch), class: 'mt-3') do |form| %>
   <div class="columns">
     <div class="column">
-      <div class="columns">
-        <div class="column">
-          <div class="field">
+      <div class="columns is-multiline">
+        <%= content_tag :div, class: 'column is-half' do %>
           <%= content_tag :div, class: 'field' do %>
             <%= form.label t('batch.name'), class: 'label' %>
             <%= form.text_field :name,
               class: 'input',
               placeholder: t('batch.name'),
-              autofocus: (batch.name.blank? ? true : false),
-              tabindex: 1
+              autofocus: (batch.name.blank? ? true : false)
             %>
           <% end %>
-            <%= form.label t('batch.connection'), class: 'label' %>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-half' do %>
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.group'), class: 'label' %>
             <div class="select is-fullwidth">
-              <%= form.collection_select :connection_id, current_user.connections,
-                :id, :name, { selected: @connection.id }, tabindex: 3,
-                data: { 'reflex': 'change->Connection#selected' }
-              %>
+              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
+                  { selected: current_user.group_id }, disabled: !admin? %>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-half' do %>
+          <%= form.label t('batch.connection'), class: 'label' %>
+          <div class="select is-fullwidth">
+            <%= form.collection_select :connection_id, current_user.connections,
+              :id, :name, { selected: @connection.id }, data: { 'reflex': 'change->Connection#selected' }
+            %>
+          </div>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-half' do %>
+          <div class="field">
+            <%= form.label t('batch.mapper'), class: 'label' %>
+            <div class="select is-fullwidth">
+              <%= form.collection_select :mapper_id, Mapper.select_options(@connection), :id, :title, {} %>
             </div>
           </div>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-three-quarters' do %>
           <%= form.label t('batch.file'), class: 'label' %>
-          <%= content_tag :div, class: 'file mb-3' do %>
+          <%= content_tag :div, class: 'file mb-3 is-fullwidth' do %>
             <%= content_tag :label, class: 'file-label' do %>
               <%=
                 form.file_field :spreadsheet, class: 'file-input', onchange: filename_js
@@ -38,37 +59,22 @@
               <% end %>
             <% end %>
           <% end %>
-          <!-- SUBMIT bottom of 1st col-->
-          <div class="field is-grouped mt-5">
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-one-quarter' do %>
+        <% end %>
+
+        <%= content_tag :div, class: 'column' do %>
+          <div class="field is-grouped">
             <div class="control">
               <%= form.button t('action.submit'), class: 'button is-link',
-                  data: { 'disable-with': spinner_html },
-                  style: 'min-width: 5rem;',
-                  tabindex: 5
-              %>
+                  data: { 'disable-with': spinner_html }, style: 'min-width: 5rem;' %>
             </div>
             <div class="control">
-              <%= link_to t('action.cancel'), batches_path, class: 'button is-info', tabindex: 6 %>
+              <%= link_to t('action.cancel'), batches_path, class: 'button is-info' %>
             </div>
           </div>
-        </div>
-        <div class="column">
-          <%= content_tag :div, class: 'field' do %>
-            <%= form.label t('batch.group'), class: 'label' %>
-            <div class="select is-fullwidth">
-              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
-                  { selected: current_user.group_id }, disabled: !admin?, tabindex: 2 %>
-            </div>
-          <% end %>
-          <div class="field">
-            <%= form.label t('batch.mapper'), class: 'label' %>
-            <div class="select is-fullwidth">
-              <%= form.collection_select :mapper_id, Mapper.select_options(@connection),
-                  :id, :title, {}, tabindex: 4
-              %>
-            </div>
-          </div>
-        </div>
+        <% end %>
       </div>
     </div>
     <div class="column">
