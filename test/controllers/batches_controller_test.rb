@@ -12,6 +12,8 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
       mapper_id: mappers(:core_collectionobject_6_0).id,
       spreadsheet: fixture_file_upload('files/core-cataloging.csv', 'text/csv')
     }
+    @invalid_params = @valid_params.dup
+    @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
   end
 
   test 'a user can view batches' do
@@ -31,6 +33,12 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
     assert_equal 'core-cataloging.csv', Batch.last.spreadsheet.filename.to_s
+  end
+
+  test 'should not create a batch with an invalid mapper' do
+    assert_no_difference('Batch.count') do
+      post batches_url, params: { batch: @invalid_params }
+    end
   end
 
   # TODO: admin can create batch for another group

@@ -14,4 +14,10 @@ class ApplicationReflex < StimulusReflex::Reflex
     record = model.find(element.dataset['id'])
     record.update(enabled: element[:checked])
   end
+
+  def toggle_hide
+    hide = element.dataset['value'].to_sym
+    session[hide] ||= false # make sure there's a default (not hidden)
+    session[hide] = !session[hide]
+  end
 end

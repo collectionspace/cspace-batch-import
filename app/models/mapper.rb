@@ -25,6 +25,10 @@ class Mapper < ApplicationRecord
     status
   end
 
+  def profile_version
+    "#{profile}-#{version}"
+  end
+
   def self.create_mapper(json)
     url_found = HTTP.get(json['url']).status.success?
     mapper = Mapper.find_or_create_by!(\

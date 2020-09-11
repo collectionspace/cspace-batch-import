@@ -10,7 +10,10 @@
       <div class="field">
         <%= form.label t('connection.name'), class: 'label' %>
         <%= content_tag :div, class: 'control has-icons-left' do %>
-          <%= form.text_field :name, class: 'input', placeholder: t('connection.placeholder.name') %>
+          <%= form.text_field :name, class: 'input',
+            placeholder: t('connection.placeholder.name'),
+            autofocus: (connection.name.blank? ? true : false)
+          %>
           <%= render partial: 'shared/icon',
               locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
           %>
@@ -109,7 +112,7 @@
       <div class="field is-grouped mt-5">
         <div class="control">
           <%= form.button t('action.submit'), class: 'button is-link',
-              data: { 'disable-with': spinner },
+              data: { 'disable-with': spinner_html },
               style: 'min-width: 5rem;'
           %>
         </div>

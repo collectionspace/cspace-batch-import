@@ -1,49 +1,31 @@
 <%= form_with(model: batch, local: true, id: dom_id(batch), class: 'mt-3') do |form| %>
   <div class="columns">
-    <div class="column is-three-fifths">
+    <div class="column">
       <div class="columns">
         <div class="column">
+          <div class="field">
           <%= content_tag :div, class: 'field' do %>
             <%= form.label t('batch.name'), class: 'label' %>
             <%= form.text_field :name,
               class: 'input',
               placeholder: t('batch.name'),
-              autofocus: (batch.name.blank? ? true : false)
+              autofocus: (batch.name.blank? ? true : false),
+              tabindex: 1
             %>
           <% end %>
-          <div class="field">
             <%= form.label t('batch.connection'), class: 'label' %>
-            <div class="select">
-              <%= form.collection_select :connection_id, current_user.connections, :id, :name, {} %>
-            </div>
-          </div>
-          <%= content_tag :div, class: 'field' do %>
-            <%= form.label t('batch.group'), class: 'label' %>
-            <div class="select">
-              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
-                  { selected: current_user.group_id }, disabled: !admin? %>
-            </div>
-          <% end %>
-          <!-- SUBMIT bottom of 1st col-->
-          <div class="field is-grouped mt-5">
-            <div class="control">
-              <%= form.button t('action.submit'), class: 'button is-link',
-                  data: { 'disable-with': spinner },
-                  style: 'min-width: 5rem;'
+            <div class="select is-fullwidth">
+              <%= form.collection_select :connection_id, current_user.connections,
+                :id, :name, { selected: @connection.id }, tabindex: 3,
+                data: { 'reflex': 'change->Connection#selected' }
               %>
             </div>
-            <div class="control">
-              <%= link_to t('action.cancel'), batches_path, class: 'button is-info' %>
-            </div>
           </div>
-        </div>
-        <div class="column">
           <%= form.label t('batch.file'), class: 'label' %>
           <%= content_tag :div, class: 'file mb-3' do %>
             <%= content_tag :label, class: 'file-label' do %>
               <%=
-                form.file_field :spreadsheet, class: 'file-input',
-                onchange: 'document.getElementById("file-name").textContent = document.getElementById("batch_spreadsheet").value'
+                form.file_field :spreadsheet, class: 'file-input', onchange: filename_js
               %>
               <%= content_tag :span, class: 'file-cta' do %>
                 <%= fa_icon('upload') %>
@@ -56,19 +38,41 @@
               <% end %>
             <% end %>
           <% end %>
+          <!-- SUBMIT bottom of 1st col-->
+          <div class="field is-grouped mt-5">
+            <div class="control">
+              <%= form.button t('action.submit'), class: 'button is-link',
+                  data: { 'disable-with': spinner_html },
+                  style: 'min-width: 5rem;',
+                  tabindex: 5
+              %>
+            </div>
+            <div class="control">
+              <%= link_to t('action.cancel'), batches_path, class: 'button is-info', tabindex: 6 %>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.group'), class: 'label' %>
+            <div class="select is-fullwidth">
+              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
+                  { selected: current_user.group_id }, disabled: !admin?, tabindex: 2 %>
+            </div>
+          <% end %>
           <div class="field">
             <%= form.label t('batch.mapper'), class: 'label' %>
             <div class="select is-fullwidth">
               <%= form.collection_select :mapper_id, Mapper.select_options(@connection),
-                  :id, :title, {}
+                  :id, :title, {}, tabindex: 4
               %>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="column is-two-fifths">
-      <article class="message mt-3">
+    <div class="column">
+      <article class="message is-small mt-3">
         <div class="message-header has-background-white-ter has-text-dark">
           <p>Field definitions</p>
         </div>
@@ -76,8 +80,8 @@
           <table class="table is-fullwidth is-bordered">
             <thead>
               <tr>
-                <th>Field</th>
-                <th>Description</th>
+                <td class="has-text-weight-bold">Field</th>
+                <td class="has-text-weight-bold">Description</th>
               </tr>
             </thead>
             <tbody>
@@ -86,10 +90,9 @@
                 <td>A name for the batch</td>
               </tr>
               <tr>
-                <td class="is-italic">File</td>
-                <td>A csv / xls file to upload</td>
+                <td class="is-italic">Group</td>
+                <td>The group for the batch (can only be changed by admins)</td>
               </tr>
-              <tr>
                 <td class="is-italic">Connection</td>
                 <td>The CollectionSpace API target</td>
               </tr>
@@ -97,6 +100,11 @@
                 <td class="is-italic"><%= link_to "Mapper", '#' %></td>
                 <td>The configuration to use (by record type)</td>
               </tr>
+              <tr>
+                <td class="is-italic">File</td>
+                <td>A csv file to upload</td>
+              </tr>
+              <tr>
             </tbody>
           </table>
           <p class="content"><%= link_to "View the complete documentation", '#' %></p>

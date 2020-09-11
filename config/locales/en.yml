@@ -58,6 +58,7 @@ en:
     deleted: Batch was successfully deleted
     file: File
     group: Group
+    invalid_profile: Profile version mismatch between connection and mapper
     mapper: Mapper
     name: Name
     step:

@@ -1,7 +1,7 @@
 <% if !step.new_record? || !batch.ready? %>
   <div class="columns">
     <div class="column">
-        <%= render partial: 'step/status', locals: { step: step } %>
+      <%= render partial: 'step/status', locals: { step: step } %>
     </div>
   </div>
   <% if step.done? || batch.ran? %>

@@ -5,4 +5,8 @@ class ConnectionReflex < ApplicationReflex
     connection = Connection.find(element.dataset['id'])
     connection.update(primary: true)
   end
+
+  def selected
+    @connection = Connection.find(element.value.to_i)
+  end
 end

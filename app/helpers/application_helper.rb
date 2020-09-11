@@ -34,6 +34,13 @@ module ApplicationHelper
     send("new_batch_step_#{step_state}_path", batch)
   end
 
+  def filename_js
+    filename_target = 'document.getElementById("file-name").textContent'
+    filename_value = 'document.getElementById("batch_spreadsheet").value'
+    filename_transform = 'replace("C:\\\\fakepath\\\\", "")'
+    "#{filename_target} = #{filename_value}.#{filename_transform}"
+  end
+
   def status_color(status)
     case status
     when :ready
@@ -76,8 +83,12 @@ module ApplicationHelper
     current_user.manage?(record)
   end
 
-  def spinner
+  def spinner_html
     "<i class='fa fa-spinner fa-spin'></i>"
+  end
+
+  def spinner_js
+    'this.querySelector(".fa-refresh").classList.add("fa-spin");'
   end
 
   def unassigned_message
@@ -90,7 +101,7 @@ module ApplicationHelper
     end
   end
 
-  def waiting_to_start
+  def waiting_to_start_html
     '<span class="is-italic">not started</span>'
   end
 end

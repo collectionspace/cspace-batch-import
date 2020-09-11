@@ -10,6 +10,7 @@ class Batch < ApplicationRecord
   belongs_to :connection
   belongs_to :mapper, counter_cache: true
   validates :name, :spreadsheet, :user, :group, :connection, :mapper, presence: true
+  validate :profile
 
   def processed?
     step_process&.done?
@@ -17,5 +18,13 @@ class Batch < ApplicationRecord
 
   def preprocessed?
     step_preprocess&.done?
+  end
+
+  private
+
+  def profile
+    return unless connection.profile != mapper.profile_version
+
+    errors.add(:profile, I18n.t('batch.invalid_profile'))
   end
 end
