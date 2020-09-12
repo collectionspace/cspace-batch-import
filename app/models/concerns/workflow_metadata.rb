@@ -12,6 +12,7 @@ module WorkflowMetadata
   end
 
   def percentage_complete?
-    (step_num_row * 100 / (batch.num_rows || 10))
+    # (step_num_row * 100 / (batch.num_rows || 10))
+    (step_num_row * 100 / (10)) # TODO: replace placeholder job
   end
 end

@@ -2,7 +2,8 @@
   <td><%= step.started_at || waiting_to_start_html.html_safe %></td>
   <td><%= step.started_at ? step.current_runtime : '0' %> seconds</td>
   <td>
-    <progress class="progress is-success" value="<%= step.step_num_row %>" max="<%= step.batch.num_rows || 10 %>"></progress>
+    <!-- TODO: step.batch.num_rows -->
+    <progress class="progress is-success" value="<%= step.step_num_row %>" max="<%= 10 %>"></progress>
   </td>
   <td><%= step.percentage_complete? %></td>
   <td><%= step.step_errors %></td>
