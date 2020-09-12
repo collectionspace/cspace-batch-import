@@ -21,8 +21,12 @@ class BatchesController < ApplicationController
       if @batch.update(
         permitted_attributes(@batch).merge(user_id: current_user.id, group_id: group_id)
       )
-        format.html do
-          redirect_to new_batch_step_preprocess_path(@batch), notice: t('batch.created')
+        if spreadsheet_ok?
+          format.html do
+            redirect_to new_batch_step_preprocess_path(@batch), notice: t('batch.created')
+          end
+        else
+          format.html { return redirect_to new_batch_path }
         end
       else
         @connection ||= current_user.default_connection
@@ -39,6 +43,21 @@ class BatchesController < ApplicationController
   end
 
   private
+
+  def spreadsheet_ok?
+    continue = false
+    Batch.validator_for(@batch) do |validator|
+      if validator.valid?
+        @batch.update(num_rows: validator.row_count)
+        continue = true
+      else
+        @batch.destroy # scrap it, they'll have to start over
+        flash[:csv_lint] = validator.errors.take(5)
+      end
+    end
+
+    continue
+  end
 
   def set_batch
     @batch = authorize Batch.find(params[:id])

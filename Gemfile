@@ -22,6 +22,7 @@ gem 'after_commit_everywhere', '~> 0.1', '>= 0.1.5'
 gem 'aws-sdk-s3', require: false
 gem 'bulma-rails', '~> 0.9.0'
 gem 'collectionspace-client', tag: 'v0.7.0', git: 'https://github.com/collectionspace/collectionspace-client.git'
+gem 'csvlint'
 gem 'devise'
 gem 'font-awesome-rails'
 gem 'hiredis'

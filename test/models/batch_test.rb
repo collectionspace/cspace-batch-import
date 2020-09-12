@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class BatchTest < ActiveSupport::TestCase
@@ -12,7 +14,6 @@ class BatchTest < ActiveSupport::TestCase
       spreadsheet: fixture_file_upload('files/core-cataloging.csv', 'text/csv')
     }
     @invalid_params = @params.dup
-    @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
   end
 
   test 'cannot create batch without a name' do
@@ -35,6 +36,7 @@ class BatchTest < ActiveSupport::TestCase
   end
 
   test 'cannot create a batch with invalid params' do
+    @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
     assert_not Batch.new(@invalid_params).valid?
   end
 end

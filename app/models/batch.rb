@@ -10,7 +10,7 @@ class Batch < ApplicationRecord
   belongs_to :connection
   belongs_to :mapper, counter_cache: true
   validates :name, :spreadsheet, :user, :group, :connection, :mapper, presence: true
-  validate :profile
+  validate :connection_profile_is_matched
 
   def processed?
     step_process&.done?
@@ -20,9 +20,23 @@ class Batch < ApplicationRecord
     step_preprocess&.done?
   end
 
+  def self.validator_for(batch)
+    # raise unless batch.spreadsheet.attached? # TODO
+
+    batch.spreadsheet.open do |spreadsheet|
+      # TODO: config from batch
+      config = { 'header': true, 'delimiter': ',' }
+      options = { limit_lines: 100 }
+      validator = Csvlint::Validator.new(
+        File.new(spreadsheet.path), config, nil, options
+      )
+      yield validator
+    end
+  end
+
   private
 
-  def profile
+  def connection_profile_is_matched
     return unless connection.profile != mapper.profile_version
 
     errors.add(:profile, I18n.t('batch.invalid_profile'))

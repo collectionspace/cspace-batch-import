@@ -13,7 +13,6 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
       spreadsheet: fixture_file_upload('files/core-cataloging.csv', 'text/csv')
     }
     @invalid_params = @valid_params.dup
-    @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
   end
 
   test 'a user can view batches' do
@@ -36,6 +35,14 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create a batch with an invalid mapper' do
+    @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
+    assert_no_difference('Batch.count') do
+      post batches_url, params: { batch: @invalid_params }
+    end
+  end
+
+  test 'should not create a batch with malformed csv' do
+    @invalid_params[:spreadsheet] = fixture_file_upload('files/malformed.csv', 'text.csv')
     assert_no_difference('Batch.count') do
       post batches_url, params: { batch: @invalid_params }
     end

@@ -38,6 +38,7 @@ module ApplicationHelper
 
   def current_step_path(batch)
     step_state = batch.aasm(:step).human_state.to_sym
+    step_state = :preprocess if step_state == :new
     send("new_batch_step_#{step_state}_path", batch)
   end
 
