@@ -31,6 +31,16 @@ class BatchTest < ActiveSupport::TestCase
     refute Batch.new(@params).valid?
   end
 
+  test 'cannot create batch without a connection' do
+    @params.delete(:connection_id)
+    Batch.new(@params).valid?
+  end
+
+  test 'cannot create batch without a mapper' do
+    @params.delete(:mapper_id)
+    refute Batch.new(@params).valid?
+  end
+
   test 'can create a batch with valid params' do
     assert Batch.new(@params).valid?
   end

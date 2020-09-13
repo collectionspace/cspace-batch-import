@@ -2,7 +2,7 @@
 
 class BatchesController < ApplicationController
   before_action :set_batch, only: %i[destroy]
-  # before_action :check_for_batch_targets_another_group, only: %i[create]
+  before_action :set_group, only: %i[create]
 
   def index
     @batches = policy_scope(Batch).order('created_at DESC')
@@ -17,9 +17,8 @@ class BatchesController < ApplicationController
   def create
     respond_to do |format|
       @batch = Batch.new
-      group_id = params.dig(:batch, :group_id) ? params[:batch][:group_id] : current_user.group.id
       if @batch.update(
-        permitted_attributes(@batch).merge(user_id: current_user.id, group_id: group_id)
+        permitted_attributes(@batch).merge(user: current_user, group: @group)
       )
         if spreadsheet_ok?
           format.html do
@@ -61,5 +60,13 @@ class BatchesController < ApplicationController
 
   def set_batch
     @batch = authorize Batch.find(params[:id])
+  end
+
+  def set_group
+    @group = if permitted_attributes(Batch).dig(:group_id)
+               Group.find(params[:batch][:group_id])
+             else
+               current_user.group
+             end
   end
 end

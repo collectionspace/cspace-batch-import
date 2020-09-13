@@ -37,7 +37,9 @@ class Batch < ApplicationRecord
   private
 
   def connection_profile_is_matched
-    return unless connection.profile != mapper.profile_version
+    if connection && mapper
+      return unless connection.profile != mapper.profile_version
+    end
 
     errors.add(:profile, I18n.t('batch.invalid_profile'))
   end

@@ -34,6 +34,32 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'core-cataloging.csv', Batch.last.spreadsheet.filename.to_s
   end
 
+  test 'admin can create a batch for another group' do
+    params = @valid_params.dup
+    params[:group_id] = groups(:fish).id
+    assert_difference('Batch.count') do
+      post batches_url, params: { batch: params }
+    end
+    assert_equal groups(:fish), Batch.last.group
+  end
+
+  test 'a non-admin user can create a batch but group is set to their group' do
+    sign_in users(:manager)
+    params = @valid_params.dup
+    params[:group_id] = groups(:fish).id
+    assert_difference('Batch.count') do
+      post batches_url, params: { batch: params }
+    end
+    assert_equal groups(:default), Batch.last.group
+  end
+
+  test 'should not create a batch with no connection' do
+    @invalid_params.delete :connection_id
+    assert_no_difference('Batch.count') do
+      post batches_url, params: { batch: @invalid_params }
+    end
+  end
+
   test 'should not create a batch with an invalid mapper' do
     @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
     assert_no_difference('Batch.count') do
@@ -47,10 +73,6 @@ class BatchesControllerTest < ActionDispatch::IntegrationTest
       post batches_url, params: { batch: @invalid_params }
     end
   end
-
-  # TODO: admin can create batch for another group
-  # TODO: non-admin user can create batch
-  # TODO: cannot create a batch without a connection
 
   test 'should destroy batch' do
     batch = batches(:minion_batch)

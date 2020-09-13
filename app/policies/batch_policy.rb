@@ -6,7 +6,7 @@ class BatchPolicy < ApplicationPolicy
     user.manage?(record) || user.group?(record.group)
   end
 
-  # any user can create a batch (we check group integrity in the controller)
+  # any user can create a batch (we enforce group integrity in the controller)
   def create?
     true
   end
@@ -24,7 +24,12 @@ class BatchPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name spreadsheet group_id connection_id mapper_id]
+    if user.admin?
+      %i[name spreadsheet group_id connection_id mapper_id]
+    else
+      # a non-admin cannot assign a group
+      %i[name spreadsheet connection_id mapper_id]
+    end
   end
 
   class Scope < Scope
