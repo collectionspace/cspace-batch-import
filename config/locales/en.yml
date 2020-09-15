@@ -69,6 +69,7 @@ en:
       preprocess:
         created: Preprocess job was successfully created
       process:
+        created: Process job was successfully created
         check_records: Check for existing records?
         check_terms: Check for existing terms?
       state:
