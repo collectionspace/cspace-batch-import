@@ -6,6 +6,8 @@ class Step::Policy < ApplicationPolicy
   end
 
   def cancel?
+    return false if record.failed? || record.finished?
+
     user.manage?(record)
   end
 

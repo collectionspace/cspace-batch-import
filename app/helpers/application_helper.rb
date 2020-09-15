@@ -74,7 +74,7 @@ module ApplicationHelper
     when :pending
       'info'
     when :running
-      'dark'
+      'success'
     when :cancelled
       'warning'
     when :finished

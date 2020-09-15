@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PreprocessJob < ApplicationJob
-  include CableReady::Broadcaster
   queue_as :default
   sidekiq_options retry: false
 
@@ -17,18 +16,19 @@ class PreprocessJob < ApplicationJob
       (1..10).each do |_i|
         break if preprocess.abort?
 
-        preprocess.update(step_num_row: preprocess.step_num_row += 1)
+        preprocess.increment!
         # do some work!
         sleep 1
-        update_progress(preprocess)
+        preprocess.update_progress
       end
     end
 
     # we'll call it good for now
-    preprocess.batch.finished! unless preprocess.abort?
+    preprocess.batch.finished! unless preprocess.abort? || preprocess.errors?
   rescue StandardError => e
     # something really bad happened! we need to make this prominent somewhere ...
-    preprocess.batch.failed!
+    preprocess.batch.failed! unless preprocess.batch.failed? # may already be in trouble
+    Rails.logger.error(e.message)
     Rails.logger.error(e.backtrace)
   ensure
     # we'll close up files etc.

@@ -3,7 +3,11 @@
   <td><%= step.started_at ? step.current_runtime : '0' %> seconds</td>
   <td>
     <!-- TODO: step.batch.num_rows -->
-    <progress class="progress is-success" value="<%= step.step_num_row %>" max="<%= 10 %>"></progress>
+    <progress
+      class="progress is-<%= step.done? ? 'success' : status_color(step.batch.reload.current_status) %>"
+      value="<%= step.step_num_row %>"
+      max="<%= 10 %>">
+    </progress>
   </td>
   <td><%= step.percentage_complete? %></td>
   <td><%= step.step_errors %></td>
