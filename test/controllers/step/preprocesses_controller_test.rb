@@ -9,6 +9,8 @@ module Step
     setup do
       sign_in users(:superuser)
       @batch = batches(:superuser_batch)
+      @batch_preprocessed = batches(:superuser_batch_preprocessed)
+      @batch_preprocessed_step = step_preprocesses(:preprocess_superuser_batch)
       # @valid_params = {
       #   step_preprocess: {
       #     message: 'preprocess'
@@ -17,11 +19,7 @@ module Step
     end
 
     test 'a user can access the new preprocess form' do
-      assert_can_view(
-        new_batch_step_preprocess_path(
-          batches(:superuser_batch)
-        )
-      )
+      assert_can_view(new_batch_step_preprocess_path(@batch))
     end
 
     test 'should create a preprocess' do
@@ -37,15 +35,15 @@ module Step
     end
 
     test 'a user is redirected to view if the preprocess step was already run' do
-      get new_batch_step_preprocess_path(batches(:superuser_batch_preprocessed))
+      get new_batch_step_preprocess_path(@batch_preprocessed)
       assert_response :redirect
     end
 
     test 'a user can view a preprocess' do
       assert_can_view(
         batch_step_preprocess_path(
-          batches(:superuser_batch_preprocessed),
-          step_preprocesses(:preprocess_superuser_batch)
+          @batch_preprocessed,
+          @batch_preprocessed_step
         )
       )
     end
