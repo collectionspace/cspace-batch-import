@@ -6,18 +6,20 @@ module Step
   class ProcessesControllerTest < ActionDispatch::IntegrationTest
     setup do
       sign_in users(:superuser)
-      @batch = batches(:superuser_batch_processing)
+      @batch = batches(:superuser_batch)
     end
 
     test 'a user can access the new process form' do
+      # we transition from the previous step to this one
       assert_can_view(
         new_batch_step_process_path(
-          batches(:superuser_batch_processing)
+          batches(:superuser_batch_preprocessed)
         )
       )
     end
 
     test 'should create a process' do
+      # TODO: with job
       assert_difference('Step::Process.count') do
         post batch_step_processes_path(@batch), params: {}
       end
@@ -37,6 +39,15 @@ module Step
           step_processes(:process_superuser_batch)
         )
       )
+    end
+
+    test 'a user can cancel a process' do
+      step = step_processes(:process_superuser_batch_ready)
+      step.batch.start!
+      post batch_step_process_cancel_path(step.batch, step)
+      assert_response :redirect
+      step.reload
+      assert_equal :cancelled, step.batch.current_status
     end
   end
 end

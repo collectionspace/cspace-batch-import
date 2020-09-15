@@ -6,7 +6,7 @@ module Integration
     # INDEX
     def assert_can_view(path)
       get path
-      assert_response :success
+      assert_response :success, @response.body
     end
 
     def refute_can_view(path)

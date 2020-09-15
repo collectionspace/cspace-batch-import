@@ -51,12 +51,12 @@ module Step
     end
 
     test 'a user can cancel a preprocess' do
-      s = step_preprocesses(:preprocess_superuser_batch_ready)
-      s.batch.start!
-      post batch_step_preprocess_cancel_path(s.batch, s)
+      step = step_preprocesses(:preprocess_superuser_batch_ready)
+      step.batch.start!
+      post batch_step_preprocess_cancel_path(step.batch, step)
       assert_response :redirect
-      s.reload
-      assert_equal :cancelled, s.batch.current_status
+      step.reload
+      assert_equal :cancelled, step.batch.current_status
     end
 
     # TODO: reset preprocess

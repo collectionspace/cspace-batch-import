@@ -70,7 +70,7 @@ module WorkflowManager
       end
 
       event :cancel do
-        transitions from: [:pending, :running], to: :cancelled
+        transitions from: %i[pending running], to: :cancelled
       end
 
       event :failed do
@@ -78,7 +78,7 @@ module WorkflowManager
       end
 
       event :retry do
-        transitions from: [:cancelled, :failed], to: :ready
+        transitions from: %i[cancelled failed], to: :ready
       end
 
       event :finished do

@@ -17,3 +17,15 @@ superuser_batch_preprocessed_attachment:
   record_type: Batch
   record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_preprocessed) %>
   blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+superuser_batch_processing_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_processing) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+superuser_batch_processed_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_processed) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>

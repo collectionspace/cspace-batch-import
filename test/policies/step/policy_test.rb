@@ -55,4 +55,6 @@ class Step::PolicyTest < ActiveSupport::TestCase
     batch.start!
     refute_permit Step::Policy, users(:minion), batch, :cancel
   end
+
+  # TODO: reset a step
 end

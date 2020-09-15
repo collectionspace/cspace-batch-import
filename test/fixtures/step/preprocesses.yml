@@ -6,5 +6,9 @@ preprocess_superuser_batch_ready:
 preprocess_superuser_batch:
   batch: superuser_batch_preprocessed
 
+preprocess_superuser_batch_done:
+  batch: superuser_batch_processed
+  done: true
+
 preprocess_fishmonger_batch:
   batch: fishmonger_batch_preprocessed

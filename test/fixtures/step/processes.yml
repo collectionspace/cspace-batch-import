@@ -5,6 +5,9 @@
 # below each fixture, per the syntax in the comments below
 #
 
+process_superuser_batch_ready:
+  batch: superuser_batch_processing
+
 process_superuser_batch:
   batch: superuser_batch_processed
 
