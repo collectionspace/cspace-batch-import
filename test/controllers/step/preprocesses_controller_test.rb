@@ -57,6 +57,15 @@ module Step
       assert_equal :cancelled, step.batch.current_status
     end
 
-    # TODO: reset preprocess
+    test 'a user can reset a preprocess' do
+      step = step_preprocesses(:preprocess_superuser_batch_ready)
+      step.batch.start!
+      step.batch.run!
+      step.batch.cancel!
+      assert_difference('Step::Preprocess.count', -1) do
+        post batch_step_preprocess_reset_path(step.batch, step)
+      end
+      assert_response :redirect
+    end
   end
 end

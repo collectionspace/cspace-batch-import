@@ -11,6 +11,8 @@ module WorkflowMetadata
     batch.reload.cancelled?
   end
 
+  # this enables a throttle on the frequency of requests from jobs
+  # i.e. rather than check after every row, check after N% of rows
   def checkin?
     # (((step_num_row.to_f / batch.num_rows) * 100) % 5).zero?
     (((step_num_row.to_f / 10) * 100) % CHECK_IN_INCREMENT).zero?

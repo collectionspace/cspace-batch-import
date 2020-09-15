@@ -45,5 +45,16 @@ module Step
       step.reload
       assert_equal :cancelled, step.batch.current_status
     end
+
+    test 'a user can reset a process' do
+      step = step_processes(:process_superuser_batch_ready)
+      step.batch.start!
+      step.batch.run!
+      step.batch.failed!
+      assert_difference('Step::Process.count', -1) do
+        post batch_step_process_reset_path(step.batch, step)
+      end
+      assert_response :redirect
+    end
   end
 end
