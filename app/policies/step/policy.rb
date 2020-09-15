@@ -6,8 +6,6 @@ class Step::Policy < ApplicationPolicy
   end
 
   def cancel?
-    return false unless record.pending?
-
     user.manage?(record)
   end
 

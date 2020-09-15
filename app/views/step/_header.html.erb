@@ -18,8 +18,8 @@
     <%= form_with(url: current_step_cancel_path(batch, step), local: true, class: 'ml-2 mr-2') do |form| %>
       <div class="field is-horizontal has-addons">
         <div class="control">
-          <%= button_to '#', class: 'button is-small is-outlined',
-              disabled: (!batch.pending?), data: { 'disable-with': spinner_html } do %>
+          <%= button_tag class: 'button is-small is-outlined',
+              disabled: (!batch.can_cancel?), data: { 'disable-with': spinner_html } do %>
               <%= content_tag :span, class: 'mr-2' do %><%= fa_icon 'stop' %><% end %>
               <%= content_tag :span do %><%= t('action.stop') %><% end %>
           <% end %>
@@ -29,8 +29,8 @@
     <%= form_with(url: current_step_reset_path(batch, step), local: true) do |form| %>
       <div class="field is-horizontal has-addons">
         <div class="control">
-          <%= button_to '#', class: 'button is-small is-outlined',
-              disabled: !(batch.cancelled? || batch.failed?), data: { 'disable-with': spinner_html } do %>
+          <%= button_tag class: 'button is-small is-outlined',
+              disabled: !(batch.can_reset?), data: { 'disable-with': spinner_html } do %>
               <%= content_tag :span, class: 'mr-2' do %><%= fa_icon 'undo' %><% end %>
               <%= content_tag :span do %><%= t('action.reset') %><% end %>
           <% end %>

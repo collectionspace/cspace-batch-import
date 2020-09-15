@@ -47,7 +47,7 @@ class Step::PolicyTest < ActiveSupport::TestCase
   test 'a member can cancel a step for a batch they own' do
     batch = batches(:minion_batch)
     batch.start!
-    refute_permit Step::Policy, users(:minion), batch, :cancel
+    assert_permit Step::Policy, users(:minion), batch, :cancel
   end
 
   test 'a member cannot cancel a step for another user' do

@@ -7,7 +7,7 @@ class PreprocessJob < ApplicationJob
 
   def perform(preprocess)
     # abort if this steps batch already has a running job or was cancelled
-    return if preprocess.batch.running?
+    return if preprocess.running? || preprocess.abort?
 
     preprocess.batch.run! # update status to running
     preprocess.update(started_at: Time.now.utc)
@@ -15,6 +15,8 @@ class PreprocessJob < ApplicationJob
     # this is fake placeholder stuff for now
     unless Rails.env.test?
       (1..10).each do |_i|
+        break if preprocess.abort?
+
         preprocess.update(step_num_row: preprocess.step_num_row += 1)
         # do some work!
         sleep 1
@@ -22,7 +24,8 @@ class PreprocessJob < ApplicationJob
       end
     end
 
-    preprocess.batch.finished! # we'll call it good for now
+    # we'll call it good for now
+    preprocess.batch.finished! unless preprocess.abort?
   rescue StandardError => e
     # something really bad happened! we need to make this prominent somewhere ...
     preprocess.batch.failed!

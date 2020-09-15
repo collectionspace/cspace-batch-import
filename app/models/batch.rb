@@ -13,7 +13,7 @@ class Batch < ApplicationRecord
   validate :connection_profile_is_matched
 
   def can_cancel?
-    current_status == :pending
+    %i[pending running].include? current_status
   end
 
   def can_reset?
