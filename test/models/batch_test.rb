@@ -49,4 +49,6 @@ class BatchTest < ActiveSupport::TestCase
     @invalid_params[:mapper_id] = mappers(:anthro_collectionobject_4_1).id
     assert_not Batch.new(@invalid_params).valid?
   end
+
+  # TODO: batch states (can cancel, reset)
 end

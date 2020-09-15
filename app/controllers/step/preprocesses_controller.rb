@@ -5,7 +5,7 @@ module Step
     include Stepable
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
-    before_action :set_step, only: :show
+    before_action :set_step, only: %i[show reset]
 
     def new
       @step = Step::Preprocess.new(batch: @batch)
@@ -33,6 +33,18 @@ module Step
     end
 
     def show; end
+
+    def cancel
+      cancel!
+      redirect_to batch_step_preprocess_path(
+        @batch, @batch.step_preprocess), notice: t('action.step.cancelled'
+      )
+    end
+
+    def reset
+      reset!
+      redirect_to new_batch_step_preprocess_path(@batch), notice: t('action.step.reset')
+    end
 
     private
 

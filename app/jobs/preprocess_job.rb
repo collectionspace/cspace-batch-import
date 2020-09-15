@@ -7,7 +7,7 @@ class PreprocessJob < ApplicationJob
 
   def perform(preprocess)
     # abort if this steps batch already has a running job or was cancelled
-    return if preprocess.batch.running? || cancelled?
+    return if preprocess.batch.running?
 
     preprocess.batch.run! # update status to running
     preprocess.update(started_at: Time.now.utc)

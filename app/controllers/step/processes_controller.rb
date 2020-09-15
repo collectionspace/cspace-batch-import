@@ -6,7 +6,7 @@ module Step
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
     before_action :set_previous_step_complete, only: :new
-    before_action :set_step, only: :show
+    before_action :set_step, only: [:show, :reset]
 
     def new
       @step = Step::Process.new(batch: @batch)
@@ -33,6 +33,20 @@ module Step
     end
 
     def show; end
+
+    def cancel
+      cancel!
+      redirect_to batch_step_process_path(
+        @batch, @batch.step_process
+      ), notice: t('action.step.cancelled')
+    end
+
+    def reset
+      reset!
+      respond_to do |format|
+        format.html { redirect_to new_batch_step_process_path(@batch), notice: t('action.step.reset') }
+      end
+    end
 
     private
 

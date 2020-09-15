@@ -5,7 +5,15 @@ class Step::Policy < ApplicationPolicy
     user.manage?(record)
   end
 
-  def destroy?
+  def cancel?
+    return false unless record.pending?
+
+    user.manage?(record)
+  end
+
+  def reset?
+    return false unless record.cancelled? || record.failed?
+
     user.manage?(record)
   end
 

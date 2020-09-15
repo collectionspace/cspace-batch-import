@@ -45,6 +45,9 @@ en:
     reset: Reset
     signup: Sign up
     start: Start
+    step:
+      cancelled: Job was successfully cancelled
+      reset: Job was successfully reset
     stop: Cancel
     submit: Submit
     update: Update

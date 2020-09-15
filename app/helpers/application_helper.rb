@@ -42,6 +42,24 @@ module ApplicationHelper
     send("new_batch_step_#{step_state}_path", batch)
   end
 
+  def current_step_cancel_path(batch, step)
+    step_state = batch.aasm(:step).human_state.to_sym
+    if batch.can_cancel?
+      send("batch_step_#{step_state}_cancel_path", batch, step)
+    else
+      '#'
+    end
+  end
+
+  def current_step_reset_path(batch, step)
+    step_state = batch.aasm(:step).human_state.to_sym
+    if batch.can_reset?
+      send("batch_step_#{step_state}_reset_path", batch, step)
+    else
+      '#'
+    end
+  end
+
   def filename_js
     filename_target = 'document.getElementById("file-name").textContent'
     filename_value = 'document.getElementById("batch_spreadsheet").value'

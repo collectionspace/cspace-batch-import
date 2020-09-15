@@ -8,6 +8,19 @@ module Stepable
     before_action :set_batch_for_create, only: :create
   end
 
+  def cancel!
+    authorize @batch, policy_class: Step::Policy
+    ApplicationJob.cancel!(@batch.job_id)
+    @batch.cancel!
+    @batch.update(job_id: nil)
+  end
+
+  def reset!
+    authorize @batch, policy_class: Step::Policy
+    @step.destroy
+    @batch.retry!
+  end
+
   def set_batch
     @batch = authorize Batch.find(params[:batch_id])
   end

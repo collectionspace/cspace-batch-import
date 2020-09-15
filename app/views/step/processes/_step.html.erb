@@ -7,29 +7,25 @@
 
 <div class="box">
   <%= render layout: 'step/header', locals: { batch: batch, step: step } do |form| %>
-    <div class="field mt-1 mr-2">
-      <%= form.label t('batch.step.process.check_records'), class: 'checkbox is-italic' do %>
-        <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.process.check_records') ; end %>
-        <%= form.check_box :check_records, disabled: !batch.ready? %>
-      <% end %>
+    <%= form.label t('batch.step.process.check_records'), class: 'checkbox is-italic my-1' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.process.check_records') ; end %>
+      <%= form.check_box :check_records, disabled: !batch.ready?, class: 'mr-2' %>
+    <% end %>
 
-      <%= form.label t('batch.step.process.check_terms'), class: 'checkbox is-italic' do %>
-        <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.process.check_terms') ; end %>
-        <%= form.check_box :check_terms, disabled: !batch.ready? %>
-      <% end %>
-    </div>
+    <%= form.label t('batch.step.process.check_terms'), class: 'checkbox is-italic my-1' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.process.check_terms') ; end %>
+      <%= form.check_box :check_terms, disabled: !batch.ready?, class: 'mr-2' %>
+    <% end %>
     <!-- these are really for transfer
-    <div class="field mt-1 mr-2">
-      <%= form.label t('batch.step.transfer.create'), class: 'checkbox is-italic' do %>
-        <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.create') ; end %>
-        <%= form.check_box :enabled %>
-      <% end %>
+    <%= form.label t('batch.step.transfer.create'), class: 'checkbox is-italic' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.create') ; end %>
+      <%= form.check_box :enabled %>
+    <% end %>
 
-      <%= form.label t('batch.step.transfer.update'), class: 'checkbox is-italic' do %>
-        <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.update') ; end %>
-        <%= form.check_box :primary %>
-      <% end %>
-    </div>
+    <%= form.label t('batch.step.transfer.update'), class: 'checkbox is-italic' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.update') ; end %>
+      <%= form.check_box :primary %>
+    <% end %>
     -->
   <% end %>
 

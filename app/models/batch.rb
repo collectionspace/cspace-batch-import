@@ -12,6 +12,14 @@ class Batch < ApplicationRecord
   validates :name, :spreadsheet, :user, :group, :connection, :mapper, presence: true
   validate :connection_profile_is_matched
 
+  def can_cancel?
+    current_status == :pending
+  end
+
+  def can_reset?
+    %i[cancelled failed].include? current_status
+  end
+
   def processed?
     step_process&.done?
   end

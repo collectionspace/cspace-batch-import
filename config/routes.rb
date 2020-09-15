@@ -2,12 +2,19 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   devise_for :users, skip: [:passwords] # TODO: :registrations if configured
   root 'sites#home'
   resources :batches, only: %i[index new create destroy] do
     namespace :step do
-      resources :preprocesses, only: %i[new create show]
-      resources :processes, only: %i[new create show]
+      resources :preprocesses, only: %i[new create show] do
+        post 'cancel'
+        post 'reset'
+      end
+      resources :processes, only: %i[new create show] do
+        post 'cancel'
+        post 'reset'
+      end
     end
   end
   resources :connections, except: %i[index show]
@@ -24,7 +31,6 @@ Rails.application.routes.draw do
   get '/users/:id', to: redirect('/users/%{id}/edit')
   get '/users/:id/group', to: redirect('/users/%{id}/edit')
   patch '/users/:id/group', to: 'users#update_group', as: 'user_group'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq'

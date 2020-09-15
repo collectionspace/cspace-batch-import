@@ -16,11 +16,21 @@ class BatchPolicy < ApplicationPolicy
     user.connections.where(enabled: true).count.positive?
   end
 
+  # defer to step policy
+  def cancel?
+    true
+  end
+
   def destroy?
     # don't allow queued / running batches to be destroyed
     return false if record.pending? || record.running?
 
     user.manage?(record)
+  end
+
+  # defer to step policy
+  def reset?
+    true
   end
 
   def permitted_attributes
