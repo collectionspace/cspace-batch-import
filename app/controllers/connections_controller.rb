@@ -16,7 +16,7 @@ class ConnectionsController < ApplicationController
       if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_user_path(current_user),
-                      notice: t('connection.created')
+                      notice: t('action.created', record: 'Connection')
         end
       else
         format.html { render :new }
@@ -29,7 +29,8 @@ class ConnectionsController < ApplicationController
       scrub_params(:connection, :password)
       if @connection.update(permitted_attributes(@connection))
         format.html do
-          redirect_to edit_connection_path(@connection), notice: t('connection.updated')
+          redirect_to edit_connection_path(@connection),
+                      notice: t('action.updated', record: 'Connection')
         end
       else
         format.html { render :edit }
@@ -41,7 +42,10 @@ class ConnectionsController < ApplicationController
     user = @connection.user
     @connection.destroy
     respond_to do |format|
-      format.html { redirect_to edit_user_path(user), notice: t('connection.deleted') }
+      format.html do
+        redirect_to edit_user_path(user),
+                    notice: t('action.deleted', record: 'Connection')
+      end
     end
   end
 

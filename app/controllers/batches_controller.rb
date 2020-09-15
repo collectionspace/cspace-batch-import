@@ -22,7 +22,8 @@ class BatchesController < ApplicationController
       )
         if spreadsheet_ok?
           format.html do
-            redirect_to new_batch_step_preprocess_path(@batch), notice: t('batch.created')
+            redirect_to new_batch_step_preprocess_path(@batch),
+                        notice: t('action.created', record: 'Batch')
           end
         else
           format.html { return redirect_to new_batch_path }
@@ -37,7 +38,7 @@ class BatchesController < ApplicationController
   def destroy
     @batch.destroy
     respond_to do |format|
-      format.html { redirect_to batches_path, notice: t('batch.deleted') }
+      format.html { redirect_to batches_path, notice: t('action.deleted', record: 'Batch') }
     end
   end
 

@@ -21,7 +21,7 @@ module Step
             # TODO: kickoff job i.e. JOB.perform_later(@step)
             redirect_to batch_step_process_path(
               @batch, @batch.step_process
-            ), notice: t('batch.step.process.created')
+            ), notice: t('action.created', record: 'Process Job')
           end
         else
           format.html do

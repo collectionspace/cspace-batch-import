@@ -34,7 +34,9 @@ en:
     cancel: Return
     confirm_delete: Are you sure?
     create: Create
+    created: "%{record} was successfully created"
     delete: Delete
+    deleted: "%{record} was successfully deleted"
     disabled: Disabled
     edit: Edit
     login: Log in
@@ -51,14 +53,13 @@ en:
     stop: Cancel
     submit: Submit
     update: Update
+    updated: "%{record} was successfully updated"
   batch:
     connection: Connection
-    created: Batch was successfully created
     created_at: Created at
     created_by: Created by
     current_state: State
     current_step: Step
-    deleted: Batch was successfully deleted
     file: File
     group: Group
     invalid_profile: Profile version mismatch between connection and mapper
@@ -89,8 +90,6 @@ en:
       step: Batch
     summary: Summary
   connection:
-    created: Connection was successfully created
-    deleted: Connection was successfully deleted
     domain: Domain
     editing_for_user: "Editing connection for: <strong>%{email}</strong>"
     enabled: Enabled
@@ -111,7 +110,6 @@ en:
       create: New Connection
       edit: Update Connection
       index: Connections
-    updated: Connection was successfully updated
     url: Url
     username: Username
   demo:
@@ -121,8 +119,6 @@ en:
     failure:
       inactive: Your account is not activated
   group:
-    created: Group was successfully created
-    deleted: Group was successfully deleted
     description: Description
     disabled: Group is disabled
     domain: Email domain
@@ -139,7 +135,6 @@ en:
       name: Group
     tooltip:
       email: This email address will be presented to new users of the group to request access.
-    updated: Group was successfully updated
   mapper:
     batches: Batches
     invalid_profile: is not a valid mapper prefix
@@ -161,6 +156,20 @@ en:
     logout: Logout
     mappers: Mappers
     users: Users
+  pundit:
+    batch_policy:
+      destroy?: You are not allowed to delete this batch
+      new?: You must create a connection to enter a batch workflow
+    group_policy:
+      index?: You are not authorized to access groups
+    mapper_policy:
+      index?: You are not authorized to view the mapping configuration
+    nil_class: You are not authorized to perform this action
+    step/policy:
+      cancel?: You are not permitted to cancel this job
+      create?: You are not permitted to continue this workflow
+    user_policy:
+      edit?: You are not authorized to perform this action
   site:
     title:
       home: Home
@@ -168,7 +177,6 @@ en:
     account: "My Account: %{email}"
     active: Active
     admin: Admin
-    deleted: User was successfully deleted
     email: Email
     enabled: Enabled
     group: Group
@@ -187,4 +195,3 @@ en:
     unassigned_group: Your group is disabled, you cannot perform any actions until group access is restored
     unassigned_user: "You are not currently enabled to work in this group, for access contact: <a href='mailto:%{email}'>%{email}</a>"
     unauthorized: You are not authorized to perform this action
-    updated: User was successfully updated

@@ -82,7 +82,7 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     transition_to_preprocessing
     run_steps_cancel
     assert :cancelled, @batch.current_status
-    assert @batch.ran?
+    assert @batch.cancelled?
     refute_transition_to_allowed @batch, :processing, on: :step
     assert_have_state @batch, :cancelled, on: :status
     @batch.retry!

@@ -16,7 +16,10 @@ class GroupsController < ApplicationController
     respond_to do |format|
       @group = Group.new
       if @group.update(group_params)
-        format.html { redirect_to groups_path, notice: t('group.created') }
+        format.html do
+          redirect_to groups_path,
+                      notice: t('action.created', record: 'Group')
+        end
       else
         format.html { render :new }
       end
@@ -28,7 +31,10 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        format.html { redirect_to edit_group_path(@group), notice: t('group.updated') }
+        format.html do
+          redirect_to edit_group_path(@group),
+                      notice: t('action.updated', record: 'Group')
+        end
       else
         format.html { render :edit }
       end
@@ -38,7 +44,10 @@ class GroupsController < ApplicationController
   def destroy
     @group.destroy
     respond_to do |format|
-      format.html { redirect_to groups_url, notice: t('group.deleted') }
+      format.html do
+        redirect_to groups_url,
+                    notice: t('action.deleted', record: 'Group')
+      end
     end
   end
 

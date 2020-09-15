@@ -20,7 +20,10 @@ class UsersController < ApplicationController
 
       if @user.update(user_params)
         # reset_user(@user)
-        format.html { redirect_to edit_user_path(@user), notice: t('user.updated') }
+        format.html do
+          redirect_to edit_user_path(@user),
+                      notice: t('action.updated', record: 'User')
+        end
       else
         @connections = @user.connections.order(:name)
         format.html { render :edit }
@@ -31,13 +34,13 @@ class UsersController < ApplicationController
   def update_group
     respond_to do |format|
       if @user.group.update(user_group_params)
-        format.html {
+        format.html do
           redirect_to edit_user_path(@user), notice: t('user.group_updated')
-        }
+        end
       else
-        format.html {
+        format.html do
           redirect_to edit_user_path(@user), alert: error_messages(@user.group.errors)
-        }
+        end
       end
     end
   end
@@ -45,7 +48,7 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: t('user.deleted') }
+      format.html { redirect_to users_url, notice: t('action.deleted', record: 'User') }
     end
   end
 
