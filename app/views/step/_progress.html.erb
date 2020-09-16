@@ -1,4 +1,4 @@
-<tr id="<%= dom_id(step) %>">
+<tr id="progress_<%= dom_id(step) %>">
   <td><%= step.started_at || waiting_to_start_html.html_safe %></td>
   <td><%= step.started_at ? step.current_runtime : '0' %> seconds</td>
   <td>

@@ -33,6 +33,6 @@ class PreprocessJob < ApplicationJob
   ensure
     # we'll close up files etc.
     preprocess.update(completed_at: Time.now.utc)
-    1
+    preprocess.update_header # final state of step
   end
 end

@@ -1,4 +1,4 @@
-<%= content_tag :div, class: 'level mb-1' do %>
+<%= content_tag :div, id: "header_#{dom_id(step)}", class: 'level mb-1' do %>
   <%= content_tag :div, class: 'level-left' do %>
     <%= render partial: 'step/title', locals: { batch: batch, step: step } %>
   <% end %>
@@ -39,4 +39,4 @@
     <% end %>
   <% end %>
 <% end %>
-<hr class="mt-2 mb-2"/>
+

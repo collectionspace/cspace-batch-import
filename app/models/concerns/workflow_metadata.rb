@@ -36,19 +36,36 @@ module WorkflowMetadata
 
   def percentage_complete?
     # (step_num_row * 100) / batch.num_rows
-    (step_num_row * 100 / (10)) # TODO: replace placeholder job
+    (step_num_row * 100 / 10) # TODO: replace placeholder job
   end
 
   def running?
     batch.reload.running?
   end
 
+  def update_header
+    action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
+    action_view.class.send(:include, ApplicationHelper)
+    action_view.class.send(:include, ActionDispatch::Routing::UrlFor)
+    action_view.class.send(:include, Rails.application.routes.url_helpers)
+    action_view.class.send(:include, FontAwesome::Rails::IconHelper)
+
+    selector = '#header_' + ActionView::RecordIdentifier.dom_id(self)
+    dom_html = action_view.render(
+      file: 'step/_header.html.erb', locals: { batch: batch.reload, step: self }
+    )
+
+    cable_ready['step'].morph(selector: selector, html: dom_html)
+    cable_ready.broadcast
+  end
+
   def update_progress
     return unless checkin?
 
-    selector = '#' + ActionView::RecordIdentifier.dom_id(self)
     action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
     action_view.class.send(:include, ApplicationHelper)
+
+    selector = '#progress_' + ActionView::RecordIdentifier.dom_id(self)
     dom_html = action_view.render(
       file: 'step/_progress.html.erb', locals: { step: self }
     )
