@@ -51,8 +51,7 @@ module Step
     private
 
     def process_params
-      # params.require(:step_process).permit(:message)
-      {}
+      params.require(:step_process).permit(:check_records, :check_terms)
     end
 
     def redirect_if_created

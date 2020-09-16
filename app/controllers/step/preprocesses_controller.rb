@@ -49,7 +49,6 @@ module Step
     private
 
     def preprocess_params
-      # params.require(:step_preprocess).permit(:message)
       {}
     end
 
