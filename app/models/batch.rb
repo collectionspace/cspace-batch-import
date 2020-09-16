@@ -9,7 +9,8 @@ class Batch < ApplicationRecord
   belongs_to :group
   belongs_to :connection
   belongs_to :mapper, counter_cache: true
-  validates :name, :spreadsheet, :user, :group, :connection, :mapper, presence: true
+  validates :spreadsheet, :user, :group, :connection, :mapper, presence: true
+  validates :name, presence: true, length: { minimum: 3 }
   validate :connection_profile_is_matched
 
   def can_cancel?

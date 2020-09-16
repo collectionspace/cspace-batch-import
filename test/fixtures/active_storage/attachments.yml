@@ -29,3 +29,9 @@ superuser_batch_processed_attachment:
   record_type: Batch
   record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_processed) %>
   blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+minion_batch_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:minion_batch) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>

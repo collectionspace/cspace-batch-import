@@ -5,9 +5,14 @@
         <%= content_tag :div, class: 'column is-half' do %>
           <%= content_tag :div, class: 'field' do %>
             <%= form.label t('batch.name'), class: 'label' %>
-            <%= form.text_field :name, class: 'input', placeholder: t('batch.name'),
-              autofocus: (batch.name.blank? ? true : false)
-            %>
+            <%= content_tag :div, class: 'control has-icons-left' do %>
+              <%= form.text_field :name, class: 'input', placeholder: t('batch.name'),
+                autofocus: (batch.name.blank? ? true : false)
+              %>
+              <%= render partial: 'shared/icon',
+                  locals: { classes: 'has-text-danger is-small is-left', icon: 'asterisk' }
+              %>
+            <% end %>
           <% end %>
         <% end %>
 
@@ -79,7 +84,7 @@
     <div class="column">
       <article class="message is-small mt-3">
         <div class="message-header has-background-white-ter has-text-dark">
-          <p>Field definitions</p>
+          <p><%= fa_icon 'book', class: 'mr-2' %>Field definitions</p>
         </div>
         <div class="message-body has-background-white-bis">
           <table class="table is-fullwidth is-bordered">
@@ -112,7 +117,7 @@
               <tr>
             </tbody>
           </table>
-          <p class="content"><%= link_to "View the complete documentation", '#' %></p>
+          <p class="content"><%= fa_icon 'external-link', class: 'mr-2' %><%= link_to "View the complete documentation", '#' %></p>
         </div>
       </article>
     </div>
