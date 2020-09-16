@@ -12,6 +12,12 @@ class Batch < ApplicationRecord
   validates :spreadsheet, :user, :group, :connection, :mapper, presence: true
   validates :name, presence: true, length: { minimum: 3 }
   validate :connection_profile_is_matched
+  scope :working, -> { where.not(step_state: 'archiving') }
+  scope :archived, -> { where(step_state: 'archiving') }
+
+  def archived?
+    false
+  end
 
   def can_cancel?
     %i[pending running].include? current_status

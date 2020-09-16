@@ -9,6 +9,10 @@
   <% end %>
 <% end %>
 
+<%= content_tag :div, class: 'tabs is-centered is-boxed' do %>
+  <%= render partial: 'shared/tabs' , locals: { tabs: @tabs } %>
+<% end %>
+
 <table class="table is-fullwidth is-hoverable">
   <thead>
     <tr>

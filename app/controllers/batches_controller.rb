@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class BatchesController < ApplicationController
+  before_action :set_tabs, only: %i[index]
   before_action :set_batch, only: %i[destroy]
   before_action :set_group, only: %i[create]
 
   def index
-    @batches = policy_scope(Batch).order('created_at DESC')
+    @batches = policy_scope(Batch).send(session[:tab]).order('created_at DESC')
   end
 
   def new
@@ -69,5 +70,22 @@ class BatchesController < ApplicationController
              else
                current_user.group
              end
+  end
+
+  def set_tabs
+    @tabs = tabs
+    current_tab = params.permit(:tab).fetch(:tab, session.fetch(:tab, :working)).to_sym
+    raise Pundit::NotAuthorizedError unless @tabs.key? current_tab
+
+    session[:tab] = current_tab
+    @tabs[current_tab][:active] = true
+  end
+
+  # TODO: concern
+  def tabs
+    {
+      working: { active: false, icon: 'hourglass', title: 'tabs.batch.working' },
+      archived: { active: false, icon: 'archive', title: 'tabs.batch.archived' }
+    }
   end
 end

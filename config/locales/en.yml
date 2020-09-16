@@ -173,6 +173,10 @@ en:
   site:
     title:
       home: Home
+  tabs:
+    batch:
+      archived: Archived
+      working: Working
   user:
     account: "My Account: %{email}"
     active: Active

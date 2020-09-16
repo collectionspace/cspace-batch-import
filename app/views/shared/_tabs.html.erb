@@ -1,0 +1,10 @@
+<ul>
+  <% tabs.each do |type, tab| %>
+    <li class="<%= tab[:active] ? 'is-active' : '' %>">
+      <%= link_to batches_path(tab: type.to_s) do %>
+        <span class="icon is-small"><%= fa_icon tab[:icon] %></span>
+        <span><%= t tab[:title] %></span>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
