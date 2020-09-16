@@ -44,6 +44,8 @@ module WorkflowMetadata
   end
 
   def update_header
+    return if Rails.env.test? # requires caching (prod, dev only)
+
     action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
     action_view.class.send(:include, ApplicationHelper)
     action_view.class.send(:include, ActionDispatch::Routing::UrlFor)

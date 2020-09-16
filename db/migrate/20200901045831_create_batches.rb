@@ -2,7 +2,7 @@ class CreateBatches < ActiveRecord::Migration[6.0]
   def change
     create_table :batches do |t|
       t.string :name
-      t.integer :job_id
+      t.string :job_id
       t.integer :num_rows
       t.string :step_state
       t.string :status_state

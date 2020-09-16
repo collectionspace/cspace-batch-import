@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
 
   create_table "batches", force: :cascade do |t|
     t.string "name"
-    t.integer "job_id"
+    t.string "job_id"
     t.integer "num_rows"
     t.string "step_state"
     t.string "status_state"
