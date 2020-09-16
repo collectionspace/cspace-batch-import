@@ -18,6 +18,7 @@ gem 'webpacker', '~> 4.0'
 
 # APP GEMS
 gem 'aasm'
+gem 'active_storage_validations'
 gem 'after_commit_everywhere', '~> 0.1', '>= 0.1.5'
 gem 'aws-sdk-s3', require: false
 gem 'bulma-rails', '~> 0.9.0'

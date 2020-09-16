@@ -147,7 +147,7 @@
               <td><%= error.category %></td>
               <td><%= error.type %></td>
               <td><%= error.column %></td>
-              <td><%= truncate error.content, length: 100 %></td>
+              <td><%= truncate error.content.to_s, length: 100 %></td>
             </tr>
           <% end %>
         </tbody>

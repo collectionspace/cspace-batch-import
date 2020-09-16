@@ -30,10 +30,7 @@ module ApplicationHelper
   end
 
   def csv_content_types
-    [
-      'application/vnd.ms-excel',
-      'text/csv'
-    ].join(',')
+    Batch.content_types.join(',')
   end
 
   def current_step_path(batch)

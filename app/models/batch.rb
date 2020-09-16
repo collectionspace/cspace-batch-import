@@ -2,6 +2,10 @@
 
 class Batch < ApplicationRecord
   include WorkflowManager
+  CONTENT_TYPES = [
+    'application/vnd.ms-excel',
+    'text/csv'
+  ].freeze
   has_one_attached :spreadsheet
   has_one :step_preprocess, class_name: 'Step::Preprocess', dependent: :destroy
   has_one :step_process, class_name: 'Step::Process', dependent: :destroy
@@ -9,7 +13,8 @@ class Batch < ApplicationRecord
   belongs_to :group
   belongs_to :connection
   belongs_to :mapper, counter_cache: true
-  validates :spreadsheet, :user, :group, :connection, :mapper, presence: true
+  validates :spreadsheet, attached: true, content_type: CONTENT_TYPES
+  validates :user, :group, :connection, :mapper, presence: true
   validates :name, presence: true, length: { minimum: 3 }
   validate :connection_profile_is_matched
   scope :working, -> { where.not(step_state: 'archiving') }
@@ -33,6 +38,10 @@ class Batch < ApplicationRecord
 
   def preprocessed?
     step_preprocess&.done?
+  end
+
+  def self.content_types
+    CONTENT_TYPES
   end
 
   def self.validator_for(batch)
