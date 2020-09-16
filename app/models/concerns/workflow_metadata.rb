@@ -30,8 +30,16 @@ module WorkflowMetadata
     step_errors.positive?
   end
 
-  def increment!
+  def increment_error!
+    update(step_errors: step_errors + 1)
+  end
+
+  def increment_row!
     update(step_num_row: step_num_row + 1)
+  end
+
+  def increment_warning!
+    update(step_warnings: step_warnings + 1)
   end
 
   def percentage_complete?

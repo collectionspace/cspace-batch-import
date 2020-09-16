@@ -5,34 +5,34 @@ class PreprocessJob < ApplicationJob
   sidekiq_options retry: false
 
   def perform(preprocess)
-    # abort if this steps batch already has a running job or was cancelled
-    return if preprocess.running? || preprocess.abort?
+    step = StepService.new(step: preprocess, save_to_file: false)
+    return if step.cut_short?
 
-    preprocess.batch.run! # update status to running
-    preprocess.update(started_at: Time.now.utc)
+    step.kickoff!
 
     # this is fake placeholder stuff for now
     unless Rails.env.test?
       (1..10).each do |_i|
-        break if preprocess.abort?
+        break if step.cancelled?
 
-        preprocess.increment!
+        step.nudge!
+
         # do some work!
         sleep 1
-        preprocess.update_progress
+        # Example: error during step
+        # if _i == 5
+        #   preprocess.batch.failed!
+        #   preprocess.increment_error!
+        # end
       end
     end
 
     # we'll call it good for now
-    preprocess.batch.finished! unless preprocess.abort? || preprocess.errors?
+    step.complete!
   rescue StandardError => e
     # something really bad happened! we need to make this prominent somewhere ...
-    preprocess.batch.failed! unless preprocess.batch.failed? # may already be in trouble
+    step.failed!
     Rails.logger.error(e.message)
     Rails.logger.error(e.backtrace)
-  ensure
-    # we'll close up files etc.
-    preprocess.update(completed_at: Time.now.utc)
-    preprocess.update_header # final state of step
   end
 end

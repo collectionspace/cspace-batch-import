@@ -14,7 +14,7 @@ class WorkflowMetadataTest < ActiveSupport::TestCase
 
   test 'can increment the step row count' do
     rows = @step.step_num_row
-    @step.increment!
+    @step.increment_row!
     assert_equal rows + 1, @step.step_num_row
   end
 
