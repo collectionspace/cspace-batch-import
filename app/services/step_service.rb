@@ -1,10 +1,22 @@
 # frozen_string_literal: true
 
 class StepService
+  attr_accessor :error_on_warning
   attr_reader :step
-  def initialize(step:, save_to_file:)
+  def initialize(step:, error_on_warning:, save_to_file:)
     @step = step
+    @error_on_warning = error_on_warning
     @save_to_file = save_to_file
+  end
+
+  def add_error!
+    step.increment_error!
+    step.batch.failed! unless step.batch.failed?
+  end
+
+  def add_warning!
+    step.increment_warning!
+    step.batch.failed! if error_on_warning && !step.batch.failed?
   end
 
   def cancelled?
@@ -20,7 +32,7 @@ class StepService
     step.running? || step.abort?
   end
 
-  def failed!
+  def exception!
     # may already be in trouble
     step.batch.failed! unless step.batch.failed?
     finishup!

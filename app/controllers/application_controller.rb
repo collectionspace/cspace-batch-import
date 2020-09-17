@@ -18,6 +18,14 @@ class ApplicationController < ActionController::Base
     value.yield_self { |s| '<span class="highlighted">%s</span>' % s }
   end
 
+  def self.renderer_with_signed_in_user(user)
+    ActionController::Renderer::RACK_KEY_TRANSLATION['warden'] ||= 'warden'
+    proxy = Warden::Proxy.new({}, Warden::Manager.new({})).tap do |i|
+      i.set_user(user, scope: :user, store: false, run_callbacks: false)
+    end
+    renderer.new('warden' => proxy)
+  end
+
   def scrub_params(type, field)
     params[type].delete(field) if params[type][field].blank?
   end

@@ -52,17 +52,9 @@ module WorkflowMetadata
   end
 
   def update_header
-    return if Rails.env.test? # requires caching (prod, dev only)
-
-    action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
-    action_view.class.send(:include, ApplicationHelper)
-    action_view.class.send(:include, ActionDispatch::Routing::UrlFor)
-    action_view.class.send(:include, Rails.application.routes.url_helpers)
-    action_view.class.send(:include, FontAwesome::Rails::IconHelper)
-
     selector = '#header_' + ActionView::RecordIdentifier.dom_id(self)
-    dom_html = action_view.render(
-      file: 'step/_header.html.erb', locals: { batch: batch.reload, step: self }
+    dom_html = status_renderer.render(
+      partial: 'step/header', locals: { batch: batch.reload, step: self }
     )
 
     cable_ready['step'].morph(selector: selector, html: dom_html)
@@ -72,12 +64,9 @@ module WorkflowMetadata
   def update_progress
     return unless checkin?
 
-    action_view = ActionView::Base.new(ActionController::Base.view_paths, {})
-    action_view.class.send(:include, ApplicationHelper)
-
     selector = '#progress_' + ActionView::RecordIdentifier.dom_id(self)
-    dom_html = action_view.render(
-      file: 'step/_progress.html.erb', locals: { step: self }
+    dom_html = status_renderer.render(
+      partial: 'step/progress', locals: { step: self }
     )
 
     cable_ready['step'].morph(selector: selector, html: dom_html)
@@ -86,5 +75,12 @@ module WorkflowMetadata
 
   def warnings?
     step_warnings.positive?
+  end
+
+  private
+
+  # Renderer for realtime updates (uses Superuser so compatible with tests)
+  def status_renderer
+    ApplicationController.renderer_with_signed_in_user(User.superuser)
   end
 end
