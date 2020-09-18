@@ -3,10 +3,15 @@
 class StepService
   attr_accessor :error_on_warning
   attr_reader :step
+  HEADERS = %i[row row_status message].freeze
+
   def initialize(step:, error_on_warning:, save_to_file:)
+    @file = nil
+    @headers = HEADERS
     @step = step
     @error_on_warning = error_on_warning
     @save_to_file = save_to_file
+    append(@headers) if @save_to_file
   end
 
   def add_error!
@@ -38,6 +43,11 @@ class StepService
     finishup!
   end
 
+  # TODO: test -- [ok, error, warning]
+  def log!(status, message)
+    append({row: step.step_num_row, row_status: status, message: message })
+  end
+
   def finishup!
     step.update(completed_at: Time.now.utc)
     step.update_header # broadcast final status of step
@@ -53,5 +63,16 @@ class StepService
   def nudge!
     step.increment_row!
     step.update_progress
+  end
+
+  private
+
+  # TODO: DRY (term_manager)
+  def append(message)
+    return unless @save_to_file
+
+    CSV.open(file, 'a') do |csv|
+      csv << (message.respond_to?(:key) ? message.values_at(*headers) : message.map(&:to_s))
+    end
   end
 end
