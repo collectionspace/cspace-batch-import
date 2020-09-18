@@ -22,3 +22,6 @@
     <%= render partial: 'row', collection: @groups, as: :group %>
   </tbody>
 </table>
+
+<hr/>
+<%== pagy_bulma_nav(@pagy) %>

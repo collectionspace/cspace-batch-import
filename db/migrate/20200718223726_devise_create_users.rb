@@ -37,6 +37,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[6.0]
       t.boolean :superuser, null: false, default: false
       t.references :group, null: false, foreign_key: true
       t.references :role, null: false, foreign_key: true
+      t.integer :connections_count, default: 0
 
       t.timestamps null: false
     end

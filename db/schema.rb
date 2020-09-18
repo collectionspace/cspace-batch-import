@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_150006) do
     t.boolean "superuser", default: false, null: false
     t.bigint "group_id", null: false
     t.bigint "role_id", null: false
+    t.integer "connections_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true

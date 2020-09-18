@@ -6,7 +6,7 @@ class BatchesController < ApplicationController
   before_action :set_group, only: %i[create]
 
   def index
-    @batches = policy_scope(Batch).send(session[:tab]).order('created_at DESC')
+    @pagy, @batches = pagy(policy_scope(Batch).send(session[:tab]).order('created_at DESC'))
   end
 
   def new

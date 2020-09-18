@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
 
   def index
     authorize(Group)
-    @groups = policy_scope(Group).order(:name)
+    @pagy, @groups = pagy(policy_scope(Group).order(:name))
   end
 
   def new

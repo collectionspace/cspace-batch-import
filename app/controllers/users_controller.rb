@@ -6,7 +6,9 @@ class UsersController < ApplicationController
 
   def index
     authorize(User)
-    @users = policy_scope(User).includes(:group, :role).order('groups.name asc, users.email asc')
+    @pagy, @users = pagy(
+      policy_scope(User).includes(:group, :role).order('groups.name asc, users.email asc')
+    )
   end
 
   def edit

@@ -31,6 +31,9 @@
       <%= render partial: 'row', collection: @batches, as: :batch %>
     </tbody>
   </table>
+
+  <hr/>
+  <%== pagy_bulma_nav(@pagy) %>
 <% else %>
   <p><%= t 'general.no_records' %></p>
 <% end %>

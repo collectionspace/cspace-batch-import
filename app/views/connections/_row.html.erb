@@ -1,11 +1,11 @@
 <tr id="<%= dom_id(connection) %>" data-connection-id="<%= connection.id %>">
-  <td class='pt-2'>
+  <td>
     <%= link_to edit_connection_path(connection) do %>
       <%= fa_icon('pencil') %>
       <%= connection.name %>
     <% end %>
   </td>
-  <td class='pt-2'>
+  <td>
     <% if connection.enabled? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }
@@ -29,7 +29,7 @@
       %>
     <% end %>
   </td>
-  <td class='pt-2'>
+  <td>
     <% if connection.primary? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'thumbs-up' }

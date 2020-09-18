@@ -2,7 +2,7 @@
 
 class Connection < ApplicationRecord
   include PrefixChecker
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   has_many :batches, dependent: :nullify # TODO: alrighty?
   has_one :group, through: :user
   encrypts :password

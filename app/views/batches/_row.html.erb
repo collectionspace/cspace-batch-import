@@ -1,22 +1,22 @@
 <tr id="<%= dom_id(batch) %>" data-batch-id="<%= batch.id %>">
-  <td class="pt-2">
+  <td>
     <%= link_to current_step_path(batch) do %>
       <%= fa_icon 'folder-open', class: 'mr-1' %>
       <%= batch.name %>
     <% end %>
   </td>
-  <td class="pt-2"><%= batch.group.name %></td>
-  <td class="pt-2"><%= batch.current_step %></td>
-  <td class="pt-2">
+  <td><%= batch.group.name %></td>
+  <td><%= batch.current_step %></td>
+  <td>
     <span class="has-text-<%= status_color(batch.current_status) %> mr-1">
       <%= fa_icon status_icon(batch.current_status) %>
     </span>
     <%= batch.current_status %>
   </td>
-  <td class="pt-2"><%= batch.user.email %></td>
-  <td class="pt-2"><%= batch.created_at %></td>
-  <td class="pt-2">
-    <%= content_tag :div, class: 'tags has-addons is-outline' do %>
+  <td><%= batch.user.email %></td>
+  <td><%= batch.created_at %></td>
+  <td>
+    <%= content_tag :div, class: 'tags has-addons is-outline is-pulled-right' do %>
       <%= render partial: 'shared/button_delete', locals: { record: batch } %>
     <% end %>
   </td>

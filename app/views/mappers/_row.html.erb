@@ -1,8 +1,8 @@
 <tr id="<%= dom_id(mapper) %>">
-  <td class='pt-3'><%= mapper.profile %></td>
-  <td class='pt-3'><%= mapper.version %></td>
-  <td class='pt-3'><%= mapper.type %></td>
-  <td class='pt-3'>
+  <td><%= mapper.profile %></td>
+  <td><%= mapper.version %></td>
+  <td><%= mapper.type %></td>
+  <td>
     <% if mapper.config.attached? %>
       <%= render partial: 'shared/icon',
           locals: { classes: 'has-text-success', icon: 'check' }
@@ -13,7 +13,7 @@
       %>
     <% end %>
   </td>
-  <td class="pt-3">
+  <td>
   <% if true %>
     <%= render partial: 'shared/icon',
         locals: { classes: 'has-text-success', icon: 'check' }
@@ -24,8 +24,8 @@
     %>
   <% end %>
   </td>
-  <td class='pt-3'><%= mapper.batches.size %></td>
-  <td class='pt-3'>
+  <td><%= mapper.batches.size %></td>
+  <td>
     <% if mapper.config.attached? %>
       <%= link_to rails_blob_path(mapper.config, disposition: "attachment") do %>
         <%= render partial: 'shared/icon',

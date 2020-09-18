@@ -3,8 +3,10 @@
 class MappersController < ApplicationController
   def index
     authorize(Mapper)
-    @mappers = policy_scope(Mapper).order(
-      'mappers.profile asc, mappers.version asc, mappers.type asc'
+    @pagy, @mappers = pagy(
+      policy_scope(Mapper).order(
+        'mappers.profile asc, mappers.version asc, mappers.type asc'
+      )
     )
   end
 

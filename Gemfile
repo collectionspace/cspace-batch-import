@@ -29,6 +29,7 @@ gem 'font-awesome-rails'
 gem 'hiredis'
 gem 'http'
 gem 'lockbox'
+gem 'pagy', '~> 3.5'
 gem 'pretender'
 gem 'pundit'
 gem 'redis', '>= 4.0', require: ['redis', 'redis/connection/hiredis']
