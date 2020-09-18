@@ -31,7 +31,7 @@ module WorkflowManager
       state :new, initial: true, display: 'new'
       state :preprocessing, display: 'preprocess'
       state :processing, display: 'process'
-      state :transfering, display: 'transfer'
+      state :transferring, display: 'transfer'
       state :deleting, display: 'delete'
       state :archiving, display: 'archive'
 
@@ -45,11 +45,11 @@ module WorkflowManager
 
       event :transfer, binding_event: :next_step do
         # transitions from: :processing, to: :deleting # if: [type] delete && :previous_step_done?
-        transitions from: :processing, to: :transfering, if: :previous_step_done?
+        transitions from: :processing, to: :transferring, if: :previous_step_done?
       end
 
       event :archive, binding_event: :next_step do
-        transitions from: :transfering, to: :archiving, if: :previous_step_done?
+        transitions from: :transferring, to: :archiving, if: :previous_step_done?
       end
     end
 

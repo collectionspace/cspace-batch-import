@@ -84,7 +84,11 @@ class BatchesController < ApplicationController
   # TODO: concern
   def tabs
     {
-      working: { active: false, icon: 'hourglass', title: 'tabs.batch.working' },
+      working: { active: false, icon: 'folder', title: 'tabs.batch.working' },
+      preprocessing: { active: false, icon: 'battery-quarter', title: 'tabs.batch.preprocessing' },
+      processing: { active: false, icon: 'battery-half', title: 'tabs.batch.processing' },
+      transferring: { active: false, icon: 'battery-three-quarters', title: 'tabs.batch.transferring' },
+      deleting: { active: false, icon: 'trash', title: 'tabs.batch.deleting' },
       archived: { active: false, icon: 'archive', title: 'tabs.batch.archived' }
     }
   end

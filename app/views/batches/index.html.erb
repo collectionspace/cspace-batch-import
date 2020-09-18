@@ -13,20 +13,24 @@
   <%= render partial: 'shared/tabs' , locals: { tabs: @tabs } %>
 <% end %>
 
-<table class="table is-fullwidth is-hoverable">
-  <thead>
-    <tr>
-      <th><%= t 'batch.name' %></th>
-      <th><%= t 'batch.group' %></th>
-      <th><%= t 'batch.current_step' %></th>
-      <th><%= t 'batch.current_state' %></th>
-      <th><%= t 'batch.created_by' %></th>
-      <th><%= t 'batch.created_at' %></th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
+<% if @batches.any? %>
+  <table class="table is-fullwidth is-hoverable">
+    <thead>
+      <tr>
+        <th><%= t 'batch.name' %></th>
+        <th><%= t 'batch.group' %></th>
+        <th><%= t 'batch.current_step' %></th>
+        <th><%= t 'batch.current_state' %></th>
+        <th><%= t 'batch.created_by' %></th>
+        <th><%= t 'batch.created_at' %></th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <%= render partial: 'row', collection: @batches, as: :batch %>
-  </tbody>
-</table>
+    <tbody>
+      <%= render partial: 'row', collection: @batches, as: :batch %>
+    </tbody>
+  </table>
+<% else %>
+  <p><%= t 'general.no_records' %></p>
+<% end %>

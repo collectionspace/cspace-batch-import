@@ -78,7 +78,7 @@ en:
       title:
         preprocess: Preprocessing
         process: Processing
-        transfer: Transfering
+        transfer: Transferring
         archive: Archiving
       transfer:
         created: Process job was successfully created
@@ -95,7 +95,7 @@ en:
     enabled: Enabled
     group_has_profile: Profile inherited from group
     name: Name
-    no_domain: <strong>Domain</strong> is not set. Check connection settings and retry.
+    no_domain: <strong>Domain</strong> is not set. Check connection settings and retry
     password: Password
     placeholder:
       domain: Not a user editable field
@@ -118,6 +118,8 @@ en:
   devise:
     failure:
       inactive: Your account is not activated
+  general:
+    no_records: 0 records found
   group:
     description: Description
     disabled: Group is disabled
@@ -176,6 +178,10 @@ en:
   tabs:
     batch:
       archived: Archived
+      deleting: Deleting
+      preprocessing: Preprocessing
+      processing: Processing
+      transferring: Transferring
       working: Working
   user:
     account: "My Account: %{email}"

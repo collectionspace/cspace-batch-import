@@ -1,5 +1,10 @@
 <tr id="<%= dom_id(batch) %>" data-batch-id="<%= batch.id %>">
-  <td class="pt-2"><%= link_to batch.name, current_step_path(batch) %></td>
+  <td class="pt-2">
+    <%= link_to current_step_path(batch) do %>
+      <%= fa_icon 'folder-open', class: 'mr-1' %>
+      <%= batch.name %>
+    <% end %>
+  </td>
   <td class="pt-2"><%= batch.group.name %></td>
   <td class="pt-2"><%= batch.current_step %></td>
   <td class="pt-2">
