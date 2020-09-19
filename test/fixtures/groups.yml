@@ -22,3 +22,8 @@ veg:
   description: Veg group.
   domain: veg.edu
   enabled: false
+xyz:
+  name: XYZ
+  description: XYZ group.
+  domain: xyz.xyz
+  enabled: true

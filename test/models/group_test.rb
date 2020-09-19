@@ -50,15 +50,33 @@ class GroupTest < ActiveSupport::TestCase
     assert_not groups(:veg).enabled?
   end
 
-  test 'scope group options includes all groups for admin user' do
-    %i[default fruit veg].each do |group|
-      assert_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
+  test 'scope group options does not include a disabled group' do
+    %i[veg].each do |group|
+      refute_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
     end
   end
 
-  test 'scope group options only includes assigned group for non-admin user' do
-    assert_equal Group.select_options(users(:manager)).count, 1
-    assert_includes Group.select_options(users(:manager)), Group.default
+  test 'scope group options with default includes assigned groups for user' do
+    %i[fish fruit sushi xyz].each do |group|
+      assert_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
+    end
+
+    assert_equal 2, Group.select_options(users(:manager)).count
+    %i[default xyz].each do |group|
+      assert_includes Group.select_options(users(:manager)), Group.find_by(name: groups(group).name)
+    end
+
+    assert_equal 1, Group.select_options(users(:fishmonger)).count
+    %i[fish].each do |group|
+      assert_includes Group.select_options(users(:fishmonger)), Group.find_by(name: groups(group).name)
+    end
+  end
+
+  test 'scope group options without default includes assigned groups for user' do
+    assert_equal 1, Group.select_options_without_default(users(:manager)).count
+    %i[xyz].each do |group|
+      assert_includes Group.select_options_without_default(users(:manager)), Group.find_by(name: groups(group).name)
+    end
   end
 
   # TODO: updating group profile updates connection profile

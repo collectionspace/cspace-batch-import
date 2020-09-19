@@ -24,6 +24,27 @@ class UsersControllerMemberTest < ActionDispatch::IntegrationTest
     refute_can_view edit_user_path users(:disabled)
   end
 
+  test 'a member can update their group affiliation' do
+    user = users(:minion)
+    run_update(
+      user_url(user),
+      user,
+      { user: { group_id: groups(:xyz).id } },
+      edit_user_path(user)
+    )
+    assert_equal groups(:xyz).name, user.group.name
+  end
+
+  test 'a member cannot update their group affiliation to an unrelated group' do
+    user = users(:minion)
+    run_update(
+      user_url(user),
+      user,
+      { user: { group_id: groups(:fish).id } }
+    )
+    assert_equal groups(:default).name, user.group.name
+  end
+
   test 'a member cannot de-promote a mananger' do
     user = users(:manager)
     run_update(

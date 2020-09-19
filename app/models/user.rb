@@ -8,10 +8,17 @@ class User < ApplicationRecord
 
   has_many :batches, dependent: :destroy
   has_many :connections, dependent: :destroy
-  belongs_to :group
+  belongs_to :group # this is the current group
+  has_many :affiliations
+  has_many :groups, through: :affiliations do
+    def <<(new_item)
+      super(Array(new_item) - proxy_association.owner.groups)
+    end
+  end
   belongs_to :role
   after_initialize :setup, if: :new_record?
   before_save :reset_admin_group
+  validate :group_is_affiliated, unless: :new_record?
   validates :superuser, uniqueness: true, if: -> { superuser }
   scope :superuser, -> { where(superuser: true).first }
 
@@ -71,6 +78,7 @@ class User < ApplicationRecord
 
   def setup
     self.group ||= target_group
+    groups << self.group # add this group to our list of affiliate groups
     self.role ||= target_role
     self.enabled ||= self.role == Role.manager
   end
@@ -85,8 +93,18 @@ class User < ApplicationRecord
 
   private
 
+  def group_is_affiliated
+    unless affiliations.where(group: group).one?
+      errors.add(:group, I18n.t('user.unaffiliated_group'))
+    end
+  end
+
   def reset_admin_group
-    self.group = Group.default if self.role == Role.admin
+    if self.role == Role.admin && self.group != Group.default
+      self.group = Group.default
+      groups.destroy_all
+      groups << self.group
+    end
   end
 
   def target_group

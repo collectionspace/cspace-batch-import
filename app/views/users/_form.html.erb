@@ -46,19 +46,21 @@
         <% end %>
       </div>
 
-      <div class="field">
-        <%= form.label t('user.group'), class: 'label' %>
-        <div class="select">
-          <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name, {},
-              disabled: !can_edit_user_group?(user) %>
+      <% unless user.admin? %>
+        <div class="field">
+          <%= form.label t('user.group'), class: 'label' %>
+          <div class="select">
+            <%= form.collection_select :group_id, Group.select_options_without_default(current_user), :id, :name, {},
+                disabled: !can_edit_user_group?(user) %>
+          </div>
         </div>
-      </div>
+      <% end %>
 
       <div class="field">
         <%= form.label t('user.role'), class: 'label' %>
         <div class="select">
-          <%= form.collection_select :role_id, Role.select_options(current_user), :id, :name, {},
-              disabled: current_user.is?(user) %>
+          <%= form.collection_select :role_id, Role.select_options(current_user), :id, :name,
+              { selected: user.role_id }, disabled: current_user.is?(user) %>
         </div>
       </div>
 

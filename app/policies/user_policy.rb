@@ -37,7 +37,8 @@ class UserPolicy < ApplicationPolicy
     elsif user.manage?(record) && !user.is?(record)
       %i[password password_confirmation active enabled role_id]
     else
-      %i[password password_confirmation]
+      # allows a user to update own group (affiliation)
+      %i[password password_confirmation group_id]
     end
   end
 
@@ -46,7 +47,8 @@ class UserPolicy < ApplicationPolicy
       if user.admin?
         scope.all
       else
-        user.group.users
+        # all users in this users group (excluding affiliations)
+        user.group.users.where(group: user.group)
       end
     end
   end

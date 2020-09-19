@@ -20,7 +20,7 @@
           <%= content_tag :div, class: 'field' do %>
             <%= form.label t('batch.group'), class: 'label' %>
             <div class="select is-fullwidth">
-              <%= form.collection_select :group_id, Group.select_options(current_user), :id, :name,
+              <%= form.collection_select :group_id, Group.select_options_with_default(current_user), :id, :name,
                   { selected: current_user.group_id }, disabled: !admin? %>
             </div>
           <% end %>

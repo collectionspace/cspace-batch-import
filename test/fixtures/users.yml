@@ -4,36 +4,50 @@ superuser:
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
   role: admin
 admin:
   email: admin@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
   role: admin
 admin2:
   email: admin2@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
   role: admin
 manager:
   email: manager@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
+    - xyz
   role: manager
 manager2:
   email: manager2@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
   role: manager
 minion:
   email: minion@collectionspace.org
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: default
+  groups:
+    - default
+    - xyz
   role: member
 disabled:
   email: disabled@collectionspace.org
@@ -41,6 +55,8 @@ disabled:
   active: true
   enabled: false
   group: default
+  groups:
+    - default
   role: member
 outcast:
   email: outcast@collectionspace.org
@@ -48,22 +64,30 @@ outcast:
   active: false
   enabled: false
   group: default
+  groups:
+    - default
   role: member
 fishmonger:
   email: manager@fish.net
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: fish
+  groups:
+    - fish
   role: manager
 salmon:
   email: salmon@fish.net
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: true
   group: fish
+  groups:
+    - fish
   role: member
 tuna:
   email: tuna@fish.net
   encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
   enabled: false
   group: fish
+  groups:
+    - fish
   role: member

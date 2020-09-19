@@ -63,6 +63,7 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
   groups = [
     { name: 'Fish', domain: 'fish.net', email: 'support@fish.net', enabled: false },
     { name: 'Fruit', domain: 'fruit.com', email: 'support@fruit.com' },
+    { name: 'Groceries', domain: 'groceries.biz', email: 'support@groceries.biz' },
     { name: 'Veg', domain: 'veg.edu', email: 'support@veg.edu' }
   ]
   groups.each do |food|
@@ -86,10 +87,11 @@ if ENV.fetch('RAILS_ENV', 'development') == 'development'
     'carrot@veg.edu'
   ]
   users.each do |email|
-    User.find_or_create_by!(email: email) do |user|
+    u = User.find_or_create_by!(email: email) do |user|
       user.enabled = true
       user.password = 'password'
       user.password_confirmation = 'password'
     end
+    u.groups << Group.where(name: 'Groceries').first
   end
 end

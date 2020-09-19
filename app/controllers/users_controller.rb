@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       scrub_params(:user, :password)
       scrub_params(:user, :password_confirmation)
+      affiliate_user_with_group
 
       if @user.update(user_params)
         # reset_user(@user)
@@ -67,6 +68,13 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def affiliate_user_with_group
+    if current_user.admin? && !@user.admin?
+      group_id = params.dig(:user, :group_id) || params[:group_id]
+      @user.groups << Group.find(group_id) if group_id
+    end
+  end
 
   def check_for_illegal_promote_to_admin
     role_id = params.dig(:user, :role_id) || params[:role_id]

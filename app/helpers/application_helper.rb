@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def allowed_access?
-    current_user.enabled?
+    current_user.enabled? && !non_admin_default_group_user?
   end
 
   def can_edit_connection_profile?(connection)
@@ -19,7 +19,10 @@ module ApplicationHelper
   end
 
   def can_edit_user_group?(user)
-    current_user.admin? && !current_user.is?(user) && !user.admin?
+    # a user can update their affiliation
+    return true if current_user.is?(user) && !user.admin?
+
+    current_user.admin? && !user.admin?
   end
 
   def can_toggle_status?(record)
@@ -66,6 +69,26 @@ module ApplicationHelper
     "#{filename_target} = #{filename_value}.#{filename_transform}"
   end
 
+  def impersonating_user?
+    current_user != true_user
+  end
+
+  def manage?(record)
+    current_user.manage?(record)
+  end
+
+  def non_admin_default_group_user?
+    current_user.group?(Group.default) && !current_user.admin?
+  end
+
+  def spinner_html
+    "<i class='fa fa-spinner fa-spin'></i>"
+  end
+
+  def spinner_js
+    'this.querySelector(".fa-refresh").classList.add("fa-spin");'
+  end
+
   def status_color(status)
     case status
     when :ready
@@ -100,24 +123,10 @@ module ApplicationHelper
     end
   end
 
-  def impersonating_user?
-    current_user != true_user
-  end
-
-  def manage?(record)
-    current_user.manage?(record)
-  end
-
-  def spinner_html
-    "<i class='fa fa-spinner fa-spin'></i>"
-  end
-
-  def spinner_js
-    'this.querySelector(".fa-refresh").classList.add("fa-spin");'
-  end
-
   def unassigned_message
-    if current_user.group.disabled?
+    if non_admin_default_group_user?
+      raw t('user.unauthorized_group', email: Group.default.email)
+    elsif current_user.group.disabled?
       raw t('user.unassigned_group')
     elsif current_user.group.email
       raw t('user.unassigned_user', email: current_user.group.email)

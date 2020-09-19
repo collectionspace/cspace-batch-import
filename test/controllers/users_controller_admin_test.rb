@@ -28,15 +28,27 @@ class UsersControllerAdminTest < ActionDispatch::IntegrationTest
     refute_can_view edit_user_path users(:admin)
   end
 
-  test "an admin can update a member's group" do
+  test "an admin can update a member's group affiliation" do
+    user = users(:manager)
+    run_update(
+      user_url(user),
+      user,
+      { user: { group_id: groups(:xyz).id } },
+      edit_user_path(user)
+    )
+    assert_equal groups(:xyz).name, user.group.name
+  end
+
+  test "an admin can update a member's group if unrelated" do
     user = users(:manager)
     run_update(
       user_url(user),
       user,
       { user: { group_id: groups(:fish).id } },
-      edit_user_path(user)
     )
     assert_equal groups(:fish).name, user.group.name
+    assert_equal 3, user.groups.count
+    # TODO: assert affiliations
   end
 
   test 'an admin can promote a user to be admin' do

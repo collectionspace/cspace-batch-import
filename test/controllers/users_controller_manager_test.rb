@@ -33,6 +33,17 @@ class UsersControllerManagerTest < ActionDispatch::IntegrationTest
     refute_can_view edit_user_path users(:salmon)
   end
 
+  test 'a manager can update their group affiliation' do
+    user = users(:manager)
+    run_update(
+      user_url(user),
+      user,
+      { user: { group_id: groups(:xyz).id } },
+      edit_user_path(user)
+    )
+    assert_equal groups(:xyz).name, user.group.name
+  end
+
   test 'a manager can update a member' do
     user = users(:minion)
     run_update(
@@ -44,15 +55,15 @@ class UsersControllerManagerTest < ActionDispatch::IntegrationTest
     assert_not user.enabled?
   end
 
-  test "a manager cannot update a member's group" do
+  test "a manager cannot update a member's group (directly)" do
     user = users(:minion)
     run_update(
       user_url(user),
       user,
-      { user: { group_id: groups(:fish).id } },
+      { user: { group_id: groups(:xyz).id } },
       edit_user_path(user)
     )
-    assert_not_equal groups(:fish).id, user.group_id
+    assert_not_equal groups(:xyz).id, user.group_id
   end
 
   test 'a manager can promote a user to be manager' do

@@ -2,7 +2,9 @@
 
 class Group < ApplicationRecord
   include PrefixChecker
-  has_many :users, dependent: :destroy
+  # has_and_belongs_to_many :users, dependent: :destroy
+  has_many :affiliations
+  has_many :users, through: :affiliations
   has_many :batches, dependent: :destroy
   has_many :connections, through: :users
   after_save :update_connection_profiles, if: -> { profile? }
@@ -11,7 +13,16 @@ class Group < ApplicationRecord
   validates :supergroup, uniqueness: true, if: -> { supergroup }
   validates_uniqueness_of :domain, allow_blank: true
   scope :default, -> { where(supergroup: true).first }
-  scope :select_options, ->(user) { user.admin? ? all : where(id: user.group.id) }
+  scope :select_options, lambda { |user|
+    (user.admin? ? all : user.groups).where(enabled: true)
+  }
+  scope :select_options_with_default, ->(user) { select_options(user) }
+  scope :select_options_without_default, ->(user) { select_options(user).where.not(id: default.id) }
+
+  before_destroy do
+    Affiliation.where(group: self).destroy_all
+    User.where(group: self).destroy_all
+  end
 
   def default?
     self == Group.default
