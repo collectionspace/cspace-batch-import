@@ -17,11 +17,11 @@ class Batch < ApplicationRecord
   validates :user, :group, :connection, :mapper, presence: true
   validates :name, presence: true, length: { minimum: 3 }
   validate :connection_profile_is_matched
-  scope :archived, -> { where(step_state: 'archiving') }
-  scope :deleting, -> { where(step_state: 'deleting') }
-  scope :preprocessing, -> { where(step_state: 'preprocessing') }
-  scope :processing, -> { where(step_state: 'processing') }
-  scope :transferring, -> { where(step_state: 'transferring') }
+  scope :archived, -> { where(step_state: 'archiving').where(status_state: 'finished') }
+  scope :deletes, -> { where(step_state: 'deleting') }
+  scope :preprocesses, -> { where(step_state: 'preprocessing') }
+  scope :processes, -> { where(step_state: 'processing') }
+  scope :transfers, -> { where(step_state: 'transferring') }
   scope :working, -> { where.not(step_state: 'archiving') }
 
   def archived?
