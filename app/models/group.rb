@@ -13,11 +13,13 @@ class Group < ApplicationRecord
   validates :supergroup, uniqueness: true, if: -> { supergroup }
   validates_uniqueness_of :domain, allow_blank: true
   scope :default, -> { where(supergroup: true).first }
-  scope :select_options, lambda { |user|
-    (user.admin? ? all : user.groups).where(enabled: true)
-  }
+  scope :select_options, lambda { |user| (user.admin? ? all : user.groups) }
   scope :select_options_with_default, ->(user) { select_options(user) }
   scope :select_options_without_default, ->(user) { select_options(user).where.not(id: default.id) }
+
+  after_create do
+    User.admins.each { |user| user.groups << self }
+  end
 
   before_destroy do
     Affiliation.where(group: self).destroy_all
@@ -36,12 +38,12 @@ class Group < ApplicationRecord
     enabled
   end
 
-  def self.default_created?
-    Group.default
-  end
-
   def profile?
     !profile.blank?
+  end
+
+  def self.default_created?
+    Group.default
   end
 
   def self.matching_domain?(domain)

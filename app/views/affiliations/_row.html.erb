@@ -1,0 +1,40 @@
+<tr id="<%= dom_id(affiliation) %>" data-connection-id="<%= affiliation.id %>">
+  <td>
+    <%= affiliation.group.name %>
+  </td>
+  <td>
+    <% if affiliation.group.enabled? %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'ban' }
+      %>
+    <% end %>
+  </td>
+  <td>
+    <% if user.affiliated_with?(affiliation.group) %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+      %>
+    <% else %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: 'has-text-danger', icon: 'ban' }
+      %>
+    <% end %>
+    <%= check_box_tag nil, nil, user.affiliated_with?(affiliation.group),
+      {
+        id: "toggle_affiliation_#{dom_id(affiliation)}",
+        data: {
+          'reflex': 'click->Application#toggle_affiliation',
+          'reflex-dataset': 'combined',
+          'model': 'affiliation',
+          'affiliation-id': affiliation.id,
+          'user-id': user.id
+        },
+        disabled: affiliation.group == user.group
+      }
+    %>
+  </td>
+</tr>

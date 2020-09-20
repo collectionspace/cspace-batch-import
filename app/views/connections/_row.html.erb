@@ -50,6 +50,7 @@
         disabled: !connection.enabled?
       }
     %>
+  </td>
   <td>
     <%= content_tag :div, class: 'tags has-addons is-outline' do %>
       <%= render partial: 'shared/button_delete', locals: { record: connection } %>

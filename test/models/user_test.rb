@@ -38,6 +38,14 @@ class UserTest < ActiveSupport::TestCase
     assert users(:minion).member?
   end
 
+  test 'can scope admins' do
+    assert_includes User.admins, users(:superuser)
+    assert_includes User.admins, users(:admin)
+    refute_includes User.admins, users(:manager)
+    refute_includes User.admins, users(:minion)
+    refute_includes User.admins, users(:fishmonger)
+  end
+
   test 'can lookup a user group' do
     assert users(:minion).group?(groups(:default))
   end
@@ -84,6 +92,23 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.enabled?
   end
 
+  # Group affiliation
+  test 'admins are automatically affiliated with groups' do
+    group = Group.create(name: 'Boom!', domain: 'boom.org')
+    assert users(:superuser).affiliated_with?(group)
+    assert users(:admin).affiliated_with?(group)
+    refute users(:manager).affiliated_with?(group)
+    refute users(:minion).affiliated_with?(group)
+  end
+
+  test 'can identify an affiliation' do
+    assert users(:admin).affiliated_with?(groups(:default))
+    assert users(:manager).affiliated_with?(groups(:default))
+    assert users(:minion).affiliated_with?(groups(:default))
+    refute users(:minion).affiliated_with?(groups(:fish))
+    assert users(:fishmonger).affiliated_with?(groups(:fish))
+  end
+
   # Group assignment
   test 'assigns user to the default group if email domain is not matched' do
     user = User.create(
@@ -92,6 +117,7 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: @password
     )
     assert_equal groups(:default).name, user.group.name
+    assert user.affiliated_with?(groups(:default))
   end
 
   test 'assigns user to a group when email domain matches' do
@@ -101,6 +127,7 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: @password
     )
     assert_equal groups(:veg).name, user.group.name
+    assert user.affiliated_with?(groups(:veg))
   end
 
   test 'assigns user to a group when email domain partial matches' do
@@ -110,6 +137,7 @@ class UserTest < ActiveSupport::TestCase
       password_confirmation: @password
     )
     assert_equal groups(:veg).name, user.group.name
+    assert user.affiliated_with?(groups(:veg))
   end
 
   # Role assignment
@@ -123,7 +151,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   # New group assignment
-  test 'assigns first user of group as manager and subsequent users as member' do
+  test 'assigns first (non-admin) user of group as manager and subsequent users as member' do
     group = Group.create(name: 'Example', domain: 'example.org')
     manager = User.create(
       email: 'manager@example.org',
@@ -139,8 +167,10 @@ class UserTest < ActiveSupport::TestCase
     )
     assert manager.role?(Role.manager.name)
     assert manager.enabled?
+    assert manager.affiliated_with?(group)
     assert member.role?(Role.member.name)
     assert_not member.enabled?
+    assert member.affiliated_with?(group)
   end
 
   # Connections

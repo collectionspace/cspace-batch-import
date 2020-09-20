@@ -187,6 +187,9 @@ en:
     account: "My Account: %{email}"
     active: Active
     admin: Admin
+    affiliated: Affiliated
+    affiliations: Groups
+    editing_affiliations: "Assignable groups for user from: %{email}"
     email: Email
     enabled: Enabled
     group: Group

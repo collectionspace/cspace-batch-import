@@ -50,8 +50,8 @@
         <div class="field">
           <%= form.label t('user.group'), class: 'label' %>
           <div class="select">
-            <%= form.collection_select :group_id, Group.select_options_without_default(current_user), :id, :name, {},
-                disabled: !can_edit_user_group?(user) %>
+            <%= form.collection_select :group_id, Group.select_options_without_default(user), :id, :name,
+                { selected: user.group_id }, disabled: !can_edit_user_group?(user) %>
           </div>
         </div>
       <% end %>
@@ -107,5 +107,9 @@
       </div>
     </div>
     <%= render partial: 'connections', locals: { user: user } %>
+    <% if can_affiliate?(user) %>
+      <hr/>
+      <%= render partial: 'affiliations', locals: { user: user } %>
+    <% end %>
   </div>
 </div>

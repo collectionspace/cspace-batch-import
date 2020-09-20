@@ -21,6 +21,7 @@ class User < ApplicationRecord
   validate :group_is_affiliated, unless: :new_record?
   validates :superuser, uniqueness: true, if: -> { superuser }
   scope :superuser, -> { where(superuser: true).first }
+  scope :admins, -> { where(role_id: Role.default_scoped.admin.id) }
 
   def active_for_authentication?
     super && active?
@@ -32,6 +33,11 @@ class User < ApplicationRecord
 
   def admin?
     role == Role.default_scoped.admin
+  end
+
+  # TODO: test
+  def affiliated_with?(group)
+    groups.exists?(group.id)
   end
 
   def default_connection
@@ -103,7 +109,7 @@ class User < ApplicationRecord
     if self.role == Role.admin && self.group != Group.default
       self.group = Group.default
       groups.destroy_all
-      groups << self.group
+      groups << Groups.all
     end
   end
 
@@ -113,7 +119,7 @@ class User < ApplicationRecord
   end
 
   def target_role
-    if self.group != Group.default && self.group.users.count.zero?
+    if self.group != Group.default && self.group.users.where.not(role: Role.admin).count.zero?
       Role.manager
     else
       Role.default

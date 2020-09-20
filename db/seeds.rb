@@ -8,16 +8,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# Setup roles first
+Role.find_or_create_by!(name: 'Admin')
+Role.find_or_create_by!(name: 'Manager')
+Role.find_or_create_by!(name: 'Member')
+
 Group.find_or_create_by!(supergroup: true) do |group|
   group.name = 'Default'
   group.supergroup = true
   group.description = 'Default group.'
 end
-
-Role.find_or_create_by!(name: 'Admin')
-Role.find_or_create_by!(name: 'Manager')
-Role.find_or_create_by!(name: 'Member')
-
 # Setup initial set of mappers (this may change)
 Mapper.refresh
 

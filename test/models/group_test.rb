@@ -50,9 +50,9 @@ class GroupTest < ActiveSupport::TestCase
     assert_not groups(:veg).enabled?
   end
 
-  test 'scope group options does not include a disabled group' do
+  test 'scope group options does include a disabled group' do
     %i[veg].each do |group|
-      refute_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
+      assert_includes Group.select_options(users(:admin)), Group.find_by(name: groups(group).name)
     end
   end
 

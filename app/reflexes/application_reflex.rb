@@ -9,6 +9,20 @@ class ApplicationReflex < StimulusReflex::Reflex
     sleep 0.5
   end
 
+  def toggle_affiliation
+    group = Affiliation.find(element.dataset['affiliation-id']).group
+    user = User.find(element.dataset['user-id'])
+    return unless group && user
+    return if user.admin? # don't mess with an admins affiliations (not in UI)
+    return if user.group == group # cannot switch out the current group
+
+    if element[:checked]
+      user.groups << group
+    else
+      user.groups.delete group
+    end
+  end
+
   def toggle_status
     model = element.dataset['model'].camelize.constantize
     record = model.find(element.dataset['id'])

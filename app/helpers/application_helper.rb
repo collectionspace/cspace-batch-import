@@ -11,6 +11,12 @@ module ApplicationHelper
     current_user.enabled? && !non_admin_default_group_user?
   end
 
+  def can_affiliate?(user)
+    return false if current_user.is?(user)
+    return false if user.admin?
+    return true if current_user.manage?(user)
+  end
+
   def can_edit_connection_profile?(connection)
     return false if connection.new_record? && current_user.group.profile?
     return false if connection.group&.profile?
