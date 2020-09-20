@@ -106,3 +106,37 @@ tuna:
   groups:
     - fish
   role: member
+fruit_n_veg_man:
+  email: fruit_n_veg_man@greengrocer.biz
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: true
+  group: fish
+  groups:
+    - fish
+    - fruit
+    - veg
+  role: manager
+apple:
+  email: apple@fruit.com
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: true
+  group: fruit
+  groups:
+    - fruit
+  role: member
+banana:
+  email: banana@fruit.com
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: false
+  group: fruit
+  groups:
+    - fruit
+  role: member
+brocolli:
+  email: brocolli@veg.edu
+  encrypted_password: "<%= Devise::Encryptor.digest(User, 'password') %>"
+  enabled: false
+  group: veg
+  groups:
+    - veg
+  role: member
