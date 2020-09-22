@@ -2,13 +2,14 @@
 
 class TermManagerService
   attr_reader :file, :headers, :found, :not_found
+  FILE_TYPE = 'csv'
   HEADERS = %i[category type subtype value found].freeze
 
   # tm = TermManagerService.new(name: 'batch1', save_to_file: true)
   # CSV.foreach(tm.file, headers: true) { |row| puts row }
   def initialize(name:, save_to_file: false)
     @all = { found: {}, not_found: {} }
-    @file = File.join(Dir.tmpdir, "#{name}-#{Time.now.to_i}.csv")
+    @file = File.join(Dir.tmpdir, "#{name}-#{Time.now.to_i}.#{FILE_TYPE}")
     @found = @all[:found] = Hash.new { |h, k| h[k] = Set.new }
     @headers = HEADERS
     @not_found = @all[:not_found] = Hash.new { |h, k| h[k] = Set.new }

@@ -2,16 +2,27 @@
 
 class StepService
   attr_accessor :error_on_warning
-  attr_reader :step
+  attr_reader :files, :step
   HEADERS = %i[row row_status message].freeze
 
   def initialize(step:, error_on_warning:, save_to_file:)
     @file = nil
+    @files = []
     @headers = HEADERS
     @step = step
     @error_on_warning = error_on_warning
     @save_to_file = save_to_file
-    append(@headers) if @save_to_file
+    return unless @save_to_file
+
+    @files << { file: @file, type: 'csv' }
+    append(@headers)
+  end
+
+  def add_file(file, type)
+    return unless step.file_types.include?(type)
+    return unless File.file? file
+
+    @files << { file: file, type: type }
   end
 
   def add_error!
@@ -45,13 +56,14 @@ class StepService
 
   # TODO: test -- [ok, error, warning]
   def log!(status, message)
-    append({row: step.step_num_row, row_status: status, message: message })
+    append({ row: step.step_num_row, row_status: status, message: message })
   end
 
   def finishup!
     step.update(completed_at: Time.now.utc)
     step.update_header # broadcast final status of step
     # TODO: attach files
+    # @files.each { |f| step.files.attach f }
   end
 
   def kickoff!

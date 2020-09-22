@@ -4,6 +4,7 @@ module WorkflowMetadata
   extend ActiveSupport::Concern
   include CableReady::Broadcaster
   CHECK_IN_INCREMENT = 5 # can checkin every 5% of the time
+  FILE_TYPES = ['csv'].freeze
 
   def abort?
     return unless checkin?
@@ -28,6 +29,10 @@ module WorkflowMetadata
 
   def errors?
     step_errors.positive?
+  end
+
+  def file_types
+    FILE_TYPES
   end
 
   def increment_error!

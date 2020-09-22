@@ -10,6 +10,26 @@ class StepServiceTest < ActiveSupport::TestCase
     @step.kickoff!
   end
 
+  test 'can add a file to a step' do
+    assert_equal 0, @step.files.size
+    @step.add_file(
+      Rails.root.join('test', 'fixtures', 'files', 'core-cataloging.csv'), 'csv'
+    )
+    assert_equal 1, @step.files.size
+  end
+
+  test 'will not add a non-file to a step' do
+    assert_equal 0, @step.files.size
+    @step.add_file(Rails.root.join('test/'), 'csv')
+    assert_equal 0, @step.files.size
+  end
+
+  test 'will not add an unrecognized file (by type) to a step' do
+    assert_equal 0, @step.files.size
+    @step.add_file(Rails.root.join('README.md'), 'markdown')
+    assert_equal 0, @step.files.size
+  end
+
   test 'can add an error to a step' do
     assert_equal 0, @s.step_warnings
     @step.add_error!
