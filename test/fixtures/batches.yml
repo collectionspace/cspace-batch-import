@@ -8,6 +8,7 @@ superuser_batch: # no associated steps
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 # STEP 1. PREPROCESSING
 
@@ -19,6 +20,7 @@ superuser_batch_preprocessing:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 superuser_batch_preprocessed:
   name: superuser_batch
@@ -28,6 +30,7 @@ superuser_batch_preprocessed:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 # STEP 2. PROCESSING
 
@@ -39,6 +42,7 @@ superuser_batch_processing:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 superuser_batch_processed:
   name: superuser_batch
@@ -48,6 +52,7 @@ superuser_batch_processed:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 # BATCHES TO TEST AUTHZ
 
@@ -59,6 +64,7 @@ minion_batch:
   group: default
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 fishmonger_batch:
   name: fishmonger_batch
@@ -68,6 +74,7 @@ fishmonger_batch:
   group: fish
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1
 
 tuna_batch:
   name: tuna_batch
@@ -77,3 +84,4 @@ tuna_batch:
   group: fish
   connection: core_superuser
   mapper: core_collectionobject_6_0
+  num_rows: 1

@@ -13,13 +13,14 @@ module WorkflowMetadata
   end
 
   # this enables a throttle on the frequency of requests from jobs
-  # i.e. rather than check after every row, check after N% of rows
+  # i.e. rather than check after every row, check after N%-ish of rows
   def checkin?
-    # (((step_num_row.to_f / batch.num_rows) * 100) % 5).zero?
-    (((step_num_row.to_f / 10) * 100) % CHECK_IN_INCREMENT).zero?
+    (((step_num_row.to_f / batch.num_rows) * 100).round % CHECK_IN_INCREMENT).zero?
   end
 
   def current_runtime
+    return 0 unless started_at
+
     ((completed_at || Time.current.utc) - started_at).round
   end
 
@@ -48,8 +49,7 @@ module WorkflowMetadata
   end
 
   def percentage_complete?
-    # (step_num_row * 100) / batch.num_rows
-    (step_num_row * 100 / 10) # TODO: replace placeholder job
+    (step_num_row * 100 / batch.num_rows)
   end
 
   def running?

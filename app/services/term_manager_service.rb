@@ -9,7 +9,7 @@ class TermManagerService
   # CSV.foreach(tm.file, headers: true) { |row| puts row }
   def initialize(name:, save_to_file: false)
     @all = { found: {}, not_found: {} }
-    @file = File.join(Dir.tmpdir, "#{name}-#{Time.now.to_i}.#{FILE_TYPE}")
+    @file = Rails.root.join('tmp', "#{name}-#{Time.now.to_i}.#{FILE_TYPE}")
     @found = @all[:found] = Hash.new { |h, k| h[k] = Set.new }
     @headers = HEADERS
     @not_found = @all[:not_found] = Hash.new { |h, k| h[k] = Set.new }

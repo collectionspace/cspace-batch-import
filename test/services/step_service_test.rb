@@ -100,8 +100,13 @@ class StepServiceTest < ActiveSupport::TestCase
   end
 
   test 'can nudge a step' do
-    assert_equal 0, @s.step_num_row
-    @step.nudge!
     assert_equal 1, @s.step_num_row
+    @step.nudge!
+    assert_equal 2, @s.step_num_row
+  end
+
+  test 'can be setup to save messages to a file' do
+    @step = StepService.new(step: @s, error_on_warning: false, save_to_file: true)
+    FileUtils.rm Dir.glob(Rails.root.join('tmp', 'step-*.csv')) # TODO
   end
 end

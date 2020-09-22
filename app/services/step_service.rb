@@ -2,11 +2,12 @@
 
 class StepService
   attr_accessor :error_on_warning
-  attr_reader :files, :step
+  attr_reader :file, :files, :headers, :step
+  FILE_TYPE = 'csv'
   HEADERS = %i[row row_status message].freeze
 
   def initialize(step:, error_on_warning:, save_to_file:)
-    @file = nil
+    @file = Rails.root.join('tmp', "step-#{Time.now.to_i}.#{FILE_TYPE}")
     @files = []
     @headers = HEADERS
     @step = step
@@ -70,6 +71,7 @@ class StepService
     step.batch.run! # update status to running
     step.update(started_at: Time.now.utc)
     step.update_header # broadcast current status
+    nudge! # increment for header
   end
 
   def nudge!

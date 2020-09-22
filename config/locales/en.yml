@@ -112,6 +112,8 @@ en:
       index: Connections
     url: Url
     username: Username
+  csv:
+    ok: No issues found
   demo:
     title: This is a dev deployment!
     message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"

@@ -18,17 +18,28 @@ class WorkflowMetadataTest < ActiveSupport::TestCase
     assert_equal rows + 1, @step.step_num_row
   end
 
-  test 'can approve a status checkin' do
-    # TODO: need to replace placeholder data
-    @step.update(step_num_row: 5)
-    @step.batch.update(num_rows: 10)
-    assert @step.checkin?
+  test 'can approve status checkins' do
+    checkins = [
+      { batch: 10, step: 5, checkin: true },
+      { batch: 100, step: 42, checkin: false },
+      { batch: 100, step: 45, checkin: true },
+      { batch: 102, step: 40, checkin: false },
+      { batch: 102, step: 41, checkin: true },
+      { batch: 1000, step: 45, checkin: true },
+      { batch: 1000, step: 50, checkin: true },
+      { batch: 10_000, step: 50, checkin: false },
+      { batch: 10_000, step: 500, checkin: true },
+    ]
+    checkins.each do |checkin|
+      @step.batch.update(num_rows: checkin[:batch])
+      @step.update(step_num_row: checkin[:step])
+      checkin[:checkin] ? assert(@step.checkin?) : refute(@step.checkin?)
+    end
   end
 
   test 'can calculate the % complete' do
-    # TODO: need to replace placeholder data
-    @step.update(step_num_row: 7)
     @step.batch.update(num_rows: 10)
+    @step.update(step_num_row: 7)
     assert_equal 70, @step.percentage_complete?
   end
 end

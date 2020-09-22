@@ -54,9 +54,8 @@ class Batch < ApplicationRecord
     batch.spreadsheet.open do |spreadsheet|
       # TODO: config from batch
       config = { 'header': true, 'delimiter': ',' }
-      options = { limit_lines: 100 }
       validator = Csvlint::Validator.new(
-        File.new(spreadsheet.path), config, nil, options
+        File.new(spreadsheet.path), config, nil
       )
       yield validator
     end
