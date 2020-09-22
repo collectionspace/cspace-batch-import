@@ -79,6 +79,24 @@ class StepService
     step.update_progress
   end
 
+  def process
+    step.batch.spreadsheet.open do |csv|
+      csv = CSV.open(csv.path, headers: true, encoding: 'bom|utf-8')
+      loop do
+        break if cancelled?
+
+        row = csv.shift
+        break unless row
+
+        nudge!
+        yield row
+      rescue CSV::MalformedCSVError => e
+        add_error!
+        log!('error', e.message)
+      end
+    end
+  end
+
   private
 
   # TODO: DRY (term_manager)
