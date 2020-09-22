@@ -28,6 +28,10 @@ class RecordService
     val
   end
 
+  def reset
+    Rails.cache.clear(namespace: namespace)
+  end
+
   private
 
   def request(type, subtype, identifier)

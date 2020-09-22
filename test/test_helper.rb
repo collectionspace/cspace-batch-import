@@ -3,10 +3,13 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require_relative 'test_support'
+require_relative 'caching_helper'
+
 require 'rails/test_help'
 require 'minitest/autorun'
 require 'aasm/minitest'
 require 'webmock/minitest'
+
 WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: 'github.com'
