@@ -8,9 +8,7 @@ class RecordServiceTest < ActiveSupport::TestCase
   setup do
     @uri = '/collectionobjects/998b6cad-4a55-4904-93b2'
     @identifier = 'xyz'
-    @rs = RecordService.new(
-      namespace: 'b1', client: users(:superuser).connections.first.client
-    )
+    @rs = RecordService.new(client: users(:superuser).connections.first.client)
   end
 
   test 'can add found uri to cache' do
@@ -23,7 +21,7 @@ class RecordServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'will add false for not found to cache' do
+  test 'will add false if not found to cache' do
     with_caching do
       @rs.stub :request, false do
         uri = @rs.lookup(type: 'collectionobjects', subtype: nil, identifier: @identifier)
@@ -33,14 +31,28 @@ class RecordServiceTest < ActiveSupport::TestCase
     end
   end
 
-  test 'can reset cache' do
+  test 'can delete from the cache' do
     with_caching do
       @rs.stub :request, @uri do
         @rs.lookup(type: 'collectionobjects', subtype: nil, identifier: @identifier)
         assert_equal @uri, @rs.get(identifier: @identifier)
-        @rs.reset
-        assert_equal nil, @rs.get(identifier: @identifier)
+        @rs.delete(identifier: @identifier)
+        assert_nil @rs.get(identifier: @identifier)
       end
+    end
+  end
+
+  test 'can reset the cache' do
+    with_caching do
+      Rails.cache.write('test', 'test')
+      @rs.stub :request, @uri do
+        @rs.lookup(type: 'collectionobjects', subtype: nil, identifier: @identifier)
+        assert_equal @uri, @rs.get(identifier: @identifier)
+        @rs.reset
+        assert_nil @rs.get(identifier: @identifier)
+      end
+      # this should still be there
+      assert_equal 'test', Rails.cache.read('test')
     end
   end
 end

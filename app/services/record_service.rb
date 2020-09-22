@@ -5,10 +5,14 @@ class RecordService
   PATH_TO_TOTAL = %w[abstract_common_list totalItems].freeze
   PATH_TO_URI = %w[abstract_common_list list_item uri].freeze
 
-  # given namespace (scoped to batch) do we need a cleverer cache key?
-  def initialize(namespace:, client:)
+  # given namespace (scoped to base_uri) do we need a cleverer cache key?
+  def initialize(client:)
     @client = client
-    @namespace = namespace
+    @namespace = @client.config.base_uri
+  end
+
+  def delete(identifier:)
+    Rails.cache.delete(identifier, namespace: namespace)
   end
 
   def get(identifier:)
@@ -29,7 +33,7 @@ class RecordService
   end
 
   def reset
-    Rails.cache.clear(namespace: namespace)
+    Rails.cache.delete_matched(/#{namespace}/)
   end
 
   private
