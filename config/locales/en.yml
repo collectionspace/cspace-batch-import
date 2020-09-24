@@ -70,7 +70,7 @@ en:
       files: Files
       preprocess:
         created: Preprocess job was successfully created
-        done: Preproccessing has been completed!
+        done: Preprocessing has been completed!
       process:
         created: Process job was successfully created
         check_records: Check for existing records?
