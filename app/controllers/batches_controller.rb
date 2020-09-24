@@ -81,15 +81,14 @@ class BatchesController < ApplicationController
     @tabs[current_tab][:active] = true
   end
 
-  # TODO: concern
   def tabs
     {
-      working: { active: false, icon: 'folder', title: 'tabs.batch.working' },
-      preprocesses: { active: false, icon: 'battery-quarter', title: 'tabs.batch.preprocessing' },
-      processes: { active: false, icon: 'battery-half', title: 'tabs.batch.processing' },
-      transfers: { active: false, icon: 'battery-three-quarters', title: 'tabs.batch.transferring' },
-      deletes: { active: false, icon: 'trash', title: 'tabs.batch.deleting' },
-      archived: { active: false, icon: 'archive', title: 'tabs.batch.archived' }
+      working: { active: false, icon: 'folder', title: I18n.t('tabs.batch.working') },
+      preprocesses: { active: false, icon: 'battery-quarter', title: I18n.t('tabs.batch.preprocessing') },
+      processes: { active: false, icon: 'battery-half', title: I18n.t('tabs.batch.processing') },
+      transfers: { active: false, icon: 'battery-three-quarters', title: I18n.t('tabs.batch.transferring') },
+      deletes: { active: false, icon: 'trash', title: I18n.t('tabs.batch.deleting') },
+      archived: { active: false, icon: 'archive', title: I18n.t('tabs.batch.archived') }
     }
   end
 end

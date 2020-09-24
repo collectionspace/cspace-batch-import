@@ -3,7 +3,7 @@
     <li class="<%= tab[:active] ? 'is-active' : '' %>">
       <%= link_to batches_path(tab: type.to_s) do %>
         <span class="icon is-small"><%= fa_icon tab[:icon] %></span>
-        <span><%= t tab[:title] %></span>
+        <span><%= tab[:title] %></span>
       <% end %>
     </li>
   <% end %>
