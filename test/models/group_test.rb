@@ -79,5 +79,10 @@ class GroupTest < ActiveSupport::TestCase
     end
   end
 
-  # TODO: updating group profile updates connection profile
+  test 'updating group profile updates connection profile' do
+    connection = connections(:core_salmon)
+    group = groups(:fish)
+    group.update(profile: 'anthro-4.1.0')
+    assert 'anthro-4.1.0', connection.profile
+  end
 end

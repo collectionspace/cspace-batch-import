@@ -50,5 +50,27 @@ class BatchTest < ActiveSupport::TestCase
     assert_not Batch.new(@invalid_params).valid?
   end
 
-  # TODO: batch states (can cancel, reset)
+  test 'can indicate when possible to cancel' do
+    batch = Batch.new(@params)
+    batch.save
+    batch.start! # pending
+    assert batch.can_cancel?
+    batch.run! # running
+    assert batch.can_cancel?
+  end
+
+  test 'can indicate when possible to reset' do
+    batch = Batch.new(@params)
+    batch.save
+    batch.start! # pending
+    refute batch.can_reset?
+    batch.cancel! # cancelled
+    assert batch.can_reset?
+    batch.retry! # ready
+    batch.start! # pending again
+    refute batch.can_reset?
+    batch.run! # running
+    batch.failed! # oops, something went wrong
+    assert batch.can_reset?
+  end
 end

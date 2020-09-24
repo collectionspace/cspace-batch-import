@@ -52,7 +52,16 @@ class ConnectionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_connection_url(@connection)
   end
 
-  # TODO: invalid params
+  test 'cannot create a connection with an invalid profile' do
+    invalid_params = @valid_params.dup
+    invalid_params[:profile] = 'nope'
+    run_update(
+      connection_url(@connection),
+      @connection,
+      { connection: invalid_params }
+    )
+    assert_equal 'core-6.0.0', @connection.profile
+  end
 
   test 'should destroy connection' do
     assert_difference('Connection.count', -1) do

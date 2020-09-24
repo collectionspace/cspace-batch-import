@@ -10,7 +10,7 @@ class UsersAdminTest < ApplicationSystemTestCase
   test 'browse users as an admin' do
     visit users_url
     assert_selector 'h1', text: 'Users'
-    assert_selector 'tbody tr', count: Pagy::VARS[:items] # TODO, cleanup
+    assert_selector 'tbody tr', count: Pagy::VARS[:items]
 
     # we should see but not link to the superuser
     assert_text users(:superuser).email

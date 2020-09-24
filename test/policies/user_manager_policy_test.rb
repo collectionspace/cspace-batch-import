@@ -51,5 +51,11 @@ class UserManagerPolicyTest < ActiveSupport::TestCase
     assert_permit UserPolicy, users(:manager), users(:manager), :update
   end
 
-  # TODO can update group
+  test 'manager can update their own group' do
+    assert_permit UserPolicy, users(:manager), groups(:default), :update_group
+  end
+
+  test 'manager cannot update a group they are not affiliated with' do
+    refute_permit UserPolicy, users(:manager), groups(:fish), :update_group
+  end
 end

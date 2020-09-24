@@ -22,7 +22,7 @@ class StepServiceTest < ActiveSupport::TestCase
     @step = StepService.new(step: @s, error_on_warning: false, save_to_file: true)
     @step.attach!
     assert 1, @step.step.reports.count
-    FileUtils.rm Dir.glob(Rails.root.join('tmp', 'preprocessing_*.csv')) # TODO
+    FileUtils.rm Dir.glob(Rails.root.join('tmp', '*.csv'))
   end
 
   test 'will not add a non-file to a step' do

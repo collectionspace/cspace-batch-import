@@ -51,5 +51,11 @@ class UserMemberPolicyTest < ActiveSupport::TestCase
     assert_permit UserPolicy, users(:minion), users(:minion), :update
   end
 
-  # TODO cannot update group
+  test 'member cannot update their own group' do
+    refute_permit UserPolicy, users(:minion), groups(:default), :update_group
+  end
+
+  test 'member cannot update a group they are not affiliated with' do
+    refute_permit UserPolicy, users(:minion), groups(:fish), :update_group
+  end
 end

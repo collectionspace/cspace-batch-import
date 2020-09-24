@@ -33,6 +33,12 @@ class UsersControllerManagerTest < ActionDispatch::IntegrationTest
     refute_can_view edit_user_path users(:salmon)
   end
 
+  test 'a manager can update their group' do
+    user = users(:manager)
+    patch user_group_url(user), params: { group: { profile: 'anthro-4.1.0' } }
+    assert_equal 'anthro-4.1.0', user.group.profile
+  end
+
   test 'a manager can update their group affiliation' do
     user = users(:manager)
     run_update(
