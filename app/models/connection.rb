@@ -39,6 +39,19 @@ class Connection < ApplicationRecord
     primary
   end
 
+  def refcache
+    @cache_config ||= {
+      redis: Rails.configuration.refcache_url,
+      domain: client.domain,
+      error_if_not_found: false,
+      lifetime: 5 * 60,
+      search_delay: 5 * 60,
+      search_enabled: true,
+      search_identifiers: false
+    }
+    CollectionSpace::RefCache.new(config: @cache_config, client: client)
+  end
+
   def unset_primary
     self.primary = false
   end

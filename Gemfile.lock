@@ -8,6 +8,16 @@ GIT
       json
       nokogiri
 
+GIT
+  remote: https://github.com/collectionspace/collectionspace-refcache.git
+  revision: 76f7c458e31302d4971d7316ae259305d83a45c1
+  tag: v0.7.2
+  specs:
+    collectionspace-refcache (0.7.2)
+      collectionspace-client (= 0.7.0)
+      redis (~> 4.2.1)
+      zache (~> 0.12.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -350,6 +360,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    zache (0.12.0)
     zeitwerk (2.4.0)
 
 PLATFORMS
@@ -367,6 +378,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   collectionspace-client!
+  collectionspace-refcache!
   csvlint
   devise
   font-awesome-rails
