@@ -129,6 +129,14 @@ module ApplicationHelper
     end
   end
 
+  # when impersonating a user don't allow the impersonator
+  # to escape their assigned groups
+  def switchable_groups(groups)
+    return groups unless impersonating_user?
+
+    groups & true_user.groups
+  end
+
   def unassigned_message
     if non_admin_default_group_user?
       raw t('user.unauthorized_group', email: Group.default.email)

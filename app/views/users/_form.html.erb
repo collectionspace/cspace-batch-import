@@ -46,23 +46,28 @@
         <% end %>
       </div>
 
-      <% unless user.admin? %>
-        <div class="field">
-          <%= form.label t('user.group'), class: 'label' %>
-          <div class="select">
-            <%= form.collection_select :group_id, Group.select_options_without_default(user), :id, :name,
-                { selected: user.group_id }, disabled: !can_edit_user_group?(user) %>
+      <%= content_tag :div, class: 'columns' do %>
+        <%= content_tag :div, class: 'column' do %>
+          <div class="field">
+            <%= form.label t('user.role'), class: 'label' %>
+            <div class="select is-fullwidth">
+              <%= form.collection_select :role_id, Role.select_options(current_user), :id, :name,
+                  { selected: user.role_id }, disabled: current_user.is?(user) %>
+            </div>
           </div>
-        </div>
+        <% end %>
+        <%= content_tag :div, class: 'column' do %>
+          <% unless user.admin? %>
+            <div class="field">
+              <%= form.label t('user.group'), class: 'label' %>
+              <div class="select is-fullwidth">
+                <%= form.collection_select :group_id, switchable_groups(Group.select_options_without_default(user)),
+                :id, :name, { selected: user.group_id }, disabled: !can_edit_user_group?(user) %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       <% end %>
-
-      <div class="field">
-        <%= form.label t('user.role'), class: 'label' %>
-        <div class="select">
-          <%= form.collection_select :role_id, Role.select_options(current_user), :id, :name,
-              { selected: user.role_id }, disabled: current_user.is?(user) %>
-        </div>
-      </div>
 
       <div class="field is-grouped mt-5">
         <div class="control">
@@ -75,7 +80,7 @@
             <%= link_to t('action.cancel'), users_path, class: 'button is-info' %>
           <% end %>
         </div>
-        <% if !current_user.is?(user) && current_user.manage?(user) %>
+        <% if !current_user.is?(user) && current_user.admin? %>
         <div class="control">
           <%=
             link_to t('navigation.become'), impersonate_user_path(user),

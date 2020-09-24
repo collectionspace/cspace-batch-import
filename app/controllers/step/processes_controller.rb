@@ -71,7 +71,7 @@ module Step
 
       @batch.step_preprocess.update(
         done: true,
-        messages: @batch.step_preprocess.messages.append(I18n.t('batch.step.preprocess.done'))
+        messages: @batch.step_preprocess.messages.append(t('batch.step.preprocess.done'))
       )
     end
 
