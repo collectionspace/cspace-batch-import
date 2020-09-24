@@ -36,6 +36,14 @@ class Batch < ApplicationRecord
     %i[cancelled failed].include? current_status
   end
 
+  def handler
+    @rm ||= fetch_mapper
+    @rm_cfg ||= {} # TODO: apply config for batch
+    CollectionSpace::Mapper::DataHandler.new(
+      @rm, connection.client, connection.refcache, @rm_cfg
+    )
+  end
+
   def processed?
     step_process&.done?
   end
@@ -69,5 +77,11 @@ class Batch < ApplicationRecord
     end
 
     errors.add(:profile, I18n.t('batch.invalid_profile'))
+  end
+
+  def fetch_mapper
+    Rails.cache.fetch(mapper.title, namespace: 'mapper', expires_in: 1.day) do
+      JSON.parse(mapper.config.download)
+    end
   end
 end

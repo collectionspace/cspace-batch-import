@@ -9,6 +9,17 @@ GIT
       nokogiri
 
 GIT
+  remote: https://github.com/collectionspace/collectionspace-mapper.git
+  revision: f1081747852bf89087b5bd17f861483be9771654
+  tag: v1.2.3
+  specs:
+    collectionspace-mapper (1.2.3)
+      chronic
+      facets
+      nokogiri (>= 1.10.9)
+      xxhash (>= 0.4.0)
+
+GIT
   remote: https://github.com/collectionspace/collectionspace-refcache.git
   revision: 76f7c458e31302d4971d7316ae259305d83a45c1
   tag: v0.7.2
@@ -126,6 +137,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
+    chronic (0.10.2)
     coderay (1.1.3)
     colorize (0.8.1)
     concurrent-ruby (1.1.6)
@@ -158,6 +170,7 @@ GEM
     escape_utils (1.2.1)
     ethon (0.12.0)
       ffi (>= 1.3.0)
+    facets (3.1.0)
     ffi (1.13.1)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -360,6 +373,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    xxhash (0.4.0)
     zache (0.12.0)
     zeitwerk (2.4.0)
 
@@ -378,6 +392,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   collectionspace-client!
+  collectionspace-mapper!
   collectionspace-refcache!
   csvlint
   devise
