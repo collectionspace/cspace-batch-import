@@ -1,0 +1,37 @@
+<article class="message is-small mt-3">
+  <div class="message-header has-background-white-ter has-text-dark">
+    <p><%= fa_icon 'book', class: 'mr-2' %>Field definitions</p>
+  </div>
+  <div class="message-body has-background-white-bis">
+    <table class="table is-fullwidth is-bordered">
+      <thead>
+        <tr>
+          <td class="has-text-weight-bold">Field</th>
+          <td class="has-text-weight-bold">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="is-italic">Name</td>
+          <td>A name for the batch</td>
+        </tr>
+        <tr>
+          <td class="is-italic">Group</td>
+          <td>The group for the batch (can only be changed by admins)</td>
+        </tr>
+          <td class="is-italic">Connection</td>
+          <td>The CollectionSpace API target</td>
+        </tr>
+        <tr>
+          <td class="is-italic"><%= link_to "Mapper", '#' %></td>
+          <td>The configuration to use (by record type)</td>
+        </tr>
+        <tr>
+          <td class="is-italic">File</td>
+          <td>A csv file to upload</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="content"><%= fa_icon 'external-link', class: 'mr-2' %><%= link_to "View the complete documentation", '#' %></p>
+  </div>
+</article>
