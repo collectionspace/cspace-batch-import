@@ -66,9 +66,11 @@ en:
     mapper: Mapper
     name: Name
     step:
+      completed_at: "%{step} was completed at %{completed_at}"
       files: Files
       preprocess:
         created: Preprocess job was successfully created
+        done: Preproccessing has been completed!
       process:
         created: Process job was successfully created
         check_records: Check for existing records?

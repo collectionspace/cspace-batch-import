@@ -9,6 +9,7 @@ class CreateStepPreprocesses < ActiveRecord::Migration[6.0]
       t.integer :step_num_row, default: 0
       t.integer :step_errors, default: 0
       t.integer :step_warnings, default: 0
+      t.json :messages, default: []
       t.references :batch, null: false, foreign_key: true
 
       t.timestamps

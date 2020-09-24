@@ -6,7 +6,7 @@ module Step
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
     before_action :set_previous_step_complete, only: :new
-    before_action :set_step, only: [:show, :reset]
+    before_action :set_step, only: %i[show reset]
 
     def new
       @step = Step::Process.new(batch: @batch)
@@ -67,7 +67,12 @@ module Step
     end
 
     def set_previous_step_complete
-      @batch.step_preprocess.update(done: true) unless @batch.step_preprocess.done?
+      return if @batch.step_preprocess.done?
+
+      @batch.step_preprocess.update(
+        done: true,
+        messages: @batch.step_preprocess.messages.append(I18n.t('batch.step.preprocess.done'))
+      )
     end
 
     def set_step

@@ -37,6 +37,14 @@ class StepServiceTest < ActiveSupport::TestCase
     assert_equal 0, @step.files.size
   end
 
+  test 'can add a message to a step' do
+    assert_equal 0, @step.messages.count
+    @step.add_message('Hello!')
+    assert_equal 1, @step.messages.count
+    @step.attach!
+    assert_equal 'Hello!', @step.step.messages[0]
+  end
+
   test 'can add an error to a step' do
     assert_equal 0, @s.step_warnings
     @step.add_error!

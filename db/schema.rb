@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 2020_09_19_015404) do
     t.integer "step_num_row", default: 0
     t.integer "step_errors", default: 0
     t.integer "step_warnings", default: 0
+    t.json "messages", default: []
     t.bigint "batch_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 2020_09_19_015404) do
     t.integer "step_num_row", default: 0
     t.integer "step_errors", default: 0
     t.integer "step_warnings", default: 0
+    t.json "messages", default: []
     t.bigint "batch_id", null: false
     t.boolean "check_records", default: true, null: false
     t.boolean "check_terms", default: true, null: false

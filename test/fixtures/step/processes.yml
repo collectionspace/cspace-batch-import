@@ -11,5 +11,9 @@ process_superuser_batch_ready:
 process_superuser_batch:
   batch: superuser_batch_processed
 
+# preprocess_superuser_batch_done:
+#   batch: superuser_batch_transferred
+#   done: true
+
 process_fishmonger_batch:
   batch: fishmonger_batch_processed

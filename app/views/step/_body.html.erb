@@ -15,8 +15,16 @@
           <div class="message-header has-background-white-ter has-text-dark">
             <p><%= fa_icon 'inbox', class: 'mr-2' %>Messages</p>
           </div>
-          <div class="message-body has-background-white-bis">
-            <p>Nothing to report!</p>
+          <div class="content message-body has-background-white-bis">
+            <ol>
+              <% if step.messages.any? %>
+                <% step.messages.each do |message| %>
+                  <li class="mb-1"><%= message %></li>
+                <% end %>
+              <% else %>
+                <li class="mb-1">Nothing to report!</li>
+              <% end %>
+            </ul>
           </div>
         </article>
       </div>

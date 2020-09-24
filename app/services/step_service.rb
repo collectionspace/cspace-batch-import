@@ -2,12 +2,13 @@
 
 class StepService
   attr_accessor :error_on_warning
-  attr_reader :file, :files, :headers, :step
+  attr_reader :file, :files, :headers, :messages, :step
   FILE_TYPE = 'csv'
   HEADERS = %i[row row_status message].freeze
 
   def initialize(step:, error_on_warning:, save_to_file:)
     @files = []
+    @messages = []
     @headers = HEADERS
     @step = step
     @error_on_warning = error_on_warning
@@ -20,6 +21,11 @@ class StepService
     append(@headers)
   end
 
+  def add_error!
+    step.increment_error!
+    step.batch.failed! unless step.batch.failed?
+  end
+
   def add_file(file, content_type)
     return unless step.class::CONTENT_TYPES.include?(content_type)
     return unless File.file? file
@@ -27,9 +33,8 @@ class StepService
     files << { file: file, content_type: content_type }
   end
 
-  def add_error!
-    step.increment_error!
-    step.batch.failed! unless step.batch.failed?
+  def add_message(message)
+    messages << message
   end
 
   def add_warning!
@@ -38,6 +43,7 @@ class StepService
   end
 
   def attach!
+    step.update(messages: messages)
     return if files.empty?
 
     files.each do |f|
@@ -76,6 +82,11 @@ class StepService
   def finishup!
     step.update(completed_at: Time.now.utc)
     step.update_header # broadcast final status of step
+    add_message(
+      I18n.t(
+        'batch.step.completed_at', step: step.name.capitalize, completed_at: step.completed_at
+      )
+    )
     attach!
   end
 
