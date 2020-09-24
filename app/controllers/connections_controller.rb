@@ -16,7 +16,7 @@ class ConnectionsController < ApplicationController
       if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_user_path(current_user),
-                      notice: t('action.created', record: 'Connection')
+                      notice: t(notice_for_domain('created'), record: 'Connection')
         end
       else
         format.html { render :new }
@@ -30,7 +30,7 @@ class ConnectionsController < ApplicationController
       if @connection.update(permitted_attributes(@connection))
         format.html do
           redirect_to edit_connection_path(@connection),
-                      notice: t('action.updated', record: 'Connection')
+                      notice: t(notice_for_domain('updated'), record: 'Connection')
         end
       else
         format.html { render :edit }
@@ -56,6 +56,10 @@ class ConnectionsController < ApplicationController
     if user_id.blank? || user_id.to_i != current_user.id
       raise Pundit::NotAuthorizedError
     end
+  end
+
+  def notice_for_domain(action)
+    @connection.domain ? "action.#{action}" : "action.#{action}_disabled"
   end
 
   def set_connection

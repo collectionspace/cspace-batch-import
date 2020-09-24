@@ -35,6 +35,7 @@ en:
     confirm_delete: Are you sure?
     create: Create
     created: "%{record} was successfully created"
+    created_disabled: "%{record} was created but is disabled"
     delete: Delete
     deleted: "%{record} was successfully deleted"
     disabled: Disabled
@@ -54,6 +55,7 @@ en:
     submit: Submit
     update: Update
     updated: "%{record} was successfully updated"
+    updated_disabled: "%{record} was updated but is disabled"
   batch:
     connection: Connection
     created_at: Created at

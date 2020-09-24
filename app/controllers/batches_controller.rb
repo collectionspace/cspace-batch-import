@@ -83,12 +83,12 @@ class BatchesController < ApplicationController
 
   def tabs
     {
-      working: { active: false, icon: 'folder', title: I18n.t('tabs.batch.working') },
-      preprocesses: { active: false, icon: 'battery-quarter', title: I18n.t('tabs.batch.preprocessing') },
-      processes: { active: false, icon: 'battery-half', title: I18n.t('tabs.batch.processing') },
-      transfers: { active: false, icon: 'battery-three-quarters', title: I18n.t('tabs.batch.transferring') },
-      deletes: { active: false, icon: 'trash', title: I18n.t('tabs.batch.deleting') },
-      archived: { active: false, icon: 'archive', title: I18n.t('tabs.batch.archived') }
+      working: { active: false, icon: 'folder', title: t('tabs.batch.working') },
+      preprocesses: { active: false, icon: 'battery-quarter', title: t('tabs.batch.preprocessing') },
+      processes: { active: false, icon: 'battery-half', title: t('tabs.batch.processing') },
+      transfers: { active: false, icon: 'battery-three-quarters', title: t('tabs.batch.transferring') },
+      deletes: { active: false, icon: 'trash', title: t('tabs.batch.deleting') },
+      archived: { active: false, icon: 'archive', title: t('tabs.batch.archived') }
     }
   end
 end

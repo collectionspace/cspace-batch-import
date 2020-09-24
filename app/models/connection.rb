@@ -53,7 +53,7 @@ class Connection < ApplicationRecord
 
   def set_domain
     update_column :domain, (Rails.env.test? ? 'test.collectionspace.org' : client.domain)
-  rescue CollectionSpace::RequestError => e
+  rescue CollectionSpace::RequestError, SocketError => e
     update_columns(domain: nil, enabled: false, primary: false)
     logger.error(e.message)
   end
