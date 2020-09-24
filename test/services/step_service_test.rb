@@ -13,20 +13,27 @@ class StepServiceTest < ActiveSupport::TestCase
   test 'can add a file to a step' do
     assert_equal 0, @step.files.size
     @step.add_file(
-      Rails.root.join('test', 'fixtures', 'files', 'core-cataloging.csv'), 'csv'
+      Rails.root.join('test', 'fixtures', 'files', 'core-cataloging.csv'), 'text/csv'
     )
     assert_equal 1, @step.files.size
   end
 
+  test 'can attach files to a step' do
+    @step = StepService.new(step: @s, error_on_warning: false, save_to_file: true)
+    @step.attach!
+    assert 1, @step.step.reports.count
+    FileUtils.rm Dir.glob(Rails.root.join('tmp', 'preprocessing_*.csv')) # TODO
+  end
+
   test 'will not add a non-file to a step' do
     assert_equal 0, @step.files.size
-    @step.add_file(Rails.root.join('test/'), 'csv')
+    @step.add_file(Rails.root.join('test/'), 'text/csv')
     assert_equal 0, @step.files.size
   end
 
   test 'will not add an unrecognized file (by type) to a step' do
     assert_equal 0, @step.files.size
-    @step.add_file(Rails.root.join('README.md'), 'markdown')
+    @step.add_file(Rails.root.join('README.md'), 'text/markdown')
     assert_equal 0, @step.files.size
   end
 
@@ -103,10 +110,5 @@ class StepServiceTest < ActiveSupport::TestCase
     assert_equal 1, @s.step_num_row
     @step.nudge!
     assert_equal 2, @s.step_num_row
-  end
-
-  test 'can be setup to save messages to a file' do
-    @step = StepService.new(step: @s, error_on_warning: false, save_to_file: true)
-    FileUtils.rm Dir.glob(Rails.root.join('tmp', 'step-*.csv')) # TODO
   end
 end

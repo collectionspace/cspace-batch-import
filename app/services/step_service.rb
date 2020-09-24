@@ -7,7 +7,6 @@ class StepService
   HEADERS = %i[row row_status message].freeze
 
   def initialize(step:, error_on_warning:, save_to_file:)
-    @file = Rails.root.join('tmp', "step-#{Time.now.to_i}.#{FILE_TYPE}")
     @files = []
     @headers = HEADERS
     @step = step
@@ -15,15 +14,17 @@ class StepService
     @save_to_file = save_to_file
     return unless @save_to_file
 
+    filename = "#{step.name}_#{step.id}-#{Time.now.to_i}.#{FILE_TYPE}"
+    @file = Rails.root.join('tmp', filename)
     @files << { file: @file, type: 'csv' }
     append(@headers)
   end
 
-  def add_file(file, type)
-    return unless step.file_types.include?(type)
+  def add_file(file, content_type)
+    return unless step.class::CONTENT_TYPES.include?(content_type)
     return unless File.file? file
 
-    @files << { file: file, type: type }
+    files << { file: file, content_type: content_type }
   end
 
   def add_error!
@@ -34,6 +35,18 @@ class StepService
   def add_warning!
     step.increment_warning!
     step.batch.failed! if error_on_warning && !step.batch.failed?
+  end
+
+  def attach!
+    return if files.empty?
+
+    files.each do |f|
+      step.reports.attach(
+        io: File.open(f[:file]),
+        filename: File.basename(f[:file]),
+        content_type: f[:content_type]
+      )
+    end
   end
 
   def cancelled?
@@ -63,8 +76,7 @@ class StepService
   def finishup!
     step.update(completed_at: Time.now.utc)
     step.update_header # broadcast final status of step
-    # TODO: attach files
-    # @files.each { |f| step.files.attach f }
+    attach!
   end
 
   def kickoff!

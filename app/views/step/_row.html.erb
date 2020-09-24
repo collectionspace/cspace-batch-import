@@ -1,0 +1,11 @@
+<tr>
+  <td><%= report.filename.to_s %></td>
+  <td><%= number_to_human_size report.byte_size %></td>
+  <td>
+    <%= link_to rails_blob_path(report, disposition: "attachment") do %>
+      <%= render partial: 'shared/icon',
+          locals: { classes: '', icon: 'download' }
+      %>
+    <% end %>
+  </td>
+</tr>
