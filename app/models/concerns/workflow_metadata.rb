@@ -17,7 +17,7 @@ module WorkflowMetadata
     validates :reports, content_type: CONTENT_TYPES
   end
 
-  def abort?
+  def cancelled?
     return unless checkin?
 
     batch.reload.cancelled?

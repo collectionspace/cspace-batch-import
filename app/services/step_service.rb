@@ -56,16 +56,20 @@ class StepService
   end
 
   def cancelled?
-    step.abort?
+    step.cancelled?
   end
 
   def complete!
-    step.batch.finished! unless step.abort? || step.errors?
+    step.batch.finished! unless cancelled? || errors?
     finishup!
   end
 
   def cut_short?
-    step.running? || step.abort?
+    running? || cancelled?
+  end
+
+  def errors?
+    step.errors?
   end
 
   def exception!
@@ -118,6 +122,14 @@ class StepService
         log!('error', e.message)
       end
     end
+  end
+
+  def running?
+    step.running?
+  end
+
+  def warnings?
+    step.warnings?
   end
 
   private
