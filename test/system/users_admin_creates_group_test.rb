@@ -16,8 +16,9 @@ class UsersAdminCreatesGroupTest < ApplicationSystemTestCase
     fill_in I18n.t('group.name'), with: 'TEST'
     fill_in I18n.t('group.domain'), with: 'test.com'
     fill_in I18n.t('group.email'), with: 'support@test.com'
-    # fill_in I18n.t('group.profile'), with: Mapper.profile_versions.first
+    find(id: 'group_profile').send_keys(Mapper.profile_versions.first)
     click_on I18n.t('action.submit')
     assert_text I18n.t('action.created', record: 'Group')
+    assert_text Mapper.profile_versions.first
   end
 end
