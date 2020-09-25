@@ -22,3 +22,22 @@ To re/start all services:
 # to run jobs
 bundle exec sidekiq
 ```
+
+## Config
+
+Environment:
+
+- APP_URL
+- AWS_ACCESS_KEY_ID
+- AWS_BUCKET
+- AWS_REGION
+- AWS_SECRET_ACCESS_KEY
+- DATABASE_URL
+- LANG
+- LOCKBOX_MASTER_KEY
+- RACK_ENV
+- RAILS_ENV
+- RAILS_LOG_TO_STDOUT
+- RAILS_SERVE_STATIC_FILES
+- REDIS_URL
+- SECRET_KEY_BASE
