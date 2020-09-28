@@ -119,4 +119,15 @@ class StepServiceTest < ActiveSupport::TestCase
     @step.nudge!
     assert_equal 2, @s.step_num_row
   end
+
+  test 'can identify the first row of data' do
+    assert_equal 1, @s.step_num_row
+    refute @step.first? # header row
+    @step.nudge!
+    assert_equal 2, @s.step_num_row
+    assert @step.first?
+    @step.nudge!
+    assert_equal 3, @s.step_num_row
+    refute @step.first? # header row
+  end
 end

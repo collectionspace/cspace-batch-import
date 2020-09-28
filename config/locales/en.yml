@@ -117,7 +117,9 @@ en:
     url: Url
     username: Username
   csv:
-    ok: No issues found
+    ok: No row specific issues found
+    preprocess_known_prefix: Recognized fields
+    preprocess_unknown_prefix: Unknown fields
   demo:
     title: This is a dev deployment!
     message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"

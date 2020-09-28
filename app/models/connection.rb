@@ -42,7 +42,7 @@ class Connection < ApplicationRecord
   def refcache
     @cache_config ||= {
       redis: Rails.configuration.refcache_url,
-      domain: client.domain,
+      domain: domain_for_env,
       error_if_not_found: false,
       lifetime: 5 * 60,
       search_delay: 5 * 60,
@@ -64,8 +64,12 @@ class Connection < ApplicationRecord
 
   private
 
+  def domain_for_env
+    Rails.env.test? ? 'test.collectionspace.org' : client.domain
+  end
+
   def set_domain
-    update_column :domain, (Rails.env.test? ? 'test.collectionspace.org' : client.domain)
+    update_column :domain, domain_for_env
   rescue CollectionSpace::RequestError, SocketError => e
     update_columns(domain: nil, enabled: false, primary: false)
     logger.error(e.message)

@@ -78,6 +78,10 @@ class StepService
     finishup!
   end
 
+  def first?
+    step.step_num_row == 2 # after header
+  end
+
   # TODO: test -- [ok, error, warning]
   def log!(status, message)
     append({ row: step.step_num_row, row_status: status, message: message })
@@ -116,7 +120,7 @@ class StepService
         break unless row
 
         nudge!
-        yield row
+        yield row.to_hash
       rescue CSV::MalformedCSVError => e
         add_error!
         log!('error', e.message)
@@ -134,7 +138,6 @@ class StepService
 
   private
 
-  # TODO: DRY (term_manager)
   def append(message)
     return unless @save_to_file
 
