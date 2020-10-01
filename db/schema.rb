@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_015404) do
+ActiveRecord::Schema.define(version: 2020_10_01_210436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,6 +143,23 @@ ActiveRecord::Schema.define(version: 2020_09_19_015404) do
     t.index ["batch_id"], name: "index_step_processes_on_batch_id"
   end
 
+  create_table "step_transfers", force: :cascade do |t|
+    t.boolean "done", default: false, null: false
+    t.datetime "started_at"
+    t.datetime "completed_at"
+    t.integer "step_num_row", default: 0
+    t.integer "step_errors", default: 0
+    t.integer "step_warnings", default: 0
+    t.json "messages", default: []
+    t.bigint "batch_id", null: false
+    t.boolean "action_create", default: false, null: false
+    t.boolean "action_update", default: false, null: false
+    t.boolean "action_delete", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["batch_id"], name: "index_step_transfers_on_batch_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -172,6 +189,7 @@ ActiveRecord::Schema.define(version: 2020_09_19_015404) do
   add_foreign_key "connections", "users"
   add_foreign_key "step_preprocesses", "batches"
   add_foreign_key "step_processes", "batches"
+  add_foreign_key "step_transfers", "batches"
   add_foreign_key "users", "groups"
   add_foreign_key "users", "roles"
 end

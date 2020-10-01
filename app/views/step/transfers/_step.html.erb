@@ -1,0 +1,30 @@
+<%= render partial: 'step/batch_summary', locals: { batch: batch } %>
+<%= render partial: 'step/breadcrumbs', locals: { batch: batch } %>
+
+<%= content_for :step_ready do %>
+  <p class="is-italic"><%= t('batch.step.state.ready_message', step: batch.current_step) %></p>
+<% end %>
+
+<div class="box">
+  <%= render layout: 'step/header', locals: { batch: batch, step: step } do |form| %>
+    <%= form.label t('batch.step.transfer.create'), class: 'checkbox is-italic my-1' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.create') ; end %>
+      <%= form.check_box :action_create %>
+    <% end %>
+
+    <%= form.label t('batch.step.transfer.update'), class: 'checkbox is-italic my-1' do %>
+      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.update') ; end %>
+      <%= form.check_box :action_update %>
+    <% end %>
+  <% end %>
+
+  <%= render partial: 'step/body', locals: { batch: batch, step: step }%>
+  <hr/>
+  <%= render partial: 'step/navigation', locals: {
+      previous_step: batch_step_process_path(batch, batch.step_process),
+      previous_ok: true,
+      next_step: new_batch_step_archive_path,
+      next_ok: (batch.may_archive? || batch.transferred?)
+    }
+  %>
+</div>

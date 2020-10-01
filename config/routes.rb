@@ -6,13 +6,11 @@ Rails.application.routes.draw do
   root 'sites#home'
   resources :batches, only: %i[index new create destroy] do
     namespace :step do
-      resources :preprocesses, only: %i[new create show] do
-        post 'cancel'
-        post 'reset'
-      end
-      resources :processes, only: %i[new create show] do
-        post 'cancel'
-        post 'reset'
+      %i[preprocesses processes transfers archives].each do |step|
+        resources step, only: %i[new create show] do
+          post 'cancel'
+          post 'reset'
+        end
       end
     end
   end

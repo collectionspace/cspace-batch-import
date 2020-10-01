@@ -43,6 +43,18 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     )
   end
 
+  def transition_to_transferring
+    transition_to(
+      to: :transferring, from: :processing, event: :transfer, next_step: :archive
+    )
+  end
+
+  def transition_to_archiving
+    transition_to(
+      to: :archiving, from: :transferring, event: :archive, next_step: nil
+    )
+  end
+
   test 'a new batch has the default (post create) workflow state' do
     assert_have_state @batch, :preprocessing, on: :step
     assert_have_state @batch, :ready, on: :status
@@ -89,5 +101,27 @@ class BatchWorkflowTest < ActiveSupport::TestCase
     assert_have_state @batch, :ready, on: :status
   end
 
-  # TODO: remaining workflow
+  test 'can transition to transferring if status steps succeed' do
+    transition_to_preprocessing
+    run_steps_success
+    transition_to_processing
+    run_steps_success
+    assert_transition_to_allowed @batch, :transferring, on: :step
+    transition_to_transferring
+    assert_have_state @batch, :transferring, on: :step
+    assert_have_state @batch, :ready, on: :status
+  end
+
+  test 'can transition to archiving if status steps succeed' do
+    transition_to_preprocessing
+    run_steps_success
+    transition_to_processing
+    run_steps_success
+    transition_to_transferring
+    run_steps_success
+    assert_transition_to_allowed @batch, :archiving, on: :step
+    transition_to_archiving
+    assert_have_state @batch, :archiving, on: :step
+    assert_have_state @batch, :ready, on: :status
+  end
 end

@@ -9,6 +9,7 @@ class Batch < ApplicationRecord
   has_one_attached :spreadsheet
   has_one :step_preprocess, class_name: 'Step::Preprocess', dependent: :destroy
   has_one :step_process, class_name: 'Step::Process', dependent: :destroy
+  has_one :step_transfer, class_name: 'Step::Transfer', dependent: :destroy
   belongs_to :user
   belongs_to :group
   belongs_to :connection
@@ -25,7 +26,7 @@ class Batch < ApplicationRecord
   scope :working, -> { where.not(step_state: 'archiving') }
 
   def archived?
-    false
+    step_archive&.done?
   end
 
   def can_cancel?
@@ -50,6 +51,10 @@ class Batch < ApplicationRecord
 
   def preprocessed?
     step_preprocess&.done?
+  end
+
+  def transferred?
+    step_transfer&.done?
   end
 
   def self.content_types

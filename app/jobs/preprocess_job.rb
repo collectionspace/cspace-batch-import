@@ -46,7 +46,6 @@ class PreprocessJob < ApplicationJob
 
       step.complete!
     rescue StandardError => e
-      # something really bad happened! we need to make this prominent somewhere ...
       step.exception!
       Rails.logger.error(e.message)
       Rails.logger.error(e.backtrace)

@@ -19,8 +19,12 @@
       <% end %>
     </li>
     <li>
-      <% if false %>
-        <a href="#"><%= t('batch.step.title.transfer') %></a>
+      <% if batch.processed? %>
+        <%= link_to new_batch_step_transfer_path(batch) do %>
+          <% if batch.transferring? %><%= fa_icon "star", class: 'mr-2' %><% end %>
+          <%= t('batch.step.title.transfer') %>
+          <% if batch.transferred? %>(<%= fa_icon 'check' %>)<% end %>
+        <% end %>
       <% else %>
         <span class="is-italic pl-2 pr-2"><%= t('batch.step.title.transfer') %></span>
       <% end %>

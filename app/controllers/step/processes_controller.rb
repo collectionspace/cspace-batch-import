@@ -18,7 +18,8 @@ module Step
         if @step.update(process_params)
           format.html do
             @batch.start!
-            # TODO: kickoff job i.e. JOB.perform_later(@step)
+            job = ProcessJob.perform_later(@step)
+            @batch.update(job_id: job.provider_job_id)
             redirect_to batch_step_process_path(
               @batch, @batch.step_process
             ), notice: t('action.created', record: 'Process Job')
@@ -69,10 +70,7 @@ module Step
     def set_previous_step_complete
       return if @batch.step_preprocess.done?
 
-      @batch.step_preprocess.update(
-        done: true,
-        messages: @batch.step_preprocess.messages.append(t('batch.step.preprocess.done'))
-      )
+      @batch.step_preprocess.update(done: true)
     end
 
     def set_step

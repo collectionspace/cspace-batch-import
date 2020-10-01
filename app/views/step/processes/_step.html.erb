@@ -16,17 +16,6 @@
       <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.process.check_terms') ; end %>
       <%= form.check_box :check_terms, disabled: !batch.ready?, class: 'mr-2' %>
     <% end %>
-    <!-- these are really for transfer
-    <%= form.label t('batch.step.transfer.create'), class: 'checkbox is-italic' do %>
-      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.create') ; end %>
-      <%= form.check_box :enabled %>
-    <% end %>
-
-    <%= form.label t('batch.step.transfer.update'), class: 'checkbox is-italic' do %>
-      <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.update') ; end %>
-      <%= form.check_box :primary %>
-    <% end %>
-    -->
   <% end %>
 
   <%= render partial: 'step/body', locals: { batch: batch, step: step }%>
@@ -34,8 +23,8 @@
   <%= render partial: 'step/navigation', locals: {
       previous_step: batch_step_preprocess_path(batch, batch.step_preprocess),
       previous_ok: true,
-      next_step: '#',
-      next_ok: batch.may_transfer?
+      next_step: new_batch_step_transfer_path,
+      next_ok: (batch.may_transfer? || batch.processed?)
     }
   %>
 </div>
