@@ -2,13 +2,13 @@
 
 require 'test_helper'
 
-class RecordServiceTest < ActiveSupport::TestCase
+class RecordManagerServiceTest < ActiveSupport::TestCase
   include CachingHelper
 
   setup do
     @uri = '/collectionobjects/998b6cad-4a55-4904-93b2'
     @identifier = 'xyz'
-    @rs = RecordService.new(client: users(:superuser).connections.first.client)
+    @rs = RecordManagerService.new(client: users(:superuser).connections.first.client)
   end
 
   test 'can add found uri to cache' do

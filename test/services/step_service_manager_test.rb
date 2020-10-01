@@ -2,11 +2,11 @@
 
 require 'test_helper'
 
-class StepServiceTest < ActiveSupport::TestCase
+class StepManagerServiceTest < ActiveSupport::TestCase
   setup do
     @s = step_preprocesses(:preprocess_superuser_batch_ready)
     @s.batch.start! # set the batch status to :pending (i.e. job enqueued)
-    @step = StepService.new(step: @s, error_on_warning: false, save_to_file: false)
+    @step = StepManagerService.new(step: @s, error_on_warning: false, save_to_file: false)
     @step.kickoff!
   end
 
@@ -19,7 +19,7 @@ class StepServiceTest < ActiveSupport::TestCase
   end
 
   test 'can attach files to a step' do
-    @step = StepService.new(step: @s, error_on_warning: false, save_to_file: true)
+    @step = StepManagerService.new(step: @s, error_on_warning: false, save_to_file: true)
     @step.attach!
     assert 1, @step.step.reports.count
     FileUtils.rm Dir.glob(Rails.root.join('tmp', '*.csv'))

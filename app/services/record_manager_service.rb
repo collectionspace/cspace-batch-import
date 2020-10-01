@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class RecordService
+class RecordManagerService
   attr_reader :client, :namespace
   PATH_TO_TOTAL = %w[abstract_common_list totalItems].freeze
   PATH_TO_URI = %w[abstract_common_list list_item uri].freeze

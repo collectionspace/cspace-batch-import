@@ -7,7 +7,9 @@ class PreprocessJob < ApplicationJob
   PREPROCESS_FIELD_REPORT_COLS = [:header, :known].freeze
 
   def perform(preprocess)
-    step = StepService.new(step: preprocess, error_on_warning: false, save_to_file: !Rails.env.test?)
+    step = StepManagerService.new(
+      step: preprocess, error_on_warning: false, save_to_file: !Rails.env.test?
+    )
     return if step.cut_short?
 
     step.kickoff!

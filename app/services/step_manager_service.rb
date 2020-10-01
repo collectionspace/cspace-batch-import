@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class StepService
+class StepManagerService
   attr_accessor :error_on_warning
   attr_reader :file, :files, :headers, :messages, :step
   FILE_TYPE = 'csv'
