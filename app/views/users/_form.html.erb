@@ -106,7 +106,8 @@
       <div class="level-right">
         <% if current_user.is?(user) %>
           <%= content_tag :div, class: 'tags has-addons mt-2' do %>
-            <%= render partial: 'shared/button_create', locals: { path: new_connection_path(user_id: user.id) } %>
+            <%= render partial: 'shared/button_create',
+                locals: { path: new_connection_path(user_id: user.id), text: t('connection.action.create') } %>
           <% end %>
         <% end %>
       </div>

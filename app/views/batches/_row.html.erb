@@ -2,7 +2,7 @@
   <td>
     <%= link_to current_step_path(batch) do %>
       <%= fa_icon 'folder-open', class: 'mr-1' %>
-      <%= batch.name %>
+      <%= truncate batch.name %>
     <% end %>
   </td>
   <td><%= batch.group.name %></td>

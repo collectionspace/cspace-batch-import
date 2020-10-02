@@ -1,5 +1,5 @@
 <%= content_tag :span, class: 'tag is-danger' do %>
-  <%= t('action.delete') %>
+  <%= local_assigns[:text] ? text : t('action.delete') %>
 <% end %>
 <%= link_to record,
     method: :delete,

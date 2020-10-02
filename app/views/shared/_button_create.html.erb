@@ -1,5 +1,5 @@
 <%= content_tag :span, class: 'tag is-link' do %>
-  <%= t('action.create') %>
+  <%= local_assigns[:text] ? text : t('action.create') %>
 <% end %>
 <%= link_to path, class: 'create tag' do %>
   <%= fa_icon "plus" %>

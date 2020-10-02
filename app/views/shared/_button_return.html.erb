@@ -1,5 +1,5 @@
 <%= content_tag :span, class: 'tag is-info' do %>
-  <%= t('navigation.return') %>
+  <%= local_assigns[:text] ? text : t('navigation.return') %>
 <% end %>
 <%= link_to path, class: 'return tag' do %>
   <%= fa_icon "undo" %>

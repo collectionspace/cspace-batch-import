@@ -2,7 +2,8 @@
 
 <%= content_tag :div, class: 'level' do %>
   <%= content_tag :div, class: 'tags has-addons' do %>
-    <%= render partial: 'shared/button_create', locals: { path: new_group_path } %>
+    <%= render partial: 'shared/button_create',
+        locals: { path: new_group_path, text: t('group.action.create') } %>
   <% end %>
 <% end %>
 

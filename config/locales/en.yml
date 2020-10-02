@@ -43,7 +43,7 @@ en:
     login: Log in
     next: Next
     previous: Previous
-    refresh: Refresh
+    refresh: Refresh page
     reload: Reload
     reset: Reset
     signup: Sign up
@@ -57,6 +57,10 @@ en:
     updated: "%{record} was successfully updated"
     updated_disabled: "%{record} was updated but is disabled"
   batch:
+    action:
+      create: Create a batch
+      delete: Delete this batch
+      return: Return to batches
     connection: Connection
     created_at: Created at
     created_by: Created by
@@ -96,6 +100,8 @@ en:
       step: Batch
     summary: Summary
   connection:
+    action:
+      create: Create a connection
     domain: Domain
     editing_for_user: "Editing connection for: <strong>%{email}</strong>"
     enabled: Enabled
@@ -131,6 +137,8 @@ en:
   general:
     no_records: 0 records found
   group:
+    action:
+      create: Create a group
     description: Description
     disabled: Group is disabled
     domain: Email domain

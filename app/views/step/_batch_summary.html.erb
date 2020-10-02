@@ -17,8 +17,10 @@
     <% end %>
     <%= content_tag :div, class: 'level-right' do %>
       <%= content_tag :div, class: 'tags has-addons mb-2' do %>
-        <%= render partial: 'shared/button_return', locals: { path: batches_path } %>
-        <%= render partial: 'shared/button_delete', locals: { record: batch } %>
+        <%= render partial: 'shared/button_return',
+            locals: { path: batches_path, text: t('batch.action.return') } %>
+        <%= render partial: 'shared/button_delete',
+            locals: { record: batch, text: t('batch.action.delete') } %>
       <% end %>
     <% end %>
   <% end %>
@@ -35,11 +37,11 @@
               <tbody>
                 <tr>
                   <td class="has-text-weight-bold">Name</td>
-                  <td><%= batch.name %></td>
+                  <td><%= truncate batch.name %></td>
                 </tr>
                 <tr>
                   <td class="has-text-weight-bold">Connection</td>
-                  <td><%= batch.connection.name %></td>
+                  <td><%= truncate batch.connection.name %></td>
                 </tr>
                 <tr>
                   <td class="has-text-weight-bold">Mapper</td>
@@ -60,7 +62,7 @@
               <tbody>
                 <tr>
                   <td class="has-text-weight-bold">Group</td>
-                  <td><%= batch.group.name %></td>
+                  <td><%= truncate batch.group.name %></td>
                 </tr>
                 <tr>
                   <td class="has-text-weight-bold">Email</td>
