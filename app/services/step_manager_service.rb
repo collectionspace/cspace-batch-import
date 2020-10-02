@@ -90,11 +90,6 @@ class StepManagerService
   def finishup!
     step.update(completed_at: Time.now.utc)
     step.update_header # broadcast final status of step
-    add_message(
-      I18n.t(
-        'batch.step.completed_at', step: step.name.capitalize, completed_at: step.completed_at
-      )
-    )
     attach!
   end
 

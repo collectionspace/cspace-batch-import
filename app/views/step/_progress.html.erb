@@ -1,5 +1,5 @@
 <tr id="progress_<%= dom_id(step) %>">
-  <td><%= step.started_at || waiting_to_start_html.html_safe %></td>
+  <td><%= step.started_at ? local_time(step.started_at) : waiting_to_start_html.html_safe %></td>
   <td><%= time_ago_in_words step.current_runtime.seconds.from_now %></td>
   <td>
     <progress

@@ -16,7 +16,7 @@ module Step
             @batch.update(job_id: job.provider_job_id)
             redirect_to batch_step_process_path(
               @batch, @batch.step_process
-            ), notice: t('action.created', record: 'Process Job')
+            )
           end
         else
           format.html do
@@ -33,13 +33,13 @@ module Step
       cancel!
       redirect_to batch_step_process_path(
         @batch, @batch.step_process
-      ), notice: t('action.step.cancelled')
+      )
     end
 
     def reset
       reset!
       respond_to do |format|
-        format.html { redirect_to new_batch_step_process_path(@batch), notice: t('action.step.reset') }
+        format.html { redirect_to new_batch_step_process_path(@batch) }
       end
     end
 

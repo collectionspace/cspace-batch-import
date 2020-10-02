@@ -15,8 +15,7 @@ class ConnectionsController < ApplicationController
       @connection = Connection.new
       if @connection.update(permitted_attributes(@connection))
         format.html do
-          redirect_to edit_user_path(current_user),
-                      notice: t(notice_for_domain('created'), record: 'Connection')
+          redirect_to edit_user_path(current_user)
         end
       else
         format.html { render :new }

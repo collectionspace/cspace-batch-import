@@ -14,7 +14,7 @@
     <%= batch.current_status %>
   </td>
   <td><%= batch.user.email %></td>
-  <td><%= batch.created_at %></td>
+  <td><%= local_time batch.created_at %></td>
   <td>
     <%= content_tag :div, class: 'tags has-addons is-outline is-pulled-right' do %>
       <%= render partial: 'shared/button_delete', locals: { record: batch } %>

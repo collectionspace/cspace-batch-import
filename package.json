@@ -8,6 +8,7 @@
     "@rails/webpacker": "4.2.2",
     "autocomplete.js": "^0.37.1",
     "axios": "^0.19.2",
+    "local-time": "^2.1.0",
     "stimulus": "^1.1.1",
     "stimulus_reflex": "^3.3.0-pre2",
     "turbolinks": "^5.2.0"

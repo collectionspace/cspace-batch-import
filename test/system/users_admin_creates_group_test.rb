@@ -10,6 +10,7 @@ class UsersAdminCreatesGroupTest < ApplicationSystemTestCase
   test 'admin creates a group' do
     visit root_path
     click_on I18n.t('group.title.index')
+    refute_text 'TEST'
     assert_selector 'h1', text: I18n.t('group.title.index')
     find('.create').click
     assert_selector 'h1', text: I18n.t('group.title.create')
@@ -18,7 +19,7 @@ class UsersAdminCreatesGroupTest < ApplicationSystemTestCase
     fill_in I18n.t('group.email'), with: 'support@test.com'
     find(id: 'group_profile').send_keys(Mapper.profile_versions.first)
     click_on I18n.t('action.submit')
-    assert_text I18n.t('action.created', record: 'Group')
+    assert_text 'TEST'
     assert_text Mapper.profile_versions.first
   end
 end

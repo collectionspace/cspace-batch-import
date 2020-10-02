@@ -15,7 +15,7 @@ module Step
             # TODO: kickoff job i.e. JOB.perform_later(@step)
             redirect_to batch_step_transfer_path(
               @batch, @batch.step_transfer
-            ), notice: t('action.created', record: 'Transfer Job')
+            )
           end
         else
           format.html do
@@ -32,13 +32,13 @@ module Step
       cancel!
       redirect_to batch_step_transfer_path(
         @batch, @batch.step_transfer
-      ), notice: t('action.step.cancelled')
+      )
     end
 
     def reset
       reset!
       respond_to do |format|
-        format.html { redirect_to new_batch_step_transfer_path(@batch), notice: t('action.step.reset') }
+        format.html { redirect_to new_batch_step_transfer_path(@batch) }
       end
     end
 

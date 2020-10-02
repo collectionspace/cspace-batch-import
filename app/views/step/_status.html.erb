@@ -1,13 +1,18 @@
-<ul>
-  <li>
-    Job created at: <%= step.created_at || '<span class="is-italic">not started</span'.html_safe %>
-  </li>
-</ul>
-<%= content_tag :div, class: 'tags has-addons mt-1 mb-1' do %>
+<%= content_tag :div, class: 'tags has-addons mt-1 mb-1 pull-right' do %>
   <%= render partial: 'shared/button_refresh',
     locals: { classes: 'tag is-primary', reflex: 'click->Application#reload' }
   %>
 <% end %>
+<ul>
+  <li>
+    Job created at: <%= local_time step.created_at %>
+  </li>
+  <% if step.completed_at %>
+  <li>
+    Job completed at: <%= local_time step.completed_at %>
+  </li>
+  <% end %>
+</ul>
 <h3 class="subtitle has-text-centered has-text-weight-semibold is-6 mt-2">Job Status</h3>
 <table class="table is-fullwidth">
   <caption class="is-italic is-size-7">Reload page when complete to update all batch information.</caption>

@@ -23,8 +23,7 @@ class BatchesController < ApplicationController
       )
         if spreadsheet_ok?
           format.html do
-            redirect_to new_batch_step_preprocess_path(@batch),
-                        notice: t('action.created', record: 'Batch')
+            redirect_to new_batch_step_preprocess_path(@batch)
           end
         else
           format.html { return redirect_to new_batch_path }
