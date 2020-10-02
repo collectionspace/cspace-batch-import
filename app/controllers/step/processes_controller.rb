@@ -1,13 +1,7 @@
 # frozen_string_literal: true
 
 module Step
-  class ProcessesController < ApplicationController
-    include Stepable
-    before_action :redirect_if_created, only: :new
-    before_action :set_batch_state, only: :new
-    before_action :set_previous_step_complete, only: :new
-    before_action :set_step, only: %i[show reset]
-
+  class ProcessesController < Step::WorkflowController
     def new
       @step = Step::Process.new(batch: @batch)
     end

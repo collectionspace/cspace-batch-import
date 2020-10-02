@@ -1,12 +1,7 @@
 # frozen_string_literal: true
 
 module Step
-  class PreprocessesController < ApplicationController
-    include Stepable
-    before_action :redirect_if_created, only: :new
-    before_action :set_batch_state, only: :new
-    before_action :set_step, only: %i[show reset]
-
+  class PreprocessesController < Step::WorkflowController
     def new
       @step = Step::Preprocess.new(batch: @batch)
     end
@@ -62,6 +57,10 @@ module Step
 
     def set_batch_state
       @batch.preprocess! unless @batch.preprocessing?
+    end
+
+    def set_previous_step_complete
+      true # NO-OP: there is no previous step
     end
 
     def set_step
