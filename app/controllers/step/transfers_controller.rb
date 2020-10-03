@@ -48,6 +48,10 @@ module Step
       params.require(:step_transfer).permit(:action_create, :action_update, :action_delete)
     end
 
+    def previous_step_complete?
+      @batch.step_process&.done?
+    end
+
     def redirect_if_created
       return unless @batch.step_transfer
 
@@ -57,13 +61,11 @@ module Step
     end
 
     def set_batch_state
+      unless previous_step_complete?
+        return redirect_back(fallback_location: batches_path)
+      end
+
       @batch.transfer! unless @batch.transferring?
-    end
-
-    def set_previous_step_complete
-      return if @batch.step_process.done?
-
-      @batch.step_process.update(done: true)
     end
 
     def set_step

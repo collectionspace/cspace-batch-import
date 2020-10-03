@@ -83,6 +83,7 @@ class StepManagerServiceTest < ActiveSupport::TestCase
   test 'can complete a step, without errors is success' do
     @step.complete!
     assert @s.batch.finished?
+    assert @s.done?
     assert :finished, @s.batch.current_status
     assert_not_nil @s.completed_at
   end
@@ -91,6 +92,7 @@ class StepManagerServiceTest < ActiveSupport::TestCase
     @step.add_error!
     @step.complete!
     assert @s.batch.failed?
+    refute @s.done?
     assert :failed, @s.batch.current_status
     assert_not_nil @s.completed_at
   end
@@ -99,6 +101,7 @@ class StepManagerServiceTest < ActiveSupport::TestCase
     @s.batch.cancel!
     @step.complete!
     assert @s.batch.cancelled?
+    refute @s.done?
     assert :cancelled, @s.batch.current_status
     assert_not_nil @s.completed_at
   end

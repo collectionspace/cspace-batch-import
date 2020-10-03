@@ -60,7 +60,10 @@ class StepManagerService
   end
 
   def complete!
-    step.batch.finished! unless cancelled? || errors?
+    unless cancelled? || errors?
+      step.batch.finished!
+      step.update(done: true)
+    end
     finishup!
   end
 

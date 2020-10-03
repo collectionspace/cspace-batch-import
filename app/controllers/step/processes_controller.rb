@@ -45,6 +45,10 @@ module Step
 
     private
 
+    def previous_step_complete?
+      @batch.step_preprocess&.done?
+    end
+
     def process_params
       params.require(:step_process).permit(:check_records, :check_terms)
     end
@@ -58,13 +62,11 @@ module Step
     end
 
     def set_batch_state
+      unless previous_step_complete?
+        return redirect_back(fallback_location: batches_path)
+      end
+
       @batch.process! unless @batch.processing?
-    end
-
-    def set_previous_step_complete
-      return if @batch.step_preprocess.done?
-
-      @batch.step_preprocess.update(done: true)
     end
 
     def set_step

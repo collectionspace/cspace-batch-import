@@ -10,6 +10,7 @@ process_superuser_batch_ready:
 
 process_superuser_batch:
   batch: superuser_batch_processed
+  done: true
 
 process_superuser_batch_done:
   batch: superuser_batch_transferred

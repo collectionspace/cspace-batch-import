@@ -7,7 +7,6 @@ module Step
     before_action :set_batch_for_create, only: :create
     before_action :redirect_if_created, only: :new
     before_action :set_batch_state, only: :new
-    before_action :set_previous_step_complete, only: :new
     before_action :set_step, only: %i[show reset]
 
     def cancel!
@@ -23,6 +22,10 @@ module Step
       @batch.retry!
     end
 
+    def previous_step_complete?
+      raise NotImplementedError
+    end
+
     def set_batch
       @batch = authorize Batch.find(params[:batch_id])
     end
@@ -36,10 +39,6 @@ module Step
     end
 
     def set_batch_state
-      raise NotImplementedError
-    end
-
-    def set_previous_step_complete
       raise NotImplementedError
     end
 

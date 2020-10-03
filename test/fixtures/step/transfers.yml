@@ -10,6 +10,7 @@ transfer_superuser_batch_ready:
 
 transfer_superuser_batch:
   batch: superuser_batch_transferred
+  done: true
 
 # transfer_superuser_batch_done:
 #   batch: superuser_batch_archived

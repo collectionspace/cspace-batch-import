@@ -59,10 +59,6 @@ module Step
       @batch.preprocess! unless @batch.preprocessing?
     end
 
-    def set_previous_step_complete
-      true # NO-OP: there is no previous step
-    end
-
     def set_step
       @step = authorize(@batch).step_preprocess
     end
