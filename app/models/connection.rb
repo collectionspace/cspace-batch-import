@@ -42,7 +42,7 @@ class Connection < ApplicationRecord
   def refcache
     @cache_config ||= {
       redis: Rails.configuration.refcache_url,
-      domain: domain_for_env,
+      domain: client.config.base_uri,
       error_if_not_found: false,
       lifetime: 5 * 60,
       search_delay: 5 * 60,
