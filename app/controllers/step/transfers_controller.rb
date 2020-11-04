@@ -12,7 +12,8 @@ module Step
         if @step.update(transfer_params)
           format.html do
             @batch.start!
-            # TODO: kickoff job i.e. JOB.perform_later(@step)
+            job = TransferJob.perform_later(@step)
+            @batch.update(job_id: job.provider_job_id)
             redirect_to batch_step_transfer_path(
               @batch, @batch.step_transfer
             )
