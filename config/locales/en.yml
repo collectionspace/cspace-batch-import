@@ -40,6 +40,7 @@ en:
     deleted: "%{record} was successfully deleted"
     disabled: Disabled
     edit: Edit
+    limit: Limit to my batches?
     login: Log in
     next: Next
     previous: Previous
