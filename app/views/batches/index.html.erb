@@ -14,6 +14,14 @@
   <%= render partial: 'shared/tabs' , locals: { tabs: @tabs } %>
 <% end %>
 
+<p><%= t 'action.limit' %>
+  <span>
+    <%= check_box_tag 'user_only', @user_only, @user_only, class: 'mb-2',
+        data: { 'reflex': 'click->Application#toggle_checkbox', 'value': 'user_only' }
+    %>
+  </span>
+</p>
+
 <% if @batches.any? %>
   <table class="table is-fullwidth is-hoverable">
     <thead>

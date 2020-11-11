@@ -23,15 +23,20 @@ class ApplicationReflex < StimulusReflex::Reflex
     end
   end
 
-  def toggle_status
-    model = element.dataset['model'].camelize.constantize
-    record = model.find(element.dataset['id'])
-    record.update(enabled: element[:checked])
+  def toggle_checkbox
+    value = element.dataset['value'].to_sym
+    session[value] = element[:checked]
   end
 
   def toggle_hide
     hide = element.dataset['value'].to_sym
     session[hide] ||= false # make sure there's a default (not hidden)
     session[hide] = !session[hide]
+  end
+
+  def toggle_status
+    model = element.dataset['model'].camelize.constantize
+    record = model.find(element.dataset['id'])
+    record.update(enabled: element[:checked])
   end
 end

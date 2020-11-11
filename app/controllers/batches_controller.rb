@@ -6,7 +6,11 @@ class BatchesController < ApplicationController
   before_action :set_group, only: %i[create]
 
   def index
-    @pagy, @batches = pagy(policy_scope(Batch).send(session[:tab]).order('created_at DESC'))
+    @user_only = session.fetch(:user_only, false)
+    email = @user_only ? current_user.email : '%'
+    @pagy, @batches = pagy(
+      policy_scope(Batch).send(session[:tab]).by_user(email).order('created_at DESC')
+    )
   end
 
   def new
