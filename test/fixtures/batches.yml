@@ -76,6 +76,28 @@ superuser_batch_transferred:
   mapper: core_collectionobject_6_0
   num_rows: 1
 
+# STEP 4. ARCHIVING
+
+superuser_batch_archiving:
+  name: superuser_batch
+  user: superuser
+  step_state: archiving
+  status_state: ready
+  group: default
+  connection: core_superuser
+  mapper: core_collectionobject_6_0
+  num_rows: 1
+
+superuser_batch_archived:
+  name: superuser_batch
+  user: superuser
+  step_state: archiving
+  status_state: finished
+  group: default
+  connection: core_superuser
+  mapper: core_collectionobject_6_0
+  num_rows: 1
+
 # BATCHES TO TEST AUTHZ
 
 minion_batch:

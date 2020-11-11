@@ -5,16 +5,16 @@
 # below each fixture, per the syntax in the comments below
 #
 
-transfer_superuser_batch_ready:
-  batch: superuser_batch_transferring
+archive_superuser_batch_ready:
+  batch: superuser_batch_archiving
 
-transfer_superuser_batch:
-  batch: superuser_batch_transferred
-  done: true
-
-transfer_superuser_batch_done:
+archive_superuser_batch:
   batch: superuser_batch_archived
   done: true
 
-transfer_fishmonger_batch:
-  batch: fishmonger_batch_transferred
+# archive_superuser_batch_done:
+#   batch: superuser_batch_archived
+#   done: true
+
+archive_fishmonger_batch:
+  batch: fishmonger_batch_archived

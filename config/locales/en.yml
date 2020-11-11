@@ -74,6 +74,9 @@ en:
     step:
       completed_at: "%{step} was completed at %{completed_at}"
       files: Files
+      archive:
+        created: Archive job was successfully created
+        done: Archiving has been completed!
       preprocess:
         created: Preprocess job was successfully created
         done: Preprocessing has been completed!

@@ -42,6 +42,18 @@ superuser_batch_transferred_attachment:
   record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_transferred) %>
   blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
 
+superuser_batch_archiving_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_archiving) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
+superuser_batch_archived_attachment:
+  name: spreadsheet
+  record_type: Batch
+  record_id: <%= ActiveRecord::FixtureSet.identify(:superuser_batch_archived) %>
+  blob_id: <%= ActiveRecord::FixtureSet.identify(:core_cataloging_csv) %>
+
 minion_batch_attachment:
   name: spreadsheet
   record_type: Batch

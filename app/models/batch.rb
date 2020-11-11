@@ -10,6 +10,7 @@ class Batch < ApplicationRecord
   has_one :step_preprocess, class_name: 'Step::Preprocess', dependent: :destroy
   has_one :step_process, class_name: 'Step::Process', dependent: :destroy
   has_one :step_transfer, class_name: 'Step::Transfer', dependent: :destroy
+  has_one :step_archive, class_name: 'Step::Archive', dependent: :destroy
   belongs_to :user
   belongs_to :group
   belongs_to :connection
@@ -23,7 +24,7 @@ class Batch < ApplicationRecord
   scope :preprocesses, -> { where(step_state: 'preprocessing') }
   scope :processes, -> { where(step_state: 'processing') }
   scope :transfers, -> { where(step_state: 'transferring') }
-  scope :working, -> { where.not(step_state: 'archiving') }
+  scope :working, -> { where.not("step_state = 'archiving' AND status_state = 'finished'") }
 
   def archived?
     step_archive&.done?

@@ -38,19 +38,13 @@ module Step
 
     def reset
       reset!
-      respond_to do |format|
-        format.html { redirect_to new_batch_step_process_path(@batch) }
-      end
+      redirect_to new_batch_step_process_path(@batch)
     end
 
     private
 
     def previous_step_complete?
       @batch.step_preprocess&.done?
-    end
-
-    def process_params
-      params.require(:step_process).permit(:check_records, :check_terms)
     end
 
     def redirect_if_created
@@ -71,6 +65,11 @@ module Step
 
     def set_step
       @step = authorize(@batch).step_process
+    end
+
+    # PARAMS
+    def process_params
+      params.require(:step_process).permit(:check_records, :check_terms)
     end
   end
 end
