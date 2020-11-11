@@ -30,8 +30,12 @@
       <% end %>
     </li>
     <li>
-      <% if false %>
-        <a href="#"><%= t('batch.step.title.archive') %></a>
+      <% if batch.transferred? %>
+        <%= link_to new_batch_step_archive_path(batch) do %>
+          <% if batch.archiving? %><%= fa_icon "star", class: 'mr-2' %><% end %>
+          <%= t('batch.step.title.archive') %>
+          <% if batch.archived? %>(<%= fa_icon 'check' %>)<% end %>
+        <% end %>
       <% else %>
         <span class="is-italic pl-2 pr-2"><%= t('batch.step.title.archive') %></span>
       <% end %>
