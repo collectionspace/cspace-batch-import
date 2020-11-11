@@ -43,8 +43,8 @@ module Step
 
     private
 
-    def preprocess_params
-      {}
+    def previous_step_complete?
+      true
     end
 
     def redirect_if_created
@@ -61,6 +61,11 @@ module Step
 
     def set_step
       @step = authorize(@batch).step_preprocess
+    end
+
+    # PARAMS
+    def preprocess_params
+      {}
     end
   end
 end

@@ -38,16 +38,10 @@ module Step
 
     def reset
       reset!
-      respond_to do |format|
-        format.html { redirect_to new_batch_step_transfer_path(@batch) }
-      end
+      redirect_to new_batch_step_transfer_path(@batch)
     end
 
     private
-
-    def transfer_params
-      params.require(:step_transfer).permit(:action_create, :action_update, :action_delete)
-    end
 
     def previous_step_complete?
       @batch.step_process&.done?
@@ -71,6 +65,11 @@ module Step
 
     def set_step
       @step = authorize(@batch).step_transfer
+    end
+
+    # PARAMS
+    def transfer_params
+      params.require(:step_transfer).permit(:action_create, :action_update, :action_delete)
     end
   end
 end
