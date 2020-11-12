@@ -25,7 +25,9 @@ module CspaceBatchImport
       'MAPPERS_URL', 'https://cs-public-shared-files.s3-us-west-2.amazonaws.com/mappers/mappers.json'
     )
 
-    config.refcache_url = ENV.fetch('REDIS_URL') { 'redis://localhost:6379/3' }
+    config.refcache_url = ENV.fetch('REDIS_REFCACHE_URL') {
+      ENV.fetch('REDIS_URL', 'redis://localhost:6379/3')
+    }
 
     config.superuser_email = ENV.fetch(
       'SUPERUSER_EMAIL', 'superuser@collectionspace.org'

@@ -3,7 +3,11 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  config.cache_store = :redis_cache_store, { url: ENV.fetch('REDIS_URL') { 'redis://localhost:6379/0' } }
+  config.cache_store = :redis_cache_store, {
+    url: ENV.fetch('REDIS_CACHE_URL') {
+      ENV.fetch('REDIS_URL', 'redis://localhost:6379/0')
+    }
+  }
   config.session_store :cache_store,
                        key: '_session',
                        compress: true,
