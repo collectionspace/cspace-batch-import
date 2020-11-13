@@ -6,21 +6,21 @@ class ProcessJob < ApplicationJob
   ERRORS = [:message].freeze
 
   def perform(process)
-    step = StepManagerService.new(
+    manager = StepManagerService.new(
       step: process, error_on_warning: false, save_to_file: !Rails.env.test?
     )
-    return if step.cut_short?
+    return if manager.cut_short?
 
-    step.kickoff!
+    manager.kickoff!
 
     begin
-      step.process do |data|
-        step.log!('ok', I18n.t('csv.ok'))
+      manager.process do |data|
+        manager.log!('ok', I18n.t('csv.ok'))
       end
 
-      step.complete!
+      manager.complete!
     rescue StandardError => e
-      step.exception!
+      manager.exception!
       Rails.logger.error(e.message)
       Rails.logger.error(e.backtrace)
     end

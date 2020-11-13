@@ -6,18 +6,18 @@ class ArchiveJob < ApplicationJob
   ERRORS = [:message].freeze
 
   def perform(archive)
-    step = StepManagerService.new(
+    manager = StepManagerService.new(
       step: archive, error_on_warning: false, save_to_file: !Rails.env.test?
     )
-    return if step.cut_short?
+    return if manager.cut_short?
 
-    step.kickoff!
+    manager.kickoff!
 
     begin
       archive.update(step_num_row: archive.batch.num_rows)
-      step.complete!
+      manager.complete!
     rescue StandardError => e
-      step.exception!
+      manager.exception!
       Rails.logger.error(e.message)
       Rails.logger.error(e.backtrace)
     end
