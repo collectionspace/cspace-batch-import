@@ -5,9 +5,9 @@ class TransferJob < ApplicationJob
   sidekiq_options retry: false
   ERRORS = [:message].freeze
 
-  def perform(process)
+  def perform(transfer)
     step = StepManagerService.new(
-      step: process, error_on_warning: false, save_to_file: !Rails.env.test?
+      step: transfer, error_on_warning: false, save_to_file: !Rails.env.test?
     )
     return if step.cut_short?
 
