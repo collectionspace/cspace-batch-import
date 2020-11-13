@@ -9,12 +9,12 @@
   <%= render layout: 'step/header', locals: { batch: batch, step: step } do |form| %>
     <%= form.label t('batch.step.transfer.create'), class: 'checkbox is-italic my-1' do %>
       <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.create') ; end %>
-      <%= form.check_box :action_create %>
+      <%= form.check_box :action_create, disabled: !batch.ready?, class: 'mr-2' %>
     <% end %>
 
     <%= form.label t('batch.step.transfer.update'), class: 'checkbox is-italic my-1' do %>
       <%= content_tag :span, class: 'ml-1 mr-1' do t('batch.step.transfer.update') ; end %>
-      <%= form.check_box :action_update %>
+      <%= form.check_box :action_update, disabled: !batch.ready?, class: 'mr-2' %>
     <% end %>
   <% end %>
 
