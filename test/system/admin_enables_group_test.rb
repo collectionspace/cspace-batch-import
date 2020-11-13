@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class UsersAdminEnablesGroupTest < ApplicationSystemTestCase
+class AdminEnablesGroupTest < ApplicationSystemTestCase
   setup do
     sign_in users(:admin)
   end
