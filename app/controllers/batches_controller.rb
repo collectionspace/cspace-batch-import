@@ -23,9 +23,9 @@ class BatchesController < ApplicationController
     respond_to do |format|
       @batch = Batch.new
       if @batch.update(
-        permitted_attributes(@batch).merge(user: current_user, group: @group, batch_config: params[:batch][:batch_config])
+        permitted_attributes(@batch).merge(user: current_user, group: @group)
       )
-        if spreadsheet_ok?
+        if spreadsheet_ok? && batch_config_ok?
           format.html do
             redirect_to new_batch_step_preprocess_path(@batch)
           end
@@ -36,6 +36,21 @@ class BatchesController < ApplicationController
         @connection ||= current_user.default_connection
         format.html { render :new }
       end
+
+      # if @batch.update(
+      #   permitted_attributes(@batch).merge(user: current_user, group: @group)
+      # )
+      #   if spreadsheet_ok?
+      #     format.html do
+      #       redirect_to new_batch_step_preprocess_path(@batch)
+      #     end
+      #   else
+      #     format.html { return redirect_to new_batch_path }
+      #   end
+      # else
+      #   @connection ||= current_user.default_connection
+      #   format.html { render :new }
+      # end
     end
   end
 
@@ -48,9 +63,31 @@ class BatchesController < ApplicationController
 
   private
 
+  def batch_config_ok?
+    continue = false
+    if @batch.batch_config.empty?
+      @batch.update(batch_config: nil)
+      continue = true
+      return continue
+    end
+
+    begin
+      config = JSON.parse(@batch.batch_config)
+    rescue JSON::ParserError
+      @batch.destroy # scrap it, they'll have to start over
+      flash[:batch_config] = ['Batch config is invalid JSON']
+      return continue
+    end
+    
+    @batch.update(batch_config: config)
+    continue = true
+    
+    continue
+  end
+
   def spreadsheet_ok?
     continue = false
-    Batch.validator_for(@batch) do |validator|
+    Batch.csv_validator_for(@batch) do |validator|
       if validator.valid?
         @batch.update(num_rows: validator.row_count)
         continue = true

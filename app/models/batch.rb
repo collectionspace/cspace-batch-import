@@ -65,7 +65,7 @@ class Batch < ApplicationRecord
     CONTENT_TYPES
   end
 
-  def self.validator_for(batch)
+  def self.csv_validator_for(batch)
     # raise unless batch.spreadsheet.attached? # TODO
 
     batch.spreadsheet.open do |spreadsheet|

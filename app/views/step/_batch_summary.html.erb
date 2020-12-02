@@ -2,100 +2,119 @@
 
 <div class="box">
   <%= content_tag :div, class: 'level mb-1' do %>
-    <%= content_tag :div, class: 'level-left' do %>
-      <h3 class="subtitle has-text-weight-bold is-6 mb-2">
-        <%= render partial: 'shared/icon',
-            locals: { classes: 'has-text-success', icon: 'thumbs-up' }
+  <%= content_tag :div, class: 'level-left' do %>
+  <h3 class="subtitle has-text-weight-bold is-6 mb-2">
+    <%= render partial: 'shared/icon',
+        locals: { classes: 'has-text-success', icon: 'thumbs-up' }
         %>
-        <%= t 'batch.summary' %>
-        <%= fa_icon (session[:hide_batch_info] ? 'chevron-circle-down' : 'chevron-circle-up'),
-            id: 'batch_summary_toggle', class: 'ml-1', data: {
-              'reflex': 'click->Application#toggle_hide', 'value': 'hide_batch_info'
-            }
-        %>
-      </h3>
-    <% end %>
-    <%= content_tag :div, class: 'level-right' do %>
-      <%= content_tag :div, class: 'tags has-addons mb-2' do %>
-        <%= render partial: 'shared/button_return',
-            locals: { path: batches_path, text: t('batch.action.return') } %>
-        <%= render partial: 'shared/button_delete',
-            locals: { record: batch, text: t('batch.action.delete') } %>
-      <% end %>
-    <% end %>
+    <%= t 'batch.summary' %>
+    <%= fa_icon (session[:hide_batch_info] ? 'chevron-circle-down' : 'chevron-circle-up'),
+        id: 'batch_summary_toggle', class: 'ml-1', data: {
+        'reflex': 'click->Application#toggle_hide', 'value': 'hide_batch_info'
+    }
+    %>
+  </h3>
+  <% end %>
+  <%= content_tag :div, class: 'level-right' do %>
+  <%= content_tag :div, class: 'tags has-addons mb-2' do %>
+  <%= render partial: 'shared/button_return',
+      locals: { path: batches_path, text: t('batch.action.return') } %>
+  <%= render partial: 'shared/button_delete',
+      locals: { record: batch, text: t('batch.action.delete') } %>
+  <% end %>
+  <% end %>
   <% end %>
   <hr class="mt-2 mb-4"/>
   <% unless session[:hide_batch_info] %>
-    <div id="batch_info" class="columns is-centered">
+  <div id="batch_info" class="columns is-centered">
+    <div class="column">
+      <article class="message is-small">
+        <div class="message-header has-background-white-ter has-text-dark">
+          <p><%= fa_icon 'cog', class: 'mr-2' %>Batch Information</p>
+        </div>
+        <div class="message-body has-background-white-bis">
+          <table class="table is-fullwidth is-bordered">
+            <tbody>
+              <tr>
+                <td class="has-text-weight-bold">Name</td>
+                <td><%= truncate batch.name %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Connection</td>
+                <td><%= truncate batch.connection.name %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Mapper</td>
+                <td><%= truncate batch.mapper.title %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+    <div class="column">
+      <article class="message is-small">
+        <div class="message-header has-background-white-ter has-text-dark">
+          <p><%= fa_icon 'user-circle', class: 'mr-2' %>User Information</p>
+        </div>
+        <div class="message-body has-background-white-bis">
+          <table class="table is-fullwidth is-bordered">
+            <tbody>
+              <tr>
+                <td class="has-text-weight-bold">Group</td>
+                <td><%= truncate batch.group.name %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Email</td>
+                <td><%= truncate batch.user.email %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Enabled</td>
+                <td><%= batch.user.enabled? %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+    <div class="column">
+      <article class="message is-small">
+        <div class="message-header has-background-white-ter has-text-dark">
+          <p><%= fa_icon 'file', class: 'mr-2' %>File Information</p>
+        </div>
+        <div class="message-body has-background-white-bis">
+          <table class="table is-fullwidth is-bordered">
+            <tbody>
+              <tr>
+                <td class="has-text-weight-bold">Name</td>
+                <td><%= truncate batch.spreadsheet.filename.to_s %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Rows</td>
+                <td><%= batch.num_rows || 0 %></td>
+              </tr>
+              <tr>
+                <td class="has-text-weight-bold">Size</td>
+                <td><%= number_to_human_size batch.spreadsheet.byte_size %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+  </div>
+  <% unless batch.batch_config.nil? %>
+    <div id="batch_config" class="columns is-centered">
       <div class="column">
         <article class="message is-small">
           <div class="message-header has-background-white-ter has-text-dark">
-            <p><%= fa_icon 'cog', class: 'mr-2' %>Batch Information</p>
+            <p><%= fa_icon 'wrench', class: 'mr-2' %>Batch Configuration</p>
           </div>
           <div class="message-body has-background-white-bis">
             <table class="table is-fullwidth is-bordered">
               <tbody>
                 <tr>
-                  <td class="has-text-weight-bold">Name</td>
-                  <td><%= truncate batch.name %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Connection</td>
-                  <td><%= truncate batch.connection.name %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Mapper</td>
-                  <td><%= truncate batch.mapper.title %></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
-      <div class="column">
-        <article class="message is-small">
-          <div class="message-header has-background-white-ter has-text-dark">
-            <p><%= fa_icon 'user-circle', class: 'mr-2' %>User Information</p>
-          </div>
-          <div class="message-body has-background-white-bis">
-            <table class="table is-fullwidth is-bordered">
-              <tbody>
-                <tr>
-                  <td class="has-text-weight-bold">Group</td>
-                  <td><%= truncate batch.group.name %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Email</td>
-                  <td><%= truncate batch.user.email %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Enabled</td>
-                  <td><%= batch.user.enabled? %></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-      </div>
-      <div class="column">
-        <article class="message is-small">
-          <div class="message-header has-background-white-ter has-text-dark">
-            <p><%= fa_icon 'file', class: 'mr-2' %>File Information</p>
-          </div>
-          <div class="message-body has-background-white-bis">
-            <table class="table is-fullwidth is-bordered">
-              <tbody>
-                <tr>
-                  <td class="has-text-weight-bold">Name</td>
-                  <td><%= truncate batch.spreadsheet.filename.to_s %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Rows</td>
-                  <td><%= batch.num_rows || 0 %></td>
-                </tr>
-                <tr>
-                  <td class="has-text-weight-bold">Size</td>
-                  <td><%= number_to_human_size batch.spreadsheet.byte_size %></td>
+                  <td><%= pp(batch.batch_config) %></td>
                 </tr>
               </tbody>
             </table>
@@ -103,5 +122,6 @@
         </article>
       </div>
     </div>
+  <% end %>
   <% end %>
 </div>
