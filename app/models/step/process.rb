@@ -16,5 +16,9 @@ module Step
     def name
       :processing
     end
+
+    def prefix
+      :pro
+    end
   end
 end

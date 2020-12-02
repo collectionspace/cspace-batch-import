@@ -8,5 +8,9 @@ module Step
     def name
       :archiving
     end
+
+    def prefix
+      :arc
+    end
   end
 end

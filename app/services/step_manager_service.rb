@@ -15,7 +15,8 @@ class StepManagerService
     @save_to_file = save_to_file
     return unless @save_to_file
 
-    filename = "#{step.name}_#{step.id}-#{Time.now.to_i}.#{FILE_TYPE}"
+    time = Time.now
+    filename = "#{step.prefix}_#{step.batch.name.parameterize}-#{time.strftime('%F').delete('-')}-#{time.strftime('%R').delete(':')}.#{FILE_TYPE}"
     @file = Rails.root.join('tmp', filename)
     @files << { file: @file, type: 'csv' }
     append(@headers)
