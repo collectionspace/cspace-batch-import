@@ -34,7 +34,7 @@
             %>
           </div>
         <% end %>
-
+	
         <%= content_tag :div, class: 'column is-half' do %>
           <div class="field">
             <%= form.label t('batch.mapper'), class: 'label' %>
@@ -68,7 +68,14 @@
         <%= content_tag :div, class: 'column is-one-quarter' do %>
         <% end %>
 
-        <%= content_tag :div, class: 'column' do %>
+        <%= content_tag :div, class: 'column is-full' do %>
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.batch_config'), class: 'label' %>
+            <%= form.text_area :batch_config, class: 'input' %>
+          <% end %>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-full' do %>
           <div class="field is-grouped">
             <div class="control">
               <%= form.button t('action.submit'), class: 'button is-link',

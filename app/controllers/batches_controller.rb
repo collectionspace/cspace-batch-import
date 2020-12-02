@@ -23,7 +23,7 @@ class BatchesController < ApplicationController
     respond_to do |format|
       @batch = Batch.new
       if @batch.update(
-        permitted_attributes(@batch).merge(user: current_user, group: @group)
+        permitted_attributes(@batch).merge(user: current_user, group: @group, batch_config: params[:batch][:batch_config])
       )
         if spreadsheet_ok?
           format.html do
