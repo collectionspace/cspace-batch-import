@@ -36,21 +36,6 @@ class BatchesController < ApplicationController
         @connection ||= current_user.default_connection
         format.html { render :new }
       end
-
-      # if @batch.update(
-      #   permitted_attributes(@batch).merge(user: current_user, group: @group)
-      # )
-      #   if spreadsheet_ok?
-      #     format.html do
-      #       redirect_to new_batch_step_preprocess_path(@batch)
-      #     end
-      #   else
-      #     format.html { return redirect_to new_batch_path }
-      #   end
-      # else
-      #   @connection ||= current_user.default_connection
-      #   format.html { render :new }
-      # end
     end
   end
 
