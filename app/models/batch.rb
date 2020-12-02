@@ -69,7 +69,6 @@ class Batch < ApplicationRecord
     # raise unless batch.spreadsheet.attached? # TODO
 
     batch.spreadsheet.open do |spreadsheet|
-      # TODO: config from batch
       config = { 'header': true, 'delimiter': ',' }
       validator = Csvlint::Validator.new(
         File.new(spreadsheet.path), config, nil
