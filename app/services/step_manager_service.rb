@@ -87,6 +87,8 @@ class StepManagerService
   end
 
   # TODO: test -- [ok, error, warning]
+  # If save_to_file = true, send message for row to CSV file
+  # If save_to_file = false, does nothing
   def log!(status, message)
     append({ row: step.step_num_row, row_status: status, message: message })
   end

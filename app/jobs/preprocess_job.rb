@@ -8,40 +8,44 @@ class PreprocessJob < ApplicationJob
 
   def perform(preprocess)
     manager = StepManagerService.new(
-      step: preprocess, error_on_warning: false, save_to_file: !Rails.env.test?
+      step: preprocess, error_on_warning: false, save_to_file: false
     )
     return if manager.cut_short?
 
     manager.kickoff!
 
     begin
-      field_report = ReportService.new(
-        name: 'fields', columns: PREPROCESS_FIELD_REPORT_COLS, save_to_file: !Rails.env.test?
-      )
-      manager.add_file field_report.file, 'text/csv'
       handler = preprocess.batch.handler
+      empty_required = {}
       manager.process do |data|
         if manager.first?
           result = handler.check_fields(data)
-          manager.add_message("#{I18n.t('csv.preprocess_known_prefix')}: #{result[:known_fields].count}")
-          manager.add_message("#{I18n.t('csv.preprocess_unknown_prefix')}: #{result[:unknown_fields].count}")
-          result[:known_fields].each { |f| field_report.add_message({ header: f, known: true }) }
-
+          manager.add_message("#{I18n.t('csv.preprocess_known_prefix')}: #{result[:known_fields].count} of #{data.keys.count}")
           if result[:unknown_fields].any?
+            manager.add_message("#{I18n.t('csv.preprocess_unknown_prefix')}: #{result[:unknown_fields].join('; ')}")
             manager.add_warning!
-            result[:unknown_fields].each { |f| field_report.add_message({ header: f, known: false }) }
+          end
+
+          validated = handler.validate(data)
+          unless validated.valid?
+            missing_required = validated.errors.select{ |err| err.start_with?('required field missing') }
+            unless missing_required.empty?
+              missing_required.each{ |msg| manager.add_message(msg) }
+              manager.add_error!
+            end
           end
         end
 
         validated = handler.validate(data)
         unless validated.valid?
-          validated.errors.each do |e|
-            manager.add_error!
-            manager.log!('error', e.values_at(*ERRORS).join(';'))
-          end
+          errs = validated.errors.reject{ |err| err.start_with?('required field missing') }
+          errs.each{ |e| empty_required[e] = nil } unless errs.empty?
         end
+      end
 
-        manager.log!('ok', I18n.t('csv.ok')) if validated.valid?
+      unless empty_required.empty?
+        empty_required.keys.each{ |msg| manager.add_message("In one or more rows, #{msg}") }
+        manager.add_error!
       end
 
       manager.complete!
