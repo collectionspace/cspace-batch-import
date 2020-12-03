@@ -3,7 +3,10 @@
     <p><%= fa_icon 'file', class: 'mr-2' %>Files</p>
   </div>
   <div class="message-body has-background-white-bis">
-    <table class="table is-fullwidth is-bordered">
+    <% if step.reports.count == 0 %>
+      No files for <%= step.name %>
+    <% else %>
+     <table class="table is-fullwidth is-bordered">
       <thead>
         <tr>
           <th>Name</th>
@@ -12,8 +15,9 @@
         </tr>
       </thead>
       <tbody>
-        <%= render partial: 'step/row', collection: reports, as: :report %>
+        <%= render partial: 'step/row', collection: step.reports, as: :report %>
       </tbody>
-    </table>
+     </table>
+     <% end %>
   </div>
 </article>
