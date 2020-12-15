@@ -2,7 +2,7 @@
 
 class StepManagerService
   attr_accessor :error_on_warning
-  attr_reader :file, :files, :headers, :messages, :step
+  attr_reader :file, :files, :headers, :messages, :step, :row_results
   FILE_TYPE = 'csv'
   HEADERS = %i[row row_status message].freeze
 
@@ -127,6 +127,10 @@ class StepManagerService
         log!('error', e.message)
       end
     end
+  end
+
+  def row_num
+    step.step_num_row
   end
 
   def running?

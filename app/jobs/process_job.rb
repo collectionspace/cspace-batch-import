@@ -14,10 +14,23 @@ class ProcessJob < ApplicationJob
     manager.kickoff!
 
     begin
+      handler = process.batch.handler
+      rs = RecordManagerService.new(client: process.batch.connection.client)
+      
       manager.process do |data|
-        manager.log!('ok', I18n.t('csv.ok'))
+        row_data = { 'err' => [], 'warn' => [] }
+        
+        result = handler.process(data)
+        id = result.identifier
+        if id.empty?
+          row_data['err'] << 'No record identifier'
+        end
+        
+        #manager.log!('ok', I18n.t('csv.ok'))
+        process.row_results[manager.row_num] = row_data
+        process.save
       end
-
+      
       manager.complete!
     rescue StandardError => e
       manager.exception!
