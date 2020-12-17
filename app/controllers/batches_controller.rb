@@ -57,16 +57,14 @@ class BatchesController < ApplicationController
     end
 
     begin
-      config = JSON.parse(@batch.batch_config)
+      JSON.parse(@batch.batch_config)
     rescue JSON::ParserError
       @batch.destroy # scrap it, they'll have to start over
       flash[:batch_config] = ['Batch config is invalid JSON']
       return continue
     end
-    
-    @batch.update(batch_config: config)
+
     continue = true
-    
     continue
   end
 
