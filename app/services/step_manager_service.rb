@@ -47,17 +47,21 @@ class StepManagerService
 
   def handle_processing_warning(report, warning)
     category = warning[:category].to_s
-    report.append(step.step_num_row, 'warning', "#{warning[:field]}: #{warning[:value]}", category)
+    report.append({ row: step.step_num_row,
+                   row_status: 'warning',
+                   message: "#{warning[:field]}: #{warning[:value]}",
+                   category: category
+                  })
     add_message("One or more records has warning: #{category}")
   end
 
-  def finalize_main_processing_report(report_service)
-    errwarn = report_service.file
+  def finalize_main_processing_report(err_warn_report_service)
+    errwarn = err_warn_report_service.file
     dh = data_headers
     ah = added_headers(errwarn)
     
     final_report = ReportService.new(
-      name: "#{@filename_base}_full.#{FILE_TYPE}",
+      name: "#{@filename_base}_processing_report",
       columns: dh + ah,
       save_to_file: true
     )

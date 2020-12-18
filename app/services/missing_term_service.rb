@@ -12,12 +12,13 @@ class MissingTermService
     @save_to_file = save_to_file
     @all = {}
     time = Time.now
-    missing_term_occurrence_filename = "missing_term_occurrences-#{batch.name.parameterize}-#{time.strftime('%F').delete('-')}-#{time.strftime('%R').delete(':')}.#{FILE_TYPE}"
+    filename_stub = "#{batch.name.parameterize}-#{time.strftime('%F').delete('-')}-#{time.strftime('%R').delete(':')}-"
+    missing_term_occurrence_filename = "#{filename_stub}missing_term_occurrences.#{FILE_TYPE}"
     @missing_term_occurrence_file = Rails.root.join('tmp', missing_term_occurrence_filename)
     @missing_term_occurrence_headers = MISSING_TERM_OCCURRENCE_HEADERS
     append_headers(@missing_term_occurrence_file, @missing_term_occurrence_headers) if @save_to_file
     
-    uniq_missing_terms_filename = "uniq_missing_terms-#{batch.name.parameterize}-#{time.strftime('%F').delete('-')}-#{time.strftime('%R').delete(':')}.#{FILE_TYPE}"
+    uniq_missing_terms_filename = "#{filename_stub}uniq_missing_terms.#{FILE_TYPE}"
     @uniq_missing_terms_file = Rails.root.join('tmp', uniq_missing_terms_filename)
     @uniq_missing_terms_headers = UNIQ_MISSING_TERMS_HEADERS
     append_headers(@uniq_missing_terms_file, @uniq_missing_terms_headers) if @save_to_file

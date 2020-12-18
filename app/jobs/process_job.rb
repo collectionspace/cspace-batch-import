@@ -16,42 +16,65 @@ class ProcessJob < ApplicationJob
 
     begin
       handler = process.batch.handler
-      rs = RecordManagerService.new(client: process.batch.connection.client)
-      mts = MissingTermService.new(batch: process.batch, save_to_file: true)
-      manager.add_file(mts.missing_term_occurrence_file, 'text/csv', :tmp)
+#      rs = RecordManagerService.new(client: process.batch.connection.client)
 
-      rep = ReportService.new(name: "#{manager.filename_base}_processed.#{FILE_TYPE}",
+      rep = ReportService.new(name: "#{manager.filename_base}_processed",
         columns: %i[row row_status message category],
         save_to_file: true)
       manager.add_file(rep.file, 'text/csv', :tmp)
 
+      rus = RecordUniquenessService.new(batch: process.batch, log_report: rep)
+
+      mts = MissingTermService.new(batch: process.batch, save_to_file: true)
+      manager.add_file(mts.missing_term_occurrence_file, 'text/csv', :tmp)
+
       manager.process do |data|
+        row_num = process.step_num_row
+        
         begin
           result = handler.process(data)
         rescue StandardError => e
           manager.add_warning!
-          rep.append(process.step_num_row, 'warning', "Mapper did not return result: #{e.message}", 'mapper')
+          rep.append({row: row_num,
+                      row_status: 'warning',
+                      message: "Mapper did not return result: #{e.message}",
+                      category: 'mapper'
+                     })
           manager.add_message("Mapping failed for one or more records")
           next	
         end
-
+        
         unless result.terms.empty?
+          puts 'Handling missing terms'
           missing_terms = mts.get_missing(result.terms)
-          missing_terms.each{ |term| mts.add(term, manager.row_num) }
+          missing_terms.each{ |term| mts.add(term, row_num) }
           msgs = missing_terms.map{ |term| mts.message(term) }.join('; ')
           manager.add_warning!
-          rep.append(process.step_num_row, 'warning', msgs, 'terms')
+          rep.append({row: row_num,
+                      row_status: 'warning',
+                      message: msgs,
+                      category: 'terms'
+                     })
         end
-
 
         unless result.warnings.empty?
+          puts 'Handling warnings'
           result.warnings.each{ |warning| manager.handle_processing_warning(rep, warning) }
         end
-        
-        # id = result.identifier
-        # if id.empty?
-        #   row_data['err'] << 'No record identifier'
-        # end
+
+        puts 'Handling record identifier'
+        id = result.identifier
+        if id.nil? || id.empty?
+          manager.add_error!
+          rep.append({row: row_num,
+                      row_status: 'error',
+                      message: "Identifier for record not found or created",
+                      category: 'record identifier'
+                     })
+          manager.add_message("No identifier value for one or more records")
+        else
+          rus.add(row: row_num, id: id)
+        end
         
         # #manager.log!('ok', I18n.t('csv.ok'))
         process.save
@@ -59,6 +82,7 @@ class ProcessJob < ApplicationJob
 
       # post-process across-batch reports
       ## unique missing terms
+      puts 'Reporting missing terms'
       mts.report_uniq_missing_terms
       manager.add_file(mts.uniq_missing_terms_file, 'text/csv')
       if mts.total_terms > 0
@@ -66,9 +90,18 @@ class ProcessJob < ApplicationJob
         manager.add_message("Batch contains #{mts.total_term_occurrences} uses of terms that do not exist in CollectionSpace")
       end
 
+      puts 'Finding/reporting any non-unique record ids in batch'
+      rus.check_for_non_unique
+      if rus.any_non_uniq
+        rus.report_non_uniq
+        manager.add_warning!
+        manager.add_message("#{rus.non_uniq_ct} rows have non-unique identifiers")
+      end
+
+      puts 'Preparing final processing report'
       manager.finalize_main_processing_report(rep)
       
-      #      manager.complete!
+      #manager.complete!
       manager.exception!
     rescue StandardError => e
       manager.exception!
