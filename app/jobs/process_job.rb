@@ -15,19 +15,6 @@ class ProcessJob < ApplicationJob
     manager.kickoff!
 
     begin
-      config = JSON.parse(process.batch.batch_config)
-      if process.check_terms
-        binding.pry
-        config.delete('check_terms') if config.dig('check_terms') == false
-      else
-        config['check_terms'] = false
-      end
-      
-      # unless process.check_terms
-      #   config = JSON.parse(process.batch.batch_config).merge({ 'check_terms' => false })
-      #   process.batch.update(batch_config: config)
-      # end
-      process.batch.update(batch_config: config)
       handler = process.batch.handler
       rs = RecordManagerService.new(batch: process.batch)
 
