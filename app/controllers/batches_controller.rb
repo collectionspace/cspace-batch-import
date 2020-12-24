@@ -51,7 +51,7 @@ class BatchesController < ApplicationController
   def batch_config_ok?
     continue = false
     if @batch.batch_config.empty?
-      @batch.update(batch_config: nil)
+      @batch.update(batch_config: {})
       continue = true
       return continue
     end

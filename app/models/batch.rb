@@ -43,9 +43,8 @@ class Batch < ApplicationRecord
 
   def handler
     @rm ||= fetch_mapper
-    @batch_config = batch_config.nil? ? {} : batch_config
     CollectionSpace::Mapper::DataHandler.new(
-      @rm, connection.client, connection.refcache, @batch_config
+      @rm, connection.client, connection.refcache, batch_config
     )
   end
 
