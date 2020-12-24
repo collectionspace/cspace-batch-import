@@ -44,14 +44,16 @@ class Mapper < ApplicationRecord
       m.url = json['url']
       m.status = url_found
     end
-    if mapper.url != json['url']
+    # commenting out conditional below, as it would prevent updates to mappers from being
+    #  picked up if their URLs didn't change
+    # if mapper.url != json['url']
       logger.info "Updating mapper for: #{json.inspect}"
       mapper.config.purge if mapper.config.attached?
       mapper.update(
         url: json['url'],
         status: url_found
       )
-    end
+    # end
     mapper.update(enabled: json['enabled']) if mapper.enabled != json['enabled']
     return mapper if mapper.config.attached? || !url_found
 
@@ -71,6 +73,36 @@ class Mapper < ApplicationRecord
       end
     rescue JSON::ParserError => e
       logger.error(e.message)
+    end
+  end
+
+  # gets rid of mappers no longer listed in mapper manifest(s)
+  # does not destroy mappers with batches still attached
+  # archive step should remove the batch/mapper connection?
+  def self.clean_up
+    mappers_url = Rails.configuration.mappers_url
+    mappers_response = HTTP.get(mappers_url)
+    return false unless mappers_response.status.success?
+
+    current_mappers = []
+
+    begin
+      JSON.parse(mappers_response.body.to_s)['mappers'].each do |m|
+        current_mappers << m['url']
+      rescue StandardError => e
+        logger.error(e.message)
+      end
+    rescue JSON::ParserError => e
+      logger.error(e.message)
+    end
+    
+    self.all.each do |m|
+      return unless m.batches_count == 0
+      return if current_mappers.include?(m.url)
+
+      logger.info "Deleting mapper for #{m.title} as it is no longer included in supported mapper config"
+      m.config.purge if m.config.attached?
+      self.destroy(m.id)
     end
   end
 
