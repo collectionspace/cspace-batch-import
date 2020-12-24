@@ -30,6 +30,7 @@ class ProcessJob < ApplicationJob
 
       manager.process do |data|
         row_num = process.step_num_row
+        data = data.compact
         begin
           result = handler.process(data)
         rescue StandardError => e
