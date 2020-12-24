@@ -15,8 +15,21 @@ class ProcessJob < ApplicationJob
     manager.kickoff!
 
     begin
+      config = JSON.parse(process.batch.batch_config)
+      if process.check_terms
+        binding.pry
+        config.delete('check_terms') if config.dig('check_terms') == false
+      else
+        config['check_terms'] = false
+      end
+      
+      # unless process.check_terms
+      #   config = JSON.parse(process.batch.batch_config).merge({ 'check_terms' => false })
+      #   process.batch.update(batch_config: config)
+      # end
+      process.batch.update(batch_config: config)
       handler = process.batch.handler
-#      rs = RecordManagerService.new(client: process.batch.connection.client)
+      rs = RecordManagerService.new(batch: process.batch)
 
       rep = ReportService.new(name: "#{manager.filename_base}_processed",
         columns: %i[row row_status message category],
@@ -30,7 +43,6 @@ class ProcessJob < ApplicationJob
 
       manager.process do |data|
         row_num = process.step_num_row
-        
         begin
           result = handler.process(data)
         rescue StandardError => e
@@ -75,8 +87,9 @@ class ProcessJob < ApplicationJob
         else
           rus.add(row: row_num, id: id)
         end
-        
-        # #manager.log!('ok', I18n.t('csv.ok'))
+
+        rs.cache_processed(row_num, result)
+
         process.save
       end
 
