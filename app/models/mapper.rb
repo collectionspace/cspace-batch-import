@@ -95,14 +95,21 @@ class Mapper < ApplicationRecord
     rescue JSON::ParserError => e
       logger.error(e.message)
     end
-    
-    self.all.each do |m|
-      return unless m.batches_count == 0
-      return if current_mappers.include?(m.url)
 
-      logger.info "Deleting mapper for #{m.title} as it is no longer included in supported mapper config"
-      m.config.purge if m.config.attached?
-      self.destroy(m.id)
+    self.all.each do |m|
+      puts "mapper url: #{m.url}"
+      puts "batches: #{m.batches_count}"
+      return unless m.batches_count == 0
+
+      puts '---'
+      is_current = current_mappers.include?(m.url)
+      puts is_current ? 'keeping' : 'nuke it!' 
+      
+      unless is_current
+        logger.info "Deleting mapper for #{m.title} as it is no longer included in supported mapper config"
+        m.config.purge if m.config.attached?
+        self.destroy(m.id)
+      end
     end
   end
 
