@@ -16,7 +16,7 @@ class ProcessJob < ApplicationJob
 
     begin
       handler = process.batch.handler
-      rs = RecordManagerService.new(batch: process.batch)
+      rcs = RecordCacheService.new(batch: process.batch)
 
       rep = ReportService.new(name: "#{manager.filename_base}_processed",
         columns: %i[row row_status message category],
@@ -76,7 +76,7 @@ class ProcessJob < ApplicationJob
           rus.add(row: row_num, id: id)
         end
 
-        rs.cache_processed(row_num, result)
+        rcs.cache_processed(row_num, result)
 
         process.save
       end
