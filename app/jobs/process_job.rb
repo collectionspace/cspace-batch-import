@@ -37,7 +37,7 @@ class ProcessJob < ApplicationJob
           manager.add_warning!
           rep.append({row: row_num,
                       row_status: 'warning',
-                      message: "Mapper did not return result: #{e.message}",
+                      message: "Mapper did not return result: #{e.message} -- #{e.backtrace.first}",
                       category: 'mapper'
                      })
           manager.add_message("Mapping failed for one or more records")
@@ -102,8 +102,7 @@ class ProcessJob < ApplicationJob
       puts 'Preparing final processing report'
       manager.finalize_main_processing_report(rep)
       
-      #manager.complete!
-      manager.exception!
+      manager.complete!
     rescue StandardError => e
       manager.exception!
       Rails.logger.error(e.message)

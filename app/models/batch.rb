@@ -44,7 +44,10 @@ class Batch < ApplicationRecord
   def handler
     @rm ||= fetch_mapper
     CollectionSpace::Mapper::DataHandler.new(
-      @rm, connection.client, connection.refcache, batch_config
+      # Leaving this here because I suspect we will want to revert to the commented version once bug
+      #  with check_terms = false when using it can be squashed.
+      # record_mapper: @rm, client: connection.client, cache: connection.refcache, config: batch_config
+      record_mapper: @rm, client: connection.client, config: batch_config
     )
   end
 
