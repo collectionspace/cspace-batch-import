@@ -39,6 +39,15 @@ connections = [
     enabled: true,
     primary: false,
     profile: 'fcart-3.0.0'
+  },
+  {
+    name: 'UCB PAHMA Dev Server',
+    url: '173.255.245.71:8180/cspace-services',
+    username: 'admin@pahma.cspace.berkeley.edu',
+    password: 'Administrator',
+    enabled: true,
+    primary: false,
+    profile: 'ucb-pahma-3.0.0-d.5'
   }
 ]
 

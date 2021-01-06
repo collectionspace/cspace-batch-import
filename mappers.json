@@ -41,6 +41,13 @@
       "type": "concept-associated",
       "enabled": true,
       "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/fcart/fcart_3_0_1-concept-associated.json"
+    },
+    {
+      "profile": "ucb-pahma",
+      "version": "3.0.0-d.5",
+      "type": "collectionobject",
+      "enabled": true,
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/custom/ucb/pahma/ucb_pahma_nagpra-collectionobject.json"
     }
   ]
 }
