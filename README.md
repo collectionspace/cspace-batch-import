@@ -15,7 +15,7 @@
 
 - Clone this repo
 - `cd` into the repo directory
-- `git checkout dev`
+- `git checkout dev` -- **Important** -- the bootstrap.sh script will not currently run successfully on other branches.
 - `bundle install` 
 - `./bootstrap.sh` -- Docker must be available for this to access Postgres and Redis. Blows away any existing databases and rebuilds them from Rails migrations and seeds
 
