@@ -38,7 +38,7 @@ connections = [
     password: 'Administrator',
     enabled: true,
     primary: false,
-    profile: 'fcart-3.0.0'
+    profile: 'fcart-3.0.1'
   }
 ]
 
