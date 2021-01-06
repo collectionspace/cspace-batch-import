@@ -22,9 +22,7 @@ class TransferJob < ApplicationJob
       rep = ReportService.new(name: "#{manager.filename_base}_transfer_status",
                               columns: %i[row XFER_status XFER_message XFER_uri],
                               save_to_file: true)
-      manager.add_file(rep.file, 'text/csv'
-                       #, :tmp
-                      )
+      manager.add_file(rep.file, 'text/csv', :tmp)
 
       manager.process do |data|
         rownum = transfer.step_num_row

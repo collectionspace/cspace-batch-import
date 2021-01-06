@@ -114,11 +114,11 @@ class StepManagerService
                                   filename_contains: 'processing_report').report
     return if processing.nil?
 
-    processing_str = processing.download
-    basecsv = CSV.parse(processing_str, headers: true)
+    processing_str = processing.download.force_encoding('utf-8')
+    basecsv = CSV.parse(processing_str, headers: true, encoding: 'bom|utf-8')
     baseheaders = basecsv.headers
 
-    statuscsv = CSV.parse(File.read(status), headers: true)
+    statuscsv = CSV.parse(File.read(status), headers: true, encoding: 'bom|utf-8')
     statusheaders = statuscsv.headers
 
     final_report = ReportService.new(
