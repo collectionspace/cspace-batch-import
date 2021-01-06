@@ -44,7 +44,7 @@ class RecordCacheService
   def build_key(rownum)
     "#{batch.id}.#{rownum}"
   end
-  
+
   def get_mapper
     Rails.cache.fetch(batch.mapper.title, namespace: 'mapper', expires_in: 1.day) do
       JSON.parse(batch.mapper.config.download)

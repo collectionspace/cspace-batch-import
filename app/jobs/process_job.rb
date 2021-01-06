@@ -19,7 +19,7 @@ class ProcessJob < ApplicationJob
       rcs = RecordCacheService.new(batch: process.batch)
 
       rep = ReportService.new(name: "#{manager.filename_base}_processed",
-        columns: %i[row row_status message category],
+        columns: %i[row header message],
         save_to_file: true)
       manager.add_file(rep.file, 'text/csv', :tmp)
 
@@ -36,14 +36,25 @@ class ProcessJob < ApplicationJob
         rescue StandardError => e
           manager.add_warning!
           rep.append({row: row_num,
-                      row_status: 'warning',
+                      header: 'ERR: mapper',
                       message: "Mapper did not return result: #{e.message} -- #{e.backtrace.first}",
-                      category: 'mapper'
                      })
           manager.add_message("Mapping failed for one or more records")
           next	
         end
-        
+
+        # write row number for later merge with transfer results
+        rep.append({row: row_num,
+                    header: 'INFO: rownum',
+                    message: row_num,
+                   })
+
+        # write record status for collation into final report
+        rep.append({row: row_num,
+                    header: 'INFO: record status',
+                    message: result.record_status,
+                   })
+
         unless result.terms.empty?
           puts 'Handling missing terms'
           missing_terms = mts.get_missing(result.terms)
@@ -51,9 +62,8 @@ class ProcessJob < ApplicationJob
           msgs = missing_terms.map{ |term| mts.message(term) }.join('; ')
           manager.add_warning!
           rep.append({row: row_num,
-                      row_status: 'warning',
+                      header: 'WARN: new terms used',
                       message: msgs,
-                      category: 'terms'
                      })
         end
 
@@ -67,9 +77,8 @@ class ProcessJob < ApplicationJob
         if id.nil? || id.empty?
           manager.add_error!
           rep.append({row: row_num,
-                      row_status: 'error',
-                      message: "Identifier for record not found or created",
-                      category: 'record identifier'
+                      header: 'ERR: record id',
+                      message: 'Identifier for record not found or created',
                      })
           manager.add_message("No identifier value for one or more records")
         else
@@ -100,9 +109,10 @@ class ProcessJob < ApplicationJob
       end
 
       puts 'Preparing final processing report'
-      manager.finalize_main_processing_report(rep)
-      
+      manager.finalize_processing_report(rep)
+
       manager.complete!
+      #manager.exception!      
     rescue StandardError => e
       manager.exception!
       Rails.logger.error(e.message)
