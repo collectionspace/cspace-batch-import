@@ -1,0 +1,12 @@
+= Creating a new connection for superuser
+
+- Log in to batch import tool as superuser@collectionspace.org.
+- Click on Mappers and verify that at least one mapper with the profile/version you wish to use for your connection is present. If not, contact @kspurgin to add mappers.
+- Click on user name in upper right corner of screen.
+- Click Create a connection.
+- Assign a name to the connection. This can be anything that makes sense to you.
+- Url, Username, Password should be filled in with information specific to your CollectionSpace client. You must include `cspace-services` on the end of the URL.
+- Choose the Profile & Version. (This list is generated from available mappers.)
+- Click submit.
+
+Now, when you create a new batch, you should be able to select your new connection. Only mappers associated with this connection's profile/version will be available.
