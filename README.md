@@ -40,6 +40,10 @@ Created database 'cspace_batch_import_test'
 - Start Sidekiq in another terminal: `bundle exec sidekiq` (Otherwise the jobs you kick of in the app will sit in queue and never finish)
 - http://127.0.0.1:3000/users/sign_in -- Currently the application functionality is tested for superuser. I'm currently having difficulty getting connections set up for other users, so just test as superuser.
 
+NOTE: If starting the Rails server fails with an error including `error Command "webpack" not found`, try running the following command: 
+
+`bundle exec rails webpacker:install`
+
 ### Run app in Console
 
 `./bin/rails c`
