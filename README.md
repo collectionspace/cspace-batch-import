@@ -22,6 +22,7 @@ Successful run of `bootstrap.sh` looks something like:
 
 ``` bash
 ❯  ./bootstrap.sh
+Using default DB PostgreSQL port 5432
 postgres
 postgres
 redis
@@ -76,3 +77,8 @@ The `REDIS_URL` can be set on a per cache basis using:
 - REDIS_CACHE_URL # rails cache and session storage
 - REDIS_REFCACHE_URL # refcache
 - REDIS_SIDEKIQ_URL # background jobs
+
+
+For development only:
+
+- CBI_DB_PORT: set the Postgres port for the dev & test databases
