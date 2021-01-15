@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:abstract-common-list xmlns:ns2="http://collectionspace.org/services/jaxb">
+  <pageNum>0</pageNum>
+  <pageSize>1</pageSize>
+  <itemsInPage>1</itemsInPage>
+  <totalItems>2</totalItems>
+  <fieldsReturned>csid|uri|refName|updatedAt|workflowState|rev|shortIdentifier|sas|displayName|vocabType</fieldsReturned>
+  <list-item>
+    <csid>bd656286-dd1c-4cdc-b5c9</csid>
+    <uri>/personauthorities/bd656286-dd1c-4cdc-b5c9</uri>
+    <refName>urn:cspace:core.collectionspace.org:personauthorities:name(ulan_pa)''ULAN Persons''</refName>
+    <updatedAt>2020-02-07T19:31:20.689Z</updatedAt>
+    <workflowState>project</workflowState>
+    <rev>12</rev>
+    <shortIdentifier>ulan_pa</shortIdentifier>
+    <displayName>ULAN Persons</displayName>
+    <vocabType>PersonAuthority</vocabType>
+  </list-item>
+</ns2:abstract-common-list>
