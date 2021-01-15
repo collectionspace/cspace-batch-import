@@ -6,19 +6,19 @@ class ReportService
   attr_reader :file, :headers
 
   def initialize(name:, columns:, save_to_file: false)
-    @file = Rails.root.join('tmp', "#{name}-#{Time.now.to_i}.#{FILE_TYPE}")
+    @file = Rails.root.join('tmp', "#{name}.#{FILE_TYPE}")
     @headers = columns
     @save_to_file = save_to_file
     append(@headers) if @save_to_file
   end
 
-  def add_message(message)
-    append(message)
+  def append(message)
+    add_to_report(message)
   end
 
   private
 
-  def append(message)
+  def add_to_report(message)
     return unless @save_to_file
 
     CSV.open(file, 'a') do |csv|

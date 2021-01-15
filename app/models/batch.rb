@@ -43,9 +43,11 @@ class Batch < ApplicationRecord
 
   def handler
     @rm ||= fetch_mapper
-    @rm_cfg ||= {} # TODO: apply config for batch
     CollectionSpace::Mapper::DataHandler.new(
-      @rm, connection.client, connection.refcache, @rm_cfg
+      # Leaving this here because I suspect we will want to revert to the commented version once bug
+      #  with check_terms = false when using it can be squashed.
+      # record_mapper: @rm, client: connection.client, cache: connection.refcache, config: batch_config
+      record_mapper: @rm, client: connection.client, config: batch_config
     )
   end
 
@@ -65,11 +67,10 @@ class Batch < ApplicationRecord
     CONTENT_TYPES
   end
 
-  def self.validator_for(batch)
+  def self.csv_validator_for(batch)
     # raise unless batch.spreadsheet.attached? # TODO
 
     batch.spreadsheet.open do |spreadsheet|
-      # TODO: config from batch
       config = { 'header': true, 'delimiter': ',' }
       validator = Csvlint::Validator.new(
         File.new(spreadsheet.path), config, nil

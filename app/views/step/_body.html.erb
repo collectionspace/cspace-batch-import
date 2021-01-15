@@ -8,7 +8,7 @@
   <% if step.done? || batch.ran? %>
     <div class="columns">
       <div class="column">
-        <%= render partial: 'step/report', locals: { reports: step.reports } %>
+        <%= render partial: 'step/report', locals: { step: step } %>
       </div>
       <div class="column">
         <article class="message is-small">

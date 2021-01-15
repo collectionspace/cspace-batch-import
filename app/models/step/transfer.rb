@@ -8,5 +8,9 @@ module Step
     def name
       :transferring
     end
+
+    def prefix
+      :tra
+    end
   end
 end

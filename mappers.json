@@ -2,17 +2,17 @@
   "mappers": [
     {
       "profile": "anthro",
-      "version": "4.1.0",
+      "version": "4.1.2",
       "type": "collectionobject",
       "enabled": true,
-      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/anthro/anthro_4_1_0-collectionobject.json"
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/anthro/anthro_4_1_2-collectionobject.json"
     },
     {
       "profile": "anthro",
-      "version": "4.1.0",
-      "type": "concept",
+      "version": "4.1.2",
+      "type": "concept-associated",
       "enabled": true,
-      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/anthro/anthro_4_1_0-concept.json"
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/anthro/anthro_4_1_2-concept-associated.json"
     },
     {
       "profile": "core",
@@ -24,23 +24,30 @@
     {
       "profile": "core",
       "version": "6.1.0",
-      "type": "concept",
+      "type": "concept-associated",
       "enabled": true,
-      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/core/core_6_1_0-concept.json"
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/core/core_6_1_0-concept-associated.json"
     },
     {
       "profile": "fcart",
-      "version": "3.0.0",
+      "version": "3.0.1",
       "type": "collectionobject",
       "enabled": true,
-      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/fcart/fcart_3_0_0-collectionobject.json"
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/fcart/fcart_3_0_1-collectionobject.json"
     },
     {
       "profile": "fcart",
-      "version": "3.0.0",
-      "type": "concept",
+      "version": "3.0.1",
+      "type": "concept-associated",
       "enabled": true,
-      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/fcart/fcart_3_0_0-concept.json"
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/release_6_1/fcart/fcart_3_0_1-concept-associated.json"
+    },
+    {
+      "profile": "ucb-pahma",
+      "version": "3.0.0-d.5",
+      "type": "collectionobject",
+      "enabled": true,
+      "url": "https://raw.githubusercontent.com/collectionspace/cspace-config-untangler/master/data/mappers/custom/ucb/pahma/ucb_pahma_nagpra-collectionobject.json"
     }
   ]
 }

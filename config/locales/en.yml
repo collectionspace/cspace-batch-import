@@ -72,6 +72,7 @@ en:
     invalid_profile: Profile version mismatch between connection and mapper
     mapper: Mapper
     name: Name
+    batch_config: Config
     step:
       completed_at: "%{step} was completed at %{completed_at}"
       files: Files
@@ -130,8 +131,8 @@ en:
     username: Username
   csv:
     ok: No row specific issues found
-    preprocess_known_prefix: Recognized fields
-    preprocess_unknown_prefix: Unknown fields
+    preprocess_known_prefix: Fields that will import
+    preprocess_unknown_prefix: Fields that will not import
   demo:
     title: This is a dev deployment!
     message: "You can login as: <strong>superuser@collectionspace.org</strong> / <strong>%{password}</strong>"

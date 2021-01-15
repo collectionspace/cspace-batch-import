@@ -8,5 +8,9 @@ module Step
     def name
       :preprocessing
     end
+
+    def prefix
+      :pre
+    end
   end
 end

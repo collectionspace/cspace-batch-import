@@ -35,10 +35,10 @@ class BatchPolicy < ApplicationPolicy
 
   def permitted_attributes
     if user.admin?
-      %i[name spreadsheet group_id connection_id mapper_id]
+      %i[name spreadsheet group_id connection_id mapper_id batch_config]
     else
       # a non-admin cannot assign a group
-      %i[name spreadsheet connection_id mapper_id]
+      %i[name spreadsheet connection_id mapper_id batch_config]
     end
   end
 

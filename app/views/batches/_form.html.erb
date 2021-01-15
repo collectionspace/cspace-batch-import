@@ -34,7 +34,7 @@
             %>
           </div>
         <% end %>
-
+	
         <%= content_tag :div, class: 'column is-half' do %>
           <div class="field">
             <%= form.label t('batch.mapper'), class: 'label' %>
@@ -68,7 +68,14 @@
         <%= content_tag :div, class: 'column is-one-quarter' do %>
         <% end %>
 
-        <%= content_tag :div, class: 'column' do %>
+        <%= content_tag :div, class: 'column is-full' do %>
+          <%= content_tag :div, class: 'field' do %>
+            <%= form.label t('batch.batch_config'), class: 'label' %>
+            <%= form.text_area :batch_config, class: 'input' %>
+          <% end %>
+        <% end %>
+
+        <%= content_tag :div, class: 'column is-full' do %>
           <div class="field is-grouped">
             <div class="control">
               <%= form.button t('action.submit'), class: 'button is-link',
@@ -116,6 +123,22 @@
         </tbody>
       </table>
       <p class="content">These errors will be lost on page reload</p>
+    </div>
+  </article>
+<% end %>
+
+<% if flash[:batch_config] %>
+  <article class="flash message is-danger is-small mt-3">
+    <div class="message-header">
+      <p>Issues were found with JSON batch config</p>
+    </div>
+    <div class="message-body">
+      <ul>
+        <% flash[:batch_config].each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+      <p class="content">Please <a href="https://jsonlint.com">validate your JSON batch config externally</a> and re-create your batch above.</p>
     </div>
   </article>
 <% end %>
