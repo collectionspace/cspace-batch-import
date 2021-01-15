@@ -20,6 +20,12 @@ class PreprocessJobTest < ActiveJob::TestCase
 
   test 'finishes the job' do
     assert @preprocess.batch.pending?
+    stub_request(:get, 'https://core.dev.collectionspace.org/cspace-services/personauthorities?pgNum=0&pgSz=1&wf_deleted=false')
+      .to_return(
+        status: 200,
+        body: File.read(Rails.root.join('test', 'fixtures', 'files', 'domain.xml')),
+        headers: { 'Content-Type' => 'application/xml' }
+      )
     PreprocessJob.perform_now(@preprocess)
     assert_equal :finished, @preprocess.batch.current_status
   end
