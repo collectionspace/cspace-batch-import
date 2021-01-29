@@ -115,10 +115,10 @@ class StepManagerService
     return if processing.nil?
 
     processing_str = processing.download.force_encoding('utf-8')
-    basecsv = CSV.parse(processing_str, headers: true, encoding: 'bom|utf-8')
+    basecsv = CSV.parse(processing_str, headers: true)
     baseheaders = basecsv.headers
 
-    statuscsv = CSV.parse(File.read(status), headers: true, encoding: 'bom|utf-8')
+    statuscsv = CSV.parse(File.read(status), headers: true)
     statusheaders = statuscsv.headers
 
     final_report = ReportService.new(
