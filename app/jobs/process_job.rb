@@ -93,10 +93,10 @@ class ProcessJob < ApplicationJob
 
       # post-process across-batch reports
       ## unique missing terms
-      puts 'Reporting missing terms'
-      mts.report_uniq_missing_terms
-      manager.add_file(mts.uniq_missing_terms_file, 'text/csv')
       if mts.total_terms > 0
+        puts 'Reporting missing terms'
+        mts.report_uniq_missing_terms
+        manager.add_file(mts.uniq_missing_terms_file, 'text/csv')
         manager.add_message("Batch contains #{mts.total_terms} unique terms that do not exist in CollectionSpace")
         manager.add_message("Batch contains #{mts.total_term_occurrences} uses of terms that do not exist in CollectionSpace")
       end
