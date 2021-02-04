@@ -55,7 +55,7 @@ class ProcessJob < ApplicationJob
                     message: result.record_status,
                    })
 
-        missing_terms = mts.get_missing(result.terms) unless result.terms.empty?
+        missing_terms = result.terms.empty? ? [] : mts.get_missing(result.terms)
         
         unless missing_terms.empty?
           puts 'Handling missing terms'
