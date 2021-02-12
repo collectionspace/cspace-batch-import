@@ -165,9 +165,17 @@ class StepManagerService
 
   def handle_processing_warning(report, warning)
     category = warning[:category].to_s
+    if category == 'multiple_records_found_for_term'
+      m = "#{warning[:field]}: #{warning[:value]} (#{warning[:message]})"
+    elsif warning[:field] && warning[:value]
+      m = "#{warning[:field]}: #{warning[:value]}"
+    else
+      m = warning[:message]
+    end
+    
     report.append({ row: step.step_num_row,
                    header: "WARN: #{category}",
-                   message: "#{warning[:field]}: #{warning[:value]}"
+                   message: m
                   })
     add_message("One or more records has warning: #{category}")
   end

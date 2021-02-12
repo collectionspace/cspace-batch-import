@@ -113,7 +113,6 @@ class ProcessJob < ApplicationJob
       manager.finalize_processing_report(rep)
 
       manager.complete!
-      #manager.exception!      
     rescue StandardError => e
       manager.exception!
       Rails.logger.error(e.message)
