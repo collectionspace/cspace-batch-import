@@ -8,6 +8,7 @@ class Connection < ApplicationRecord
   encrypts :password
   before_save :resolve_primary, if: -> { primary? }
   before_save :unset_primary, if: -> { disabled? && primary? }
+  before_validation :inherit_profile
   after_save :set_domain
   validates :name, :profile, :url, :username, presence: true
   validates :password, presence: true, length: { minimum: 6, maximum: 18 }
@@ -66,6 +67,10 @@ class Connection < ApplicationRecord
 
   def domain_for_env
     Rails.env.test? ? 'test.collectionspace.org' : client.domain
+  end
+
+  def inherit_profile
+    self.profile = user.group.profile if profile.blank?
   end
 
   def set_domain
