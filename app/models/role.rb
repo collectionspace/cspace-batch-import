@@ -20,22 +20,31 @@ class Role < ApplicationRecord
     def initialize(user)
       @user = user
     end
-  end
 
-  class Admin < Type
-    def collaborator?(record)
+    def eligible?(record)
       return false if record.nil?
 
       true
     end
+  end
+
+  class Admin < Type
+    def collaborator?(_record)
+      true
+    end
 
     def manage?(record)
+      return false unless eligible?(record)
+
       collaborator?(record)
     end
   end
 
   class Manager < Type
     def collaborator?(record)
+      return true if user.is?(record)
+      return true if user.group?(record)
+
       if record.respond_to?(:group)
         user.group.id == record.group.id
       elsif record.respond_to?(:user)
@@ -43,27 +52,27 @@ class Role < ApplicationRecord
       end
     end
 
-    def manage?(record)
+    def eligible?(record)
       return false if record.nil?
       return false if record.respond_to?(:role) && record.admin?
 
-      return true if user.is?(record)
-      return true if user.group?(record)
+      true
+    end
+
+    def manage?(record)
+      return false unless eligible?(record)
 
       collaborator?(record)
     end
   end
 
   class Member < Type
-    def collaborator?(_record)
-      false
+    def collaborator?(record)
+      return true if user.is?(record) || user.owner_of?(record)
     end
 
     def manage?(record)
-      return false if record.nil?
-
-      return true if user.is?(record)
-      return true if user.owner_of?(record)
+      return false unless eligible?(record)
 
       collaborator?(record)
     end
